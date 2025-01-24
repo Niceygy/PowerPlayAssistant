@@ -1,0 +1,23 @@
+BTHT=Bounty hunting: Hunt pirates with bounties in-system. These can be found at resource extraction sites & at navigation beacons. Not applicable in anarchy systems.
+CEPD=Collect Escape Pods: Collect escape pods (occupied or damaged) from signal sources or destroyed ships. Can be paired with bounty hunting.
+HSHK=Holoscreen Hacking: Use a recon limpet to hack holoads. Note that holoads in your own power's system may only be hacked if they are showing an ad for an opposing power. This does not apply for ads in enemy & uncontrolled systems.
+PKLS=Power Kills: Kill members of opposing powers. Works best in anarchy systems.
+SDLK=Scan datalinks: Find a megaship (these can be found on Inara.cz under "scannable megaships") and scan it with the data link scanner. Then find the "Megaship Log Uplink" and scan that too.
+SLFP=Sell for large profits: Trade across systems for a large profit. Merits apply to destination system.
+SMNR=Sell mined resources: Sell mined resources in a system you wish to influence. For undermining they have to be mined in-system. If reinforcing, it does not matter where they have been mined.
+SRGD=Sell rare goods: Sell rare goods, more efficient the further from the source the rare good is sold.
+TPCD=First go to a Stronghold or Fortified system nearby. Stronghold systems have a range of 30LY, and Fortified have one of 20LY. Take the commodity to a target system within range, and hand it in at any port
+CAHM=Complete aid and humanitarian missions: Complete missions that provide aid and humanitarian support to systems. E.G Donation Missions.
+FMLV=Flood markets with low value goods: Sell low value goods in large quantities to flood the market.
+SSWK=Scan ships and wakes: Scan ships in supercruse or around a point of interest (E.G Station, Nav Beacon)
+HBRS=Hand in biological research samples: Collect and hand in biological research samples.
+HICD=Hand in cartography data: Collect and hand in cartography data.
+HISV=Hand in salvage: Collect and hand in salvage from signal sources or destroyed ships.
+RMCP=Reboot mission completion: Complete missions that involve rebooting systems or equipment.
+CMCR=Commit crimes: Engage in criminal activities (E.G Murder, other crimes do not seem to count as much)
+# ODY
+RSGD=Retrieve specific goods: Retrieve specific goods required for missions. 
+TPCL=Transfer Power classified data: Transfer classified data for your power.
+TPAD=Transfer Power association and political data: Transfer association and political data for your power.
+TPRD=Transfer Power research and Industrial data: Transfer research and industrial data for your power.
+UPMW=Upload Powerplay malware: Upload malware to disrupt enemy operations.

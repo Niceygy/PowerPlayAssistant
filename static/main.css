@@ -1,0 +1,25 @@
+/* templates/main.css */
+@font-face {
+    font-family: 'EUROCAPS';
+    src: url("fonts/EUROCAPS.TTF");
+}
+
+body {
+    background-color: #000;
+    color: rgb(230, 129, 14);
+    font-family: 'EUROCAPS', Arial, sans-serif;
+}
+
+h1 {
+    color: rgb(230, 129, 14);
+}
+
+form {
+    margin: 20px;
+}
+
+button, select, input[type="text"], input[type="submit"], input[type="email"], textarea, label {
+    font-family: 'EUROCAPS', Arial, sans-serif;
+    background-color: #000;
+    color: rgb(230, 129, 14);
+}

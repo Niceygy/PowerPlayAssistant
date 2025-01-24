@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>PowerPlay Assistant - Warning</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='main.css') }}"
+    />
+  </head>
+  <body>
+    <h1>Warning!</h1>
+    <p><strong>Task:</strong> {{ task }}</p>
+    <br />
+    <p>The task you have selected is illegal, and may incur a fine or bounty</p>
+    <p>Would you like to limit your search to anarchy-only systems?</p>
+
+    <form action="{{ url_for('is_crime') }}" method="post">
+      <input type="hidden" name="task" value="{{ task }}">
+      <input type="hidden" name="power" value="{{ power }}">
+      <input type="hidden" name="system" value="{{ system }}">
+
+      <div class="buttons" style="text-align: center;">
+        <div class="action_btn">
+          <button
+            name="anarchy"
+            type="submit"
+            value="Yes"
+          >
+            Yes
+          </button>
+          <button
+            name="anarchy"
+            type="submit"
+            value="No"
+          >
+            No
+          </button>
+        </div>
+      </div>
+    </form>
+    <br />
+    <a href="{{ url_for('index') }}">Back to Home</a>
+  </body>
+</html>

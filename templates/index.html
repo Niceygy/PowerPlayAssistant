@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PowerPlay Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <script>
+        async function searchSystems(isTwo=false) {
+            let elementID = "system";
+            if (isTwo) {elementID = "system2";}
+            const query = document.getElementById(elementID).value;
+            const response = await fetch(`/search_systems?query=${query}`);
+            const results = await response.json();
+            const datalist = document.getElementById(elementID + '-results');
+            datalist.innerHTML = '';
+            results.forEach(system => {
+                const option = document.createElement('option');
+                option.value = system;
+                datalist.appendChild(option);
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>PowerPlay Assistant</h1>
+    <div class="specifyTask">
+    <h2>Specify Task</h2>
+    <form action="/" method="post">
+        <label for="mission">Doing:</label>
+        <select id="mission" name="mission">
+            {% for mission in missions %}
+                <option value="{{ mission }}" {% if selected_mission == mission %}selected{% endif %}>{{ mission }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <label for="system">Near system:</label>
+        <input list="system-results" id="system" name="system" oninput="searchSystems()" autocomplete="off">
+        <datalist id="system-results"></datalist><br><br>
+
+        <label for="power">For:</label>
+        <select id="power" name="power">
+            {% for power in powers %}
+                <option value="{{ power }}" {% if selected_power == power %}selected{% endif %}>{{ power }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <button type="submit">Go!</button>
+    </form>
+    </div>
+
+</body>
+<div class="footer">
+    <a href="{{ url_for('changelog') }}">Changelog</a>
+    <a href="https://niceygy.net">Niceygy.Net</a>
+    <a href="https://forums.frontier.co.uk/threads/powerplay-2-0-activities.629227/">PowerPlay Thread</a>
+    <a href="https://ko-fi.com/niceygy">Support Me</a>
+</div>
+</html>

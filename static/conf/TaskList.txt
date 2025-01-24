@@ -1,0 +1,24 @@
+#SHIP
+Bounty hunting=AQ,RE
+Collect Escape Pods=AQ,RE,UM
+Holoscreen Hacking=AQ,RE,UM
+Power Kills=AQ,RE,UM
+Scan datalinks
+Sell for large profits
+Sell mined resources
+Sell rare goods
+Transport Powerplay commodities
+Complete aid and humanitarian missions
+Flood markets with low value goods
+Scan ships and wakes
+Hand in biological research samples
+Hand in cartography data
+Hand in salvage
+Reboot mission completion
+Commit crimes
+#ODY
+Retrieve specific goods
+Transfer Power classified data
+Transfer Power association and political data
+Transfer Power research and Industrial data
+Upload Powerplay malware

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>PowerPlay Assistant - Results</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='main.css') }}"
+    />
+  </head>
+  <body>
+    <h1>Selected Options</h1>
+    <p><strong>System:</strong> {{ system }}</p>
+    <p><strong>For:</strong> {{ power }}</p>
+
+    <h1>About System:</h1>
+    <p><strong>Current Controlling Power: </strong> {{ currentPower }}</p>
+    <p><strong>Current State: </strong> {{ currentState }}</p>
+    <p><strong>Is Anarchy: </strong> {{ isAnarchy }}</p>
+    <p><strong>Notes: </strong> {{ systemNotes }} </p>
+
+    <h1>Selected Task:</h1>
+    <p><strong>Task: </strong> {{ taskName }}</p>
+    <p><strong>Task Type: </strong> {{ taskType }}</p>
+    <p><strong>Task Description: </strong> {{ taskDescription }}</p>
+    <p><strong>This {{ isIllegal }} Illegal </strong></p>
+    <p><strong>This {{ isOpposingWeakness }} the opposing power's weakness</strong></p>
+    <br />
+
+
+    <a href="{{ url_for('index') }}">Back to Home</a>
+  </body>
+</html>
