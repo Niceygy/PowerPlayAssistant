@@ -9,16 +9,21 @@ from flask import (
     send_from_directory,
 )
 from server.possibleTasks import get_system_power_info, isAnarchy, power_full_to_short
-from server.systems import system_coordinates, query_star_systems
-from server.tasks import (
+from server.database.systems import system_coordinates, query_star_systems
+from server.tasks.tasks import (
     getTaskType,
     isPowersWeakness,
     TaskDescription,
     systemNotes,
-    isTaskLegal
+    isTaskLegal,
 )
 from server.constants import POWERNAMES, TASKNAMES, DATABASE_CONNECTION_STRING
-from server.database import StarSystem, Station, database, find_nearest_systems
+from server.database.database import (
+    StarSystem,
+    Station,
+    database,
+    find_nearest_anarchy_systems,
+)
 from contextlib import contextmanager
 
 app = Flask(__name__)
@@ -63,9 +68,9 @@ def index():
                 url_for(
                     "is_crime",
                     task=selected_task,
-                    #still good
+                    # still good
                     power=selected_power,
-                    system=selected_system
+                    system=selected_system,
                 )
             )
         else:
@@ -77,12 +82,13 @@ def index():
                     power=selected_power,
                 )
             )
-    
+
     return render_template(
         "index.html",
         missions=TASKNAMES,
         powers=POWERNAMES,
     )
+
 
 @app.route("/is_crime", methods=["GET", "POST"])
 def is_crime():
@@ -90,7 +96,6 @@ def is_crime():
         task = request.args.get("task")
         power = request.args.get("power")
         system = request.args.get("system")
-        print(f"{task} is task in is_crime")
         return render_template("is_crime.html", task=task, power=power, system=system)
     else:
         task = request.form.get("task")
@@ -100,6 +105,9 @@ def is_crime():
 
         if anarchy == "Yes":
             anarchy = True
+            #we need to find an anarchy system!
+            start_x, start_y, start_z = system_coordinates(system, database)
+            system = find_nearest_anarchy_systems(start_x, start_y, start_z, database.session)
         else:
             anarchy = False
 
@@ -113,58 +121,12 @@ def is_crime():
             )
         )
 
-# @app.route("/specifed_system", methods=["POST"])
-# def specifed_system():
-#     action_type = request.form.get("task")
-#     system_name = request.form.get("system")
-#     power = request.form.get("power")
-#     power = power if power != "Any" else "Unspecified Power"
-#     is_anarchy = False
-#     if request.form.get("anarchy") == "Yes":
-#         is_anarchy = True
-#     else:
-#         is_anarchy = False
-
-#     # Process the form data
-#     # For example, find the nearest systems based on the provided system name
-#     start_x, start_y, start_z = system_coordinates(system_name, database)
-#     nearest_systems = find_nearest_systems(
-#         start_x, start_y, start_z, database.session, is_anarchy
-#     )
-#     if len(nearest_systems) == 0:
-#         return "No systems found"
-
-#     # populate with user-useful data
-#     results = []
-#     loopSucseses = 0
-#     loopCount = 0
-#     while loopSucseses != 10 and loopCount != len(nearest_systems) - 1:
-#         loopCount = loopCount + 1
-#         _system_name = nearest_systems[loopCount][0]
-#         _system_power = get_system_power_info(_system_name, database)[1]
-#         _system_power = _system_power if _system_power != "Uncontrolled" else "No-One"
-#         if isAnarchy(_system_name, database) == is_anarchy:
-#             results.append([_system_name, _system_power])
-#             loopSucseses = loopSucseses + 1
-
-#     return render_template(
-#         "results_systems.html",
-#         system=system_name,
-#         power=power,
-#         results=results,
-#         isAnarchy="yes" if is_anarchy else "no",
-#         actionType=action_type,
-#     )
-
 
 @app.route("/results")
 def results():
     system = request.args.get("system")
     task = request.args.get("task")
     power = request.args.get("power")
-    print(f"{task} is task")
-    print(f"{power} is power")
-    print(f"{system} is system")
 
     # calculated boxes
     powerInfo = get_system_power_info(system, database)

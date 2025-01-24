@@ -1,7 +1,7 @@
 from server.possibleTasks import power_full_to_short, get_system_power_info
 from server.constants import TASKSHORTCODES, TASKTYPES, POWERWEAKNESSES, HOMESYSTEMS, PERMITLOCKED
 from server.commodites import what_commodity_action
-from server.database import StarSystem 
+from server.database.database import StarSystem 
 
 def getTaskType(taskFullName):
     """

@@ -1,6 +1,5 @@
 from server.constants import POWERCOMMODITIES, POWERS
 from server.possibleTasks import get_system_power_info, power_full_to_short
-import sqlite3
 
 def what_commodity_action(powerFullName, system, database):
     system_controlling_power = get_system_power_info(system, database)[1]

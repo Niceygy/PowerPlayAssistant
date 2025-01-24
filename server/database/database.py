@@ -26,7 +26,7 @@ class Station(database.Model):
     faction_name = Column(String(255))
     is_anarchy = Column(Boolean)
 
-def find_nearest_systems(start_x, start_y, start_z, session, isAnarchy):
+def find_nearest_anarchy_systems(start_x, start_y, start_z, session):
     """
     Finds the nearest star systems to a given starting point (x, y, z).
 
@@ -39,7 +39,7 @@ def find_nearest_systems(start_x, start_y, start_z, session, isAnarchy):
 
     Returns:
         list: A list of dictionaries containing the system name, latitude, longitude, height, and distance
-              of the 10 nearest star systems.
+              of the nearest star system.
     """
 
     print(f" * Finding nearest systems to ({start_x}, {start_y}, {start_z})")
@@ -52,10 +52,13 @@ def find_nearest_systems(start_x, start_y, start_z, session, isAnarchy):
 
     nearest_systems = session.query(
         StarSystem.system_name,
-        StarSystem.latitude,
-        StarSystem.longitude,
-        StarSystem.height,
-        distance
-    ).filter(StarSystem.is_anarchy == isAnarchy).order_by(distance).limit(40).all()
+        # StarSystem.latitude,
+        # StarSystem.longitude,
+        # StarSystem.height,
+        distance,
+        StarSystem.is_anarchy,
+        StarSystem.shortcode        
+    ).filter(StarSystem.is_anarchy == True).filter(StarSystem.shortcode != None).order_by(distance).limit(1).all()
+    print(nearest_systems)
 
-    return nearest_systems
+    return nearest_systems[0].system_name

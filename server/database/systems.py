@@ -1,4 +1,4 @@
-from server.database import StarSystem
+from server.database.database import StarSystem
 
 def system_coordinates(system_name, database):
     result = database.session.query(
@@ -13,6 +13,10 @@ def system_coordinates(system_name, database):
     return [result.latitude, result.longitude, result.height]
 
 def query_star_systems(query):
+    """"
+    Returns a list of 10 systems that roughtly match the 
+    query by name
+    """
     results = (
         StarSystem.query.filter(StarSystem.system_name.like(f"%{query}%"))
         .limit(10)

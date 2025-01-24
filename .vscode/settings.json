@@ -1,0 +1,20 @@
+{
+    "python.REPL.enableREPLSmartSend": false,
+    "sqltools.connections": [
+        {//before anyone asks, this is NOT reachable outside my network
+         //:)
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "10.0.0.52",
+            "port": 3306,
+            "driver": "MariaDB",
+            "name": "EliteDB",
+            "database": "elite",
+            "username": "assistant",
+            "password": "6548"
+        }
+    ]
+}

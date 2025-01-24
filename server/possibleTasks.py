@@ -1,5 +1,5 @@
-from server.constants import POWERS, POWERRENFORCEACTIVITIES
-from server.database import StarSystem, Station
+from server.constants import POWERS
+from server.database.database import StarSystem, Station
 
 
 def power_full_to_short(power):
@@ -43,31 +43,6 @@ def get_system_power_info(system, database):
     except Exception as e:
         print(e)
         return ["Uncontrolled", "Uncontrolled"]
-
-
-# def possibleTasks(ownPower, isAnarchy, systemName, database):
-#     result = []
-#     #[["name", "description", "legality", "whosWeakness"]]
-#     own_power_shortcode = power_full_to_short(ownPower)
-#     opposing_power_shortcode = get_system_power_info(systemName, database)[1]
-#     if (own_power_shortcode == opposing_power_shortcode):
-#         #renforce
-#         activities = POWERRENFORCEACTIVITIES[own_power_shortcode]
-#         for activity in activities:
-#             task = {}
-#             task["name"] = activity
-#             task["description"] 
-
-#             #get description
-#             #get legality
-#             #get whos weakness it is
-#             #add this all to TASK object
-        
-
-#     #create a list of tasks, with all the tasks that can be done in that system
-#     #
-    
-#     return []# result
 
 
 def isAnarchy(systemName, database):
