@@ -48,14 +48,22 @@ class StarSystem(database.Model):
     has_res_sites = Column(Boolean)
 
 
-# class Station(database.Model):
-#     __tablename__ = "stations"
-#     id = Column(Integer, primary_key=True, autoincrement=True)
-#     system_name = Column(String(255))
-#     station_name = Column(String(255))
-#     station_type = Column(String(255))
-#     faction_name = Column(String(255))
-#     is_anarchy = Column(Boolean)
+class Station(database.Model):
+    __tablename__ = "stations"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    station_name = Column(String(255))
+    star_system = Column(String(255))
+    station_type = Column(String(255))
+
+class Megaship(database.Model):
+    __tablename__ = "megaships"
+    name = Column(String(255), primary_key=True)
+    SYSTEM1 = Column(String(255))
+    SYSTEM2 = Column(String(255))
+    SYSTEM3 = Column(String(255))
+    SYSTEM4 = Column(String(255))
+    SYSTEM5 = Column(String(255))
+    SYSTEM6 = Column(String(255))
 
 def find_nearest_anarchy_systems(start_x, start_y, start_z, session):
     """

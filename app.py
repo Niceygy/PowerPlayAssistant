@@ -22,6 +22,7 @@ from server.database.database import (
     database,
     find_nearest_anarchy_systems,
 )
+from server.tasks.megaships import find_nearest_megaships
 from contextlib import contextmanager
 
 app = Flask(__name__)
@@ -126,16 +127,28 @@ def results():
     task = request.args.get("task")
     power = request.args.get("power")
 
-    if task == "Scan Megaship Datalinks":
-        print()
-        
-
     # calculated boxes
     powerInfo = get_system_power_info(system, database)
     controllingPower = powerInfo[1]
     systemState = powerInfo[0]
+    powerShortCode = power_full_to_short(power)
+
+    if task == "Scan Megaship Datalinks":
+        megaships = find_nearest_megaships(system, powerShortCode, True, database.session)
+        return render_template(
+            "tasks/megaships.html",
+            system=system,
+            power=power,
+            taskName=task,
+            taskDescription=TaskDescription(task, power, system, powerInfo, database),
+            taskType=getTaskType(task),
+            isIllegal="Is" if isTaskLegal(task) else "isn't",
+            isOpposingWeakness=isPowersWeakness(power, task),
+            megaships=megaships
+        )    
+
     return render_template(
-        "tasks/results.html",
+        "tasks/general.html",
         system=system,
         power=power,
         currentPower=controllingPower,
