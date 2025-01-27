@@ -24,7 +24,7 @@ def get_week_of_cycle(date=datetime.now(), cycle_length=6, start_day=3):
     weeks = weeks + 1
     while weeks > 6:
         weeks = weeks - 6
-    print(f"Week {weeks}")
+    # print(f"Week {weeks}")
     return weeks
 
 
@@ -46,8 +46,16 @@ def megaships_in_cache(system_name, shortcode, opposing):
                     and bool(_opposing) == opposing
                 ):
                     f.close()
-                    print(f"Returned {_data} from cache")
-                    return json.loads(_data)
+                    jsonData = json.loads(_data)
+                    #only return the systems for this week
+                    result =[]
+                    for i in range(len(jsonData)):
+                        entry = jsonData[i]
+                        megaship_name = entry[0]["name"]
+                        system = entry[0][f"SYSTEM{get_week_of_cycle()}"]
+                        result.append([megaship_name, system])
+                    # print(f"Returned {_data} from cache")
+                    return result
             f.close()
     except FileNotFoundError:
         with open(f"cache/week{current_week}.cache", "w") as f:
@@ -88,6 +96,10 @@ def find_nearest_megaships(system_name, shortcode, opposing, session):
     Returns:
         List of nearest megaships
     """
+    cache = megaships_in_cache(system_name, shortcode, opposing)
+    if cache != None:
+        return cache
+    
     current_week = get_week_of_cycle()
     system_column = f"SYSTEM{current_week}"
 
@@ -118,6 +130,7 @@ def find_nearest_megaships(system_name, shortcode, opposing, session):
             megaship_distances.append((megaship, distance))
 
     # Sort by distance and return the 10 nearest megaships
+    print(f"Found {len(megaship_distances)} entries")
     megaship_distances.sort(key=lambda x: x[1])
     nearest_megaships = [megaship for megaship, distance in megaship_distances[:10]]
 
@@ -126,5 +139,7 @@ def find_nearest_megaships(system_name, shortcode, opposing, session):
 
     # Cache the result
     add_megaship_to_cache(system_name, shortcode, opposing, nearest_megaships_dicts)
+
+    print(nearest_megaships[0])
 
     return nearest_megaships
