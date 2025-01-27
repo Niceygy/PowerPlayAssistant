@@ -25,6 +25,8 @@ from server.database.database import (
 from server.tasks.megaships import find_nearest_megaships
 from contextlib import contextmanager
 
+print(" * All imports sucsessful")
+
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_CONNECTION_STRING
 app.config["SQLALCHEMY_POOL_SIZE"] = 10
