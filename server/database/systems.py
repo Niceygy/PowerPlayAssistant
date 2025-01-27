@@ -22,4 +22,7 @@ def query_star_systems(query):
         .limit(10)
         .all()
     )
-    return [row.system_name for row in results]
+    if results == None or results[0].system_name == None:
+        return []
+    else:
+        return [row.system_name for row in results]
