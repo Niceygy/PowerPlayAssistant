@@ -22,7 +22,8 @@ def query_star_systems(query):
         .limit(10)
         .all()
     )
-    if results == None or results[0].system_name == None:
-        return []
-    else:
+    
+    try:
         return [row.system_name for row in results]
+    except Exception:
+        return []

@@ -110,7 +110,7 @@ def TaskDescription(taskFullName, powerFullName, systemName, systemPowerInfo, da
     if taskFullName == None:
         return ""
     result = ""
-    if isTaskLegal(taskFullName):
+    if isTaskACrime(taskFullName):
         result += "This task is illegal in non-anarchy systems. "
     else:
         result += "This task is legal in all systems. "
@@ -146,7 +146,7 @@ def hasResSite(systemName, database):
     except Exception as e:
         return False
     
-def isTaskLegal(taskName):
+def isTaskACrime(taskName):
     """
     Checks if a task is a crime.
 

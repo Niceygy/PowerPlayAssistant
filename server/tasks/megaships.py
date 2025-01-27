@@ -132,7 +132,6 @@ def find_nearest_megaships(system_name, shortcode, opposing, session):
     # Sort by distance and return the 10 nearest megaships
     print(f"Found {len(megaship_distances)} entries")
     megaship_distances.sort(key=lambda x: x[1])
-    nearest_megaships = [megaship for megaship, distance in megaship_distances[:10]]
 
     # Convert the nearest megaships to dictionaries for caching
     nearest_megaships_dicts = [(row_to_dict(megaship), distance) for megaship, distance in megaship_distances[:10]]
@@ -140,5 +139,6 @@ def find_nearest_megaships(system_name, shortcode, opposing, session):
     # Cache the result
     add_megaship_to_cache(system_name, shortcode, opposing, nearest_megaships_dicts)
 
+    #returned cached result
 
-    return nearest_megaships_dicts
+    return megaships_in_cache(system_name, shortcode, opposing)

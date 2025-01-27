@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>PowerPlay Assistant - Choice</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='main.css') }}"
+    />
+  </head>
+  <body>
+    <h1>Megaship Choice</h1>
+    <p><strong>Task:</strong> {{ task }}</p>
+    <br />
+    <!-- <p>Would you like to renforce your own power's system,</p>
+    <p>or undermine your opponents?</p> -->
+    <p><i>In the future, you will be able to select if you want to search for megaships in</i></p>
+    <p><i>Reinforcing or undermining systems. But for now, just select either.</i></p>
+
+
+    <form action="{{ url_for('megaship_choice') }}" method="post">
+      <input type="hidden" name="task" value="{{ taskName }}">
+      <input type="hidden" name="power" value="{{ power }}">
+      <input type="hidden" name="system" value="{{ system }}">
+
+      <div class="buttons" style="text-align: center;">
+        <div class="action_btn">
+          <button
+            name="choice"
+            type="submit"
+            value="Reinforce"
+          >
+            Reinforce
+          </button>
+          <button
+            name="choice"
+            type="submit"
+            value="Reinforce"
+          >
+            Undermine
+          </button>
+          <!-- Undermine -->
+        </div>
+      </div>
+    </form>
+    <br />
+    <a href="{{ url_for('index') }}">Back to Home</a>
+  </body>
+</html>

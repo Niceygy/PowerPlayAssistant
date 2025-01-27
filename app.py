@@ -15,7 +15,7 @@ from server.tasks.tasks import (
     isPowersWeakness,
     TaskDescription,
     systemNotes,
-    isTaskLegal,
+    isTaskACrime,
 )
 from server.constants import POWERNAMES, TASKNAMES, DATABASE_CONNECTION_STRING
 from server.database.database import (
@@ -62,22 +62,22 @@ def index():
         selected_task = request.form.get("mission")
         selected_power = request.form.get("power")
 
-        if isTaskLegal(selected_task):
+        if isTaskACrime(selected_task):
             return redirect(
                 url_for(
                     "is_crime",
-                    task=selected_task,
-                    # still good
+                    taskName=selected_task,
                     power=selected_power,
                     system=selected_system,
                 )
             )
         else:
+            print(selected_task)
             return redirect(
                 url_for(
                     "results",
                     system=selected_system,
-                    task=selected_task,
+                    taskName=selected_task,
                     power=selected_power,
                 )
             )
@@ -92,21 +92,23 @@ def index():
 @app.route("/is_crime", methods=["GET", "POST"])
 def is_crime():
     if request.method == "GET":
-        task = request.args.get("task")
+        task = request.args.get("taskName")
         power = request.args.get("power")
         system = request.args.get("system")
         return render_template("is_crime.html", task=task, power=power, system=system)
     else:
-        task = request.form.get("task")
+        task = request.form.get("taskName")
         power = request.form.get("power")
         system = request.form.get("system")
         anarchy = request.form.get("anarchy")
 
         if anarchy == "Yes":
             anarchy = True
-            #we need to find an anarchy system!
+            # we need to find an anarchy system!
             start_x, start_y, start_z = system_coordinates(system, database)
-            system = find_nearest_anarchy_systems(start_x, start_y, start_z, database.session)
+            system = find_nearest_anarchy_systems(
+                start_x, start_y, start_z, database.session
+            )
         else:
             anarchy = False
 
@@ -124,8 +126,10 @@ def is_crime():
 @app.route("/results")
 def results():
     system = request.args.get("system")
-    task = request.args.get("task")
+    task = request.args.get("taskName")
+    print(task)
     power = request.args.get("power")
+    choice = request.args.get("choice")
 
     # calculated boxes
     powerInfo = get_system_power_info(system, database)
@@ -133,8 +137,16 @@ def results():
     systemState = powerInfo[0]
     powerShortCode = power_full_to_short(power)
 
-    if task == "Scan Megaship Datalinks":
-        megaships = find_nearest_megaships(system, powerShortCode, True, database.session)
+    if task == "Scan Megaship Datalinks" and choice == None:
+        return redirect(
+            url_for("megaship_choice", system=system, power=power, taskName=task)
+        )
+    elif task == "Scan Megaship Datalinks" and choice != None:
+        if choice == "Reinforce":
+            choice = True
+        else:
+            choice = False
+        megaships = find_nearest_megaships(system, powerShortCode, choice, database.session)
         return render_template(
             "tasks/megaships.html",
             system=system,
@@ -142,10 +154,10 @@ def results():
             taskName=task,
             taskDescription=TaskDescription(task, power, system, powerInfo, database),
             taskType=getTaskType(task),
-            isIllegal="Is" if isTaskLegal(task) else "isn't",
+            isIllegal="Is" if isTaskACrime(task) else "isn't",
             isOpposingWeakness=isPowersWeakness(power, task),
             megaships=megaships
-        )    
+        )
 
     return render_template(
         "tasks/general.html",
@@ -156,10 +168,32 @@ def results():
         isAnarchy="YES" if isAnarchy(system, database) else "NO",
         taskName=task,
         taskType=getTaskType(task),
-        isIllegal="Is" if isTaskLegal(task) else "isn't",
+        isIllegal="Is" if isTaskACrime(task) else "isn't",
         isOpposingWeakness=isPowersWeakness(power, task),
         taskDescription=TaskDescription(task, power, system, powerInfo, database),
         systemNotes=systemNotes(power, system, database),
+    )
+
+
+@app.route("/megaship_choice", methods=["GET", "POST"])
+def megaship_choice():
+    system = request.args.get("system")
+    task = request.args.get("taskName")
+    print(f"{task} megaship choice GET")
+    power = request.args.get("power")
+    
+    if request.method == "POST":
+        choice = request.form.get("choice")
+        system = request.form.get("system")
+        task = request.form.get("task")
+        power = request.form.get("power")
+        print(f"{task} megaship choice POST")
+        return redirect(
+            url_for("results", system=system, power=power, taskName=task, choice=choice)
+        )
+
+    return render_template(
+        "tasks/megaship_choice.html", system=system, power=power, taskName=task
     )
 
 
@@ -174,9 +208,11 @@ def search_systems():
 def favicon():
     return send_from_directory(app.static_folder, "favicon.ico")
 
+
 @app.route("/copy_icon.svg")
 def copy_icon():
     return send_from_directory(app.static_folder, "copy_solid_icon.svg")
+
 
 @app.route("/changelog", methods=["GET"])
 def changelog():
