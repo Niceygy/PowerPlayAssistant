@@ -72,7 +72,7 @@ def index():
                 )
             )
         else:
-            print(selected_task)
+            # print(selected_task)
             return redirect(
                 url_for(
                     "results",
@@ -127,7 +127,7 @@ def is_crime():
 def results():
     system = request.args.get("system")
     task = request.args.get("taskName")
-    print(task)
+    # print(task)
     power = request.args.get("power")
     choice = request.args.get("choice")
 
@@ -179,7 +179,7 @@ def results():
 def megaship_choice():
     system = request.args.get("system")
     task = request.args.get("taskName")
-    print(f"{task} megaship choice GET")
+    # print(f"{task} megaship choice GET")
     power = request.args.get("power")
     
     if request.method == "POST":
@@ -187,7 +187,7 @@ def megaship_choice():
         system = request.form.get("system")
         task = request.form.get("task")
         power = request.form.get("power")
-        print(f"{task} megaship choice POST")
+        # print(f"{task} megaship choice POST")
         return redirect(
             url_for("results", system=system, power=power, taskName=task, choice=choice)
         )
@@ -217,6 +217,11 @@ def copy_icon():
 @app.route("/changelog", methods=["GET"])
 def changelog():
     return render_template("changelog.html")
+
+@app.route("/robots.txt")
+def robots():
+    print(request.headers.get("User-Agent"))
+    return send_from_directory(app.static_folder, "robots.txt")
 
 
 if __name__ == "__main__":
