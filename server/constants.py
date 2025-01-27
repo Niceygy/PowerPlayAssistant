@@ -6,7 +6,7 @@ TASKNAMES = [
     "Collect Escape Pods",
     "Holoscreen Hacking",
     "Power Kills",
-    "Scan datalinks",
+    "Scan Megaship Datalinks",
     "Sell for large profits",
     "Sell mined resources",
     "Sell rare goods",

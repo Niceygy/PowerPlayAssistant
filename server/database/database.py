@@ -3,6 +3,37 @@ from flask_sqlalchemy import SQLAlchemy
 
 database = SQLAlchemy()
 
+"""
+TABLES:
+
+star_systems:
+
+    id: int pri key
+    system_name text
+    latitude float
+    longitude float
+    height float
+    state text (powerplay state)
+    shortcode text (power shortcode)
+    is_anarchy bool
+    has_res_sites bool
+
+stations:
+
+    id int pri key
+    name text
+    system text
+    type text (Starport, Outpost, PlanetaryPort, Settlement, EngineerBase)
+
+megaships: 
+    name text pri key
+    system1 text
+    system2 text
+    system3 text
+    system4 text
+    system5 text
+    system6 text
+"""
 
 class StarSystem(database.Model):
     __tablename__ = "star_systems"
@@ -17,14 +48,14 @@ class StarSystem(database.Model):
     has_res_sites = Column(Boolean)
 
 
-class Station(database.Model):
-    __tablename__ = "stations"
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    system_name = Column(String(255))
-    station_name = Column(String(255))
-    station_type = Column(String(255))
-    faction_name = Column(String(255))
-    is_anarchy = Column(Boolean)
+# class Station(database.Model):
+#     __tablename__ = "stations"
+#     id = Column(Integer, primary_key=True, autoincrement=True)
+#     system_name = Column(String(255))
+#     station_name = Column(String(255))
+#     station_type = Column(String(255))
+#     faction_name = Column(String(255))
+#     is_anarchy = Column(Boolean)
 
 def find_nearest_anarchy_systems(start_x, start_y, start_z, session):
     """

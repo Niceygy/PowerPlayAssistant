@@ -19,8 +19,6 @@ from server.tasks.tasks import (
 )
 from server.constants import POWERNAMES, TASKNAMES, DATABASE_CONNECTION_STRING
 from server.database.database import (
-    StarSystem,
-    Station,
     database,
     find_nearest_anarchy_systems,
 )
@@ -128,12 +126,16 @@ def results():
     task = request.args.get("task")
     power = request.args.get("power")
 
+    if task == "Scan Megaship Datalinks":
+        print()
+        
+
     # calculated boxes
     powerInfo = get_system_power_info(system, database)
     controllingPower = powerInfo[1]
     systemState = powerInfo[0]
     return render_template(
-        "results.html",
+        "tasks/results.html",
         system=system,
         power=power,
         currentPower=controllingPower,
@@ -143,7 +145,7 @@ def results():
         taskType=getTaskType(task),
         isIllegal="Is" if isTaskLegal(task) else "isn't",
         isOpposingWeakness=isPowersWeakness(power, task),
-        taskDescription=TaskDescription(task, power, system, powerInfo),
+        taskDescription=TaskDescription(task, power, system, powerInfo, database),
         systemNotes=systemNotes(power, system, database),
     )
 

@@ -1,5 +1,5 @@
 from server.constants import POWERS
-from server.database.database import StarSystem, Station
+from server.database.database import StarSystem
 
 
 def power_full_to_short(power):
@@ -46,7 +46,7 @@ def get_system_power_info(system, database):
 
 
 def isAnarchy(systemName, database):
-    result = database.session.query(Station).filter(Station.system_name == systemName).first()
+    result = database.session.query(StarSystem).filter(StarSystem.system_name == systemName).first()
     if result == None:
         return False
     #invert it, becuase mariadb is weird

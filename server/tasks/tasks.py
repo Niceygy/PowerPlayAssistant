@@ -95,7 +95,7 @@ def systemNotes(powerFullName, systemName, database):
     else:
         return message
     
-def TaskDescription(taskFullName, powerFullName, systemName, systemPowerInfo):
+def TaskDescription(taskFullName, powerFullName, systemName, systemPowerInfo, database):
     """
     Get the description of a task.
 
@@ -125,7 +125,7 @@ def TaskDescription(taskFullName, powerFullName, systemName, systemPowerInfo):
             if str(line).startswith(str(taskShortCode)):
                 result += line.split("=")[1]
     if taskFullName == "Transport Powerplay commodities":
-        result += f". You will need the commodity '{what_commodity_action(powerFullName, systemName)}'."
+        result += f". You will need the commodity '{what_commodity_action(powerFullName, systemName, database)}'."
     if systemPowerInfo[0] == "Stronghold":
         result += " Warning, this system is a stronghold. Opposing powers will not be welcome here"
     return result
