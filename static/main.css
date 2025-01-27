@@ -23,3 +23,12 @@ button, select, input[type="text"], input[type="submit"], input[type="email"], t
     background-color: #000;
     color: rgb(230, 129, 14);
 }
+
+.copy_system {
+    background: url("/copy_icon.svg") no-repeat center center;
+    background-size: contain;
+    border: none;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }

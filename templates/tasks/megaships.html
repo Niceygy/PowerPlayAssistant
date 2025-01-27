@@ -1,12 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <title>PowerPlay Assistant - Results</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='main.css') }}"
     />
+    <title>Megaships</title>
+    <script>
+      function copyText(text) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(function() {
+            alert("Copied " + text);
+          }).catch(function(err) {
+            console.error('Could not copy text: ', err);
+          });
+        } else {
+          // Fallback method
+          let textarea = document.createElement("textarea");
+          textarea.value = text;
+          document.body.appendChild(textarea);
+          textarea.select();
+          try {
+            document.execCommand("copy");
+            alert("Copied " + text);
+          } catch (err) {
+            console.error('Fallback: Oops, unable to copy', err);
+          }
+          document.body.removeChild(textarea);
+        }
+      }
+    </script>
   </head>
   <body>
     <h1>Selected Options</h1>
@@ -18,14 +43,24 @@
     <p><strong>Task Type: </strong> {{ taskType }}</p>
     <p><strong>Task Description: </strong> {{ taskDescription }}</p>
     <p><strong>This {{ isIllegal }} Illegal </strong></p>
-    <p><strong>This {{ isOpposingWeakness }} the opposing power's weakness</strong></p>
+    <p>
+      <strong
+        >This {{ isOpposingWeakness }} the opposing power's weakness</strong
+      >
+    </p>
 
     <h1>Megaships:</h1>
-    {% for megaship in megaships %}
-            <li>{{ megaship[0] }} - In {{ megaship[1] }}</li>
-    {% endfor %}
+    <ul>
+      {% for megaship in megaships %}
+      <li>
+        {{ megaship[0] }} - In 
+        <a
+          onclick="copyText('{{ megaship[1] }}')"
+        >{{ megaship[1] }}</a>
+      </li>
+      {% endfor %}
+    </ul>
     <br />
-
 
     <a href="{{ url_for('index') }}">Back to Home</a>
   </body>

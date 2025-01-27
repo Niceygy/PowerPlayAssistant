@@ -174,6 +174,9 @@ def search_systems():
 def favicon():
     return send_from_directory(app.static_folder, "favicon.ico")
 
+@app.route("/copy_icon.svg")
+def copy_icon():
+    return send_from_directory(app.static_folder, "copy_solid_icon.svg")
 
 @app.route("/changelog", methods=["GET"])
 def changelog():
