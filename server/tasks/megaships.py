@@ -100,9 +100,9 @@ def find_nearest_megaships(system_name, shortcode, opposing, session):
 
     # Query to find megaships
     if opposing:
-        megaships_query = session.query(Megaship).select_from(Megaship).join(StarSystem, Megaship.system_id == StarSystem.id).filter(StarSystem.shortcode != shortcode)
+        megaships_query = session.query(Megaship).join(StarSystem, getattr(Megaship, system_column) == StarSystem.system_name).filter(StarSystem.shortcode != shortcode)
     else:
-        megaships_query = session.query(Megaship).select_from(Megaship).join(StarSystem, Megaship.system_id == StarSystem.id).filter(StarSystem.shortcode == shortcode)
+        megaships_query = session.query(Megaship).join(StarSystem, getattr(Megaship, system_column) == StarSystem.system_name).filter(StarSystem.shortcode == shortcode)
 
     megaships = megaships_query.all()
 
@@ -112,7 +112,7 @@ def find_nearest_megaships(system_name, shortcode, opposing, session):
 
     megaship_distances = []
     for megaship in megaships:
-        megaship_system = session.query(StarSystem).filter_by(name=getattr(megaship, system_column)).first()
+        megaship_system = session.query(StarSystem).filter_by(system_name=getattr(megaship, system_column)).first()
         if megaship_system:
             distance = calculate_distance(user_coords, (megaship_system.longitude, megaship_system.latitude, megaship_system.height))
             megaship_distances.append((megaship, distance))
