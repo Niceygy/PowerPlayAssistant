@@ -32,7 +32,7 @@ TASKSHORTCODES = {
     "CEPD": "Collect Escape Pods",
     "HSHK": "Holoscreen Hacking",
     "PKLS": "Power Kills",
-    "SDLK": "Scan datalinks",
+    "SDLK": "Scan Megaship Datalinks",
     "SLFP": "Sell for large profits",
     "SMNR": "Sell mined resources",
     "SRGD": "Sell rare goods",
@@ -57,18 +57,11 @@ TASKTYPES = {
     "Combat": ["BTHT", "PKLS", "CMCR"],
     "Trading": ["SLFP", "SRGD", "FMLV", "TPCD"],
     "Mining": ["SMNR"],
-    "Scanning": ["SSWK", "HICD"],
-    "Exploration": [
-        "HICD",
-        "HBRS",
-    ],
+    "Scanning": ["SSWK", "HICD", "SDLK"],
+    "Exploration": ["HICD", "HBRS"],
     "Odyssey": ["RSGD", "TPCL", "TPAD", "TPRD", "UPMW"],
     "Aid": ["CAHM", "CEPD"],
-    "Illegal": [
-        "CMCR",
-        "HSHK",
-        "PKLS",
-    ],
+    "Illegal": ["CMCR", "HSHK", "PKLS"],
 }
 
 
@@ -156,33 +149,60 @@ POWERNAMES = [
 ]
 
 POWERRENFORCEACTIVITIES = {
-    "ALD": ["BTHT","CEPD","HSHK"],
-    "ARD": ["BTHT","PKLS","RSGD"],
-    "ASD": ["BTHT","PKLS","RSGD"],
-    "DPT": ["BTHT","CEPD","HSHK"],
-    "EMH": ["SLFP","SMNR","CAHM"],
-    "FLW": ["CEPD","CAHM","UPMW"],
-    "JRA": ["BTHT","CEPD","HSHK"],
-    "LYR": ["SLFP","SMNR","CAHM"],
-    "NAK": ["CEPD","CAHM","UPMW"],
-    "PRA": ["CEPD","CAHM","UPMW"],
-    "YRG": ["BTHT","CEPD","HSHK"],
-    "ZMT": ["SLFP","SMNR","CAHM"],
+    "ALD": ["BTHT", "CEPD", "HSHK"],
+    "ARD": ["BTHT", "PKLS", "RSGD"],
+    "ASD": ["BTHT", "PKLS", "RSGD"],
+    "DPT": ["BTHT", "CEPD", "HSHK"],
+    "EMH": ["SLFP", "SMNR", "CAHM"],
+    "FLW": ["CEPD", "CAHM", "UPMW"],
+    "JRA": ["BTHT", "CEPD", "HSHK"],
+    "LYR": ["SLFP", "SMNR", "CAHM"],
+    "NAK": ["CEPD", "CAHM", "UPMW"],
+    "PRA": ["CEPD", "CAHM", "UPMW"],
+    "YRG": ["BTHT", "CEPD", "HSHK"],
+    "ZMT": ["SLFP", "SMNR", "CAHM"],
 }
 
 POWERCOMMODITIES = {
-    #power: aquire, reinforce, undermine
-    "ALD": ["Lavingy Corruption Reports", "Lavingy Garrison Supplies", "Lavingy Strategic Reports"],
+    # power: aquire, reinforce, undermine
+    "ALD": [
+        "Lavingy Corruption Reports",
+        "Lavingy Garrison Supplies",
+        "Lavingy Strategic Reports",
+    ],
     "ARD": ["Kumo Contraband Packages", "Unmarked Military Supplies", "Marked Slaves"],
-    "ASD": ["Aisling Media Material", "Aisling Sealed Contract", "Aisling Programme Material"],
-    "DPT": ["Marked Military Arms", "Patrus field supplies", "Patrus Garrison Supplies"],
-    "EMH": ["Alliance Trade Agreements", "Alliance Legislative Contract	", "Alliance Legislative Records"],
+    "ASD": [
+        "Aisling Media Material",
+        "Aisling Sealed Contract",
+        "Aisling Programme Material",
+    ],
+    "DPT": [
+        "Marked Military Arms",
+        "Patrus field supplies",
+        "Patrus Garrison Supplies",
+    ],
+    "EMH": [
+        "Alliance Trade Agreements",
+        "Alliance Legislative Contract	",
+        "Alliance Legislative Records",
+    ],
     "FLW": ["Liberal Federal Aid", "Liberal Federal Packages", "Liberal Propaganda"],
-    "JRA": ["Archer's Restricted Intel", "Archer's Field Supplies", "Archer's Garrison Supplies"],
-    "LYR": ["Sirius Franchise Package", "Sirius Industrial Equipment", "Sirius Corporate Contract"],
+    "JRA": [
+        "Archer's Restricted Intel",
+        "Archer's Field Supplies",
+        "Archer's Garrison Supplies",
+    ],
+    "LYR": [
+        "Sirius Franchise Package",
+        "Sirius Industrial Equipment",
+        "Sirius Corporate Contract",
+    ],
     "NAK": ["Kaine Lobbying Material", "Kaine Aid Supplies", "Kaine Misinformation"],
     "PRA": ["Utopian Publicity", "Utopian Supplies", "Utopian Dissident"],
-    "YRG": ["Grom Underground Support", "Grom Military Supplies", "Grom Counter Intelligence"],
+    "YRG": [
+        "Grom Underground Support",
+        "Grom Military Supplies",
+        "Grom Counter Intelligence",
+    ],
     "ZMT": ["Torval Trade Agreements", "Torval Deeds", "Torval Political Servants"],
 }
-

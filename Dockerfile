@@ -8,15 +8,24 @@ COPY . /home/
 
 WORKDIR /home
 
+#update
+# RUN apt update -y
+
+#Install Tools
+#apt install curl
+
 # Install Python dependencies
-#RUN python3 -m pip install --upgrade pip
 RUN pip install -r requirements.txt
 
-# Copy Nginx configuration file
-# COPY nginx.conf /etc/nginx/nginx.conf
+#Create cache
 
-# Create required directories
-# RUN mkdir -p /var/log/nginx /var/run/nginx
+RUN mkdir cache
+RUN touch cache/week1.cache
+RUN touch cache/week2.cache
+RUN touch cache/week3.cache
+RUN touch cache/week4.cache
+RUN touch cache/week5.cache
+RUN touch cache/week6.cache
 
 # Expose ports
 EXPOSE 80
