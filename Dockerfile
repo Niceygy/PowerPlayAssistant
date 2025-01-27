@@ -19,7 +19,7 @@ RUN pip install -r requirements.txt
 
 #Create cache
 
-RUN mkdir cache
+# RUN mkdir /home/cache
 RUN touch cache/week1.cache
 RUN touch cache/week2.cache
 RUN touch cache/week3.cache
