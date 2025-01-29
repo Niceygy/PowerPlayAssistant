@@ -95,7 +95,7 @@ def systemNotes(powerFullName, systemName, database):
     else:
         return message
     
-def TaskDescription(taskFullName, powerFullName, systemName, systemPowerInfo, database):
+def TaskDescription(taskFullName, powerFullName, systemName, systemPowerInfo, database, extraInfo=""):
     """
     Get the description of a task.
 
@@ -128,6 +128,8 @@ def TaskDescription(taskFullName, powerFullName, systemName, systemPowerInfo, da
         result += f". You will need the commodity '{what_commodity_action(powerFullName, systemName, database)}'."
     if systemPowerInfo[0] == "Stronghold":
         result += " Warning, this system is a stronghold. Opposing powers will not be welcome here"
+    if extraInfo != None:
+        result += extraInfo
     return result
 
 def hasResSite(systemName, database):

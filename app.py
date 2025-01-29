@@ -144,13 +144,22 @@ def results():
             url_for("megaship_choice", system=system, power=power, taskName=task)
         )
     elif task == "Scan Megaship Datalinks" and choice != None:
-        if choice == "Reinforce":
-            choice = True
-        else:
+        extraInfo = ""
+        if choice == "Undermine":
+            extraInfo = (
+                f"Found megaships all but {power}'s systems, nearest to {system}"
+            )
             choice = False
-        megaships = find_nearest_megaships(system, powerShortCode, choice, database.session)
+        else:
+            extraInfo = f"Found megaships in {power}'s systems, nearest to {system}"
+            choice = True
+
+        megaships = find_nearest_megaships(
+            system, powerShortCode, choice, database.session
+        )
         return render_template(
             "tasks/megaships.html",
+            type=request.args.get("choice"),
             system=system,
             power=power,
             taskName=task,
@@ -158,7 +167,8 @@ def results():
             taskType=getTaskType(task),
             isIllegal="Is" if isTaskACrime(task) else "isn't",
             isOpposingWeakness=isPowersWeakness(power, task),
-            megaships=megaships
+            extraInfo=extraInfo,
+            megaships=megaships,
         )
 
     return render_template(
@@ -183,7 +193,7 @@ def megaship_choice():
     task = request.args.get("taskName")
     # print(f"{task} megaship choice GET")
     power = request.args.get("power")
-    
+
     if request.method == "POST":
         choice = request.form.get("choice")
         system = request.form.get("system")
@@ -219,6 +229,7 @@ def copy_icon():
 @app.route("/changelog", methods=["GET"])
 def changelog():
     return render_template("changelog.html")
+
 
 @app.route("/robots.txt")
 def robots():

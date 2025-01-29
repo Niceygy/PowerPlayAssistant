@@ -6,31 +6,25 @@ import json
 from sqlalchemy.orm import class_mapper
 
 
-def get_week_of_cycle(date=datetime.now(), cycle_length=6, start_day=3):
+def get_week_of_cycle():
     """
     Determines the current week of a cycle.
-
-    Args:
-        date (datetime): The date to check.
-        cycle_length (int): The length of the cycle in weeks.
-        start_day (int): The starting day of the week (0=Monday, 1=Tuesday, ..., 6=Sunday).
-
     Returns:
         int: The current week of the cycle (1-based).
     """
-    # Calculate the number of days since the start of the cycle
+    date=datetime.now()
     days_since_start = (date - datetime(2025, 1, 10)).days
     weeks = math.trunc(days_since_start / 7)
     weeks = weeks + 1
     while weeks > 6:
         weeks = weeks - 6
-    # print(f"Week {weeks}")
     return weeks
 
 
 def megaships_in_cache(system_name, shortcode, opposing):
     current_week = get_week_of_cycle()
     try:
+        #linear search
         with open(f"cache/week{current_week}.cache", "r") as f:
             for line in f.read().splitlines():
                 if line == None:
@@ -43,7 +37,7 @@ def megaships_in_cache(system_name, shortcode, opposing):
                 if (
                     _system_name == system_name
                     and _shortcode == shortcode
-                    and bool(_opposing) == opposing
+                    and _opposing == str(opposing)
                 ):
                     f.close()
                     jsonData = json.loads(_data)
@@ -55,9 +49,14 @@ def megaships_in_cache(system_name, shortcode, opposing):
                         system = entry[0][f"SYSTEM{get_week_of_cycle()}"]
                         result.append([megaship_name, system])
                     # print(f"Returned {_data} from cache")
+                    if result == None:
+                        print("none")
+                    else:
+                        print("not none")
                     return result
             f.close()
     except FileNotFoundError:
+        #create cache file
         with open(f"cache/week{current_week}.cache", "w") as f:
             f.write("")
             f.close()
@@ -65,9 +64,11 @@ def megaships_in_cache(system_name, shortcode, opposing):
     return None
 
 def add_megaship_to_cache(system_name, shortcode, opposing, data):
+    #is it in cache?
     if megaships_in_cache(system_name, shortcode, opposing) != None:
-        return
+        return #yes
     else:
+        #nope, add it
         current_week = get_week_of_cycle()
         with open(f"./cache/week{current_week}.cache", "a") as f:
             f.write(f"{system_name}/{shortcode}/{opposing}/{json.dumps(data)}\n")
@@ -78,6 +79,7 @@ def add_megaship_to_cache(system_name, shortcode, opposing, data):
 def row_to_dict(row):
     """
     Convert a SQLAlchemy row object to a dictionary.
+    GH Copilot Magic
     """
     return {c.key: getattr(row, c.key) for c in class_mapper(row.__class__).columns}
 
@@ -103,21 +105,22 @@ def find_nearest_megaships(system_name, shortcode, opposing, session):
     current_week = get_week_of_cycle()
     system_column = f"SYSTEM{current_week}"
 
-    # Query to find the user's system coordinates
+    # Where is the user???
     user_system = session.query(StarSystem).filter_by(system_name=system_name).first()
     if not user_system:
+        #nowhere.....
         return []
 
     user_coords = (user_system.longitude, user_system.latitude, user_system.height)
 
-    # Query to find megaships
+    # find megaships
     if opposing:
         megaships_query = session.query(Megaship).join(StarSystem, getattr(Megaship, system_column) == StarSystem.system_name).filter(StarSystem.shortcode != shortcode).limit(500)
     else:
         megaships_query = session.query(Megaship).join(StarSystem, getattr(Megaship, system_column) == StarSystem.system_name).filter(StarSystem.shortcode == shortcode).limit(500)
 
     megaships = megaships_query.all()
-
+    print(megaships_query)
     # Calculate distances and sort
     def calculate_distance(coords1, coords2):
         return ((coords1[0] - coords2[0]) ** 2 + (coords1[1] - coords2[1]) ** 2 + (coords1[2] - coords2[2]) ** 2) ** 0.5
@@ -130,7 +133,7 @@ def find_nearest_megaships(system_name, shortcode, opposing, session):
             megaship_distances.append((megaship, distance))
 
     # Sort by distance and return the 10 nearest megaships
-    print(f"Found {len(megaship_distances)} entries")
+    # print(f"Found {len(megaship_distances)} entries")
     megaship_distances.sort(key=lambda x: x[1])
 
     # Convert the nearest megaships to dictionaries for caching

@@ -37,6 +37,7 @@
     <h1>Selected Options</h1>
     <p><strong>System:</strong> {{ system }}</p>
     <p><strong>For:</strong> {{ power }}</p>
+    <p><strong>Type:</strong> {{ type }}</p>
 
     <h1>Selected Task:</h1>
     <p><strong>Task: </strong> {{ taskName }}</p>
@@ -48,8 +49,10 @@
         >This {{ isOpposingWeakness }} the opposing power's weakness</strong
       >
     </p>
+    
 
     <h1>Megaships:</h1>
+    <p><strong>{{ extraInfo }}</strong></p>
     <ul>
       {% for megaship in megaships %}
       <li>
