@@ -52,4 +52,4 @@ Stations table: `CREATE TABLE IF NOT EXISTS stations (id BIGINT PRIMARY KEY AUTO
 
 ## Help
 
-If you need help with any part, feel free to contact me on [BlueSky](https://go.niceygy.net/bsky), or on the PowerPlay Assistant [fourm thread](https://forums.frontier.co.uk/threads/powerplay-2-0-activities.629227/).
+If you need help with any part, feel free to contact me on [BlueSky](https://go.niceygy.net/bsky), or on the PowerPlay Assistant [fourm thread](https://forums.frontier.co.uk/threads/powerplay-2-0-activities.629227/)
