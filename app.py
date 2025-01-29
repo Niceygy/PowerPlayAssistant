@@ -147,7 +147,7 @@ def results():
         extraInfo = ""
         if choice == "Undermine":
             extraInfo = (
-                f"Found megaships all but {power}'s systems, nearest to {system}"
+                f"Found megaships in all but {power}'s systems, nearest to {system}"
             )
             choice = False
         else:

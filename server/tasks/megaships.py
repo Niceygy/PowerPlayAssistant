@@ -114,7 +114,7 @@ def find_nearest_megaships(system_name, shortcode, opposing, session):
     user_coords = (user_system.longitude, user_system.latitude, user_system.height)
 
     # find megaships
-    if opposing:
+    if not opposing:
         megaships_query = session.query(Megaship).join(StarSystem, getattr(Megaship, system_column) == StarSystem.system_name).filter(StarSystem.shortcode != shortcode).limit(500)
     else:
         megaships_query = session.query(Megaship).join(StarSystem, getattr(Megaship, system_column) == StarSystem.system_name).filter(StarSystem.shortcode == shortcode).limit(500)
