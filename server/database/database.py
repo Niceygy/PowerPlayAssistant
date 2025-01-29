@@ -98,6 +98,6 @@ def find_nearest_anarchy_systems(start_x, start_y, start_z, session):
         StarSystem.is_anarchy,
         StarSystem.shortcode,
     ).filter(StarSystem.is_anarchy == True).filter(StarSystem.shortcode != None).order_by(distance).limit(1).all()
-    print(nearest_systems)
+    # print(nearest_systems)
 
     return nearest_systems[0].system_name

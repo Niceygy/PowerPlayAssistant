@@ -49,10 +49,10 @@ def megaships_in_cache(system_name, shortcode, opposing):
                         system = entry[0][f"SYSTEM{get_week_of_cycle()}"]
                         result.append([megaship_name, system])
                     # print(f"Returned {_data} from cache")
-                    if result == None:
-                        print("none")
-                    else:
-                        print("not none")
+                    # if result == None:
+                    #     print("none")
+                    # else:
+                    #     print("not none")
                     return result
             f.close()
     except FileNotFoundError:
@@ -120,8 +120,9 @@ def find_nearest_megaships(system_name, shortcode, opposing, session):
         megaships_query = session.query(Megaship).join(StarSystem, getattr(Megaship, system_column) == StarSystem.system_name).filter(StarSystem.shortcode == shortcode).limit(500)
 
     megaships = megaships_query.all()
-    print(megaships_query)
-    # Calculate distances and sort
+    # print(megaships_query)
+
+    #sort by distance from the user
     def calculate_distance(coords1, coords2):
         return ((coords1[0] - coords2[0]) ** 2 + (coords1[1] - coords2[1]) ** 2 + (coords1[2] - coords2[2]) ** 2) ** 0.5
 

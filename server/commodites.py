@@ -6,14 +6,14 @@ def what_commodity_action(powerFullName, system, database):
     power_shortcode = power_full_to_short(powerFullName)
     if system_controlling_power == powerFullName:
         #own system, reinforce
-        print("reinforce")
+        # print("reinforce")
         return POWERCOMMODITIES[power_shortcode][1]
     elif system_controlling_power in POWERS:
         #enemy system, undermine
-        print("undermine")
+        # print("undermine")
         return POWERCOMMODITIES[power_shortcode][2]
     else:
         #uncontrolled system, acquire
-        print(power_shortcode)
+        # print(power_shortcode)
         return POWERCOMMODITIES[power_shortcode][0]
     
