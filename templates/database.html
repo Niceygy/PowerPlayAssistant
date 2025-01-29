@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PowerPlay Assistant - Database</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+</head>
+<body>
+    <!-- <h1>PowerPlay Assistant</h1> -->
+    <h2>Database Stats</h2>
+    <p><strong>Star Systems: </strong> {{systems}} </p>
+    <p><strong>Stations: </strong> {{stations}} </p>
+    <p><strong>Megaships: </strong> {{megaships}} </p>
+    <br>
+
+</body>
+<div class="footer">
+    <a href="{{ url_for('index') }}">Home</a>
+</div>
+</html>

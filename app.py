@@ -7,7 +7,9 @@ from flask import (
     redirect,
     url_for,
     send_from_directory,
+    make_response
 )
+from sqlalchemy import func
 from server.possibleTasks import get_system_power_info, isAnarchy, power_full_to_short
 from server.database.systems import system_coordinates, query_star_systems
 from server.tasks.tasks import (
@@ -21,6 +23,9 @@ from server.constants import POWERNAMES, TASKNAMES, DATABASE_CONNECTION_STRING
 from server.database.database import (
     database,
     find_nearest_anarchy_systems,
+    StarSystem,
+    Station,
+    Megaship
 )
 from server.tasks.megaships import find_nearest_megaships
 from contextlib import contextmanager
@@ -74,7 +79,9 @@ def index():
                 )
             )
         else:
-            # print(selected_task)
+            last_power = ""
+            if "PPA-LastPower" in request.cookies:
+                last_power = request.cookies.get("PPA-LastPower")
             return redirect(
                 url_for(
                     "results",
@@ -129,9 +136,10 @@ def is_crime():
 def results():
     system = request.args.get("system")
     task = request.args.get("taskName")
-    # print(task)
     power = request.args.get("power")
     choice = request.args.get("choice")
+
+    resp = None
 
     # calculated boxes
     powerInfo = get_system_power_info(system, database)
@@ -157,7 +165,7 @@ def results():
         megaships = find_nearest_megaships(
             system, powerShortCode, choice, database.session
         )
-        return render_template(
+        resp = make_response(render_template(
             "tasks/megaships.html",
             type=request.args.get("choice"),
             system=system,
@@ -169,9 +177,9 @@ def results():
             isOpposingWeakness=isPowersWeakness(power, task),
             extraInfo=extraInfo,
             megaships=megaships,
-        )
+        ))
 
-    return render_template(
+    resp = make_response(render_template(
         "tasks/general.html",
         system=system,
         power=power,
@@ -184,7 +192,9 @@ def results():
         isOpposingWeakness=isPowersWeakness(power, task),
         taskDescription=TaskDescription(task, power, system, powerInfo, database),
         systemNotes=systemNotes(power, system, database),
-    )
+    ))
+    resp.set_cookie("PPA-LastPower", power, 60*60*24*7)
+    return resp
 
 
 @app.route("/megaship_choice", methods=["GET", "POST"])
@@ -208,11 +218,22 @@ def megaship_choice():
         "tasks/megaship_choice.html", system=system, power=power, taskName=task
     )
 
+@app.route("/database", methods=["GET"])
+def database_stats():
+    systems = database.session.query(func.count(func.distinct(StarSystem.system_name))).scalar()
+    megaships = database.session.query(func.count(func.distinct(Megaship.name))).scalar()
+    stations = database.session.query(func.count(func.distinct(Station.station_name))).scalar()
+    return render_template(
+        "database.html",
+        systems=systems,
+        megaships=megaships,
+        stations=stations
+    )
 
 @app.route("/search_systems", methods=["GET"])
 def search_systems():
     query = request.args.get("query", "")
-    results = query_star_systems(query)
+    results = query_star_systems(query, database)
     return jsonify(results)
 
 
@@ -220,22 +241,18 @@ def search_systems():
 def favicon():
     return send_from_directory(app.static_folder, "favicon.ico")
 
-
 @app.route("/copy_icon.svg")
 def copy_icon():
     return send_from_directory(app.static_folder, "copy_solid_icon.svg")
-
 
 @app.route("/changelog", methods=["GET"])
 def changelog():
     return render_template("changelog.html")
 
-
 @app.route("/robots.txt")
 def robots():
     print(request.headers.get("User-Agent"))
     return send_from_directory(app.static_folder, "robots.txt")
-
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=5001)
