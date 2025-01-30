@@ -27,7 +27,7 @@ from server.database.database import (
     Station,
     Megaship
 )
-from server.tasks.megaships import find_nearest_megaships
+from server.tasks.megaships import find_nearest_megaships, get_week_of_cycle
 from contextlib import contextmanager
 
 print(" * All imports sucsessful")
@@ -165,7 +165,7 @@ def results():
         megaships = find_nearest_megaships(
             system, powerShortCode, choice, database.session
         )
-        resp = make_response(render_template(
+        return render_template(
             "tasks/megaships.html",
             type=request.args.get("choice"),
             system=system,
@@ -177,7 +177,7 @@ def results():
             isOpposingWeakness=isPowersWeakness(power, task),
             extraInfo=extraInfo,
             megaships=megaships,
-        ))
+        )
 
     resp = make_response(render_template(
         "tasks/general.html",
@@ -201,7 +201,6 @@ def results():
 def megaship_choice():
     system = request.args.get("system")
     task = request.args.get("taskName")
-    # print(f"{task} megaship choice GET")
     power = request.args.get("power")
 
     if request.method == "POST":
@@ -209,7 +208,6 @@ def megaship_choice():
         system = request.form.get("system")
         task = request.form.get("task")
         power = request.form.get("power")
-        # print(f"{task} megaship choice POST")
         return redirect(
             url_for("results", system=system, power=power, taskName=task, choice=choice)
         )
@@ -227,7 +225,8 @@ def database_stats():
         "database.html",
         systems=systems,
         megaships=megaships,
-        stations=stations
+        stations=stations,
+        week=get_week_of_cycle()
     )
 
 @app.route("/search_systems", methods=["GET"])

@@ -53,3 +53,49 @@ Stations table: `CREATE TABLE IF NOT EXISTS stations (id BIGINT PRIMARY KEY AUTO
 ## Help
 
 If you need help with any part, feel free to contact me on [BlueSky](https://go.niceygy.net/bsky), or on the PowerPlay Assistant [fourm thread](https://forums.frontier.co.uk/threads/powerplay-2-0-activities.629227/).
+
+## Deployment
+
+PowerPlay Assistant uses the following docker-compose.yml.
+
+``` yaml
+version: "3.3"
+ services:
+  powerplay_assistant:
+    ports:
+      - 5005:5005
+    container_name: PowerPlayAssistant
+    stdin_open: true
+    tty: true
+    image: niceygynet/powerplay_assistant
+    restart: unless-stopped
+    networks:
+      - intranet
+    depends_on:
+      - mariadb
+    volumes:
+      - powerplaycache:/home/cache/
+  mariadb:
+    image: mariadb:latest
+    container_name: MariaDB
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: elite
+      MYSQL_USER: assistant
+      MYSQL_PASSWORD: 6548
+      userstat: 1
+    ports:
+      - 3306:3306
+    volumes:
+      - mariadb_data:/var/lib/mysql
+      - /root/code/ED/mysql.cnf:/etc/mysql/my.cnf
+    restart: unless-stopped
+networks:
+  intranet: {}
+volumes:
+  mariadb_data: null
+  powerplaycache: null
+x-dockge:
+  urls:
+    - https://elite.niceygy.net
+```

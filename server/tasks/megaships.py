@@ -18,7 +18,7 @@ def get_week_of_cycle():
     weeks = weeks + 1
     while weeks > 6:
         weeks = weeks - 6
-    return weeks
+    return 4# weeks
 
 
 def megaships_in_cache(system_name, shortcode, opposing):

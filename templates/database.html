@@ -13,6 +13,7 @@
     <p><strong>Star Systems: </strong> {{systems}} </p>
     <p><strong>Stations: </strong> {{stations}} </p>
     <p><strong>Megaships: </strong> {{megaships}} </p>
+    <p><strong>Megaship cycle week: </strong>{{week}}</p>
     <br>
 
 </body>
@@ -20,3 +21,7 @@
     <a href="{{ url_for('index') }}">Home</a>
 </div>
 </html>
+
+<!-- 
+30 7 * * 4 /bin/bash -c 'if [ -f /var/elite/cycle.txt ]; then cycle=$(cat /var/elite/cycle.txt); if [ "$cycle" -eq 6 ]; then echo 1 > /var/elite/cycle.txt; else echo $((cycle + 1)) > /var/elite/cycle.txt; fi; else echo 1 > /var/elite/cycle.txt; fi'
+-->
