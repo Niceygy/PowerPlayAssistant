@@ -32,3 +32,8 @@ button, select, input[type="text"], input[type="submit"], input[type="email"], t
     height: 24px;
     cursor: pointer;
   }
+
+.task-description {
+    max-width: 600px; /* Adjust the width as needed */
+    word-wrap: break-word;
+}

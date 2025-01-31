@@ -18,6 +18,7 @@ def get_week_of_cycle():
     weeks = weeks + 1
     while weeks > 6:
         weeks = weeks - 6
+    print(f"Weeks {weeks}")
     return 4# weeks
 
 
@@ -142,7 +143,6 @@ def find_nearest_megaships(system_name, shortcode, opposing, session):
 
     # Cache the result
     add_megaship_to_cache(system_name, shortcode, opposing, nearest_megaships_dicts)
-
+    
     #returned cached result
-
     return megaships_in_cache(system_name, shortcode, opposing)

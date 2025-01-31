@@ -52,6 +52,7 @@ def session_scope():
         raise
     finally:
         print(" * Closing session")
+        CACHE.close()
         session.close()
 
 
