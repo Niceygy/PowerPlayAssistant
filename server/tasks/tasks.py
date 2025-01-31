@@ -112,8 +112,8 @@ def TaskDescription(taskFullName, powerFullName, systemName, systemPowerInfo, da
     result = ""
     if isTaskACrime(taskFullName):
         result += "This task is illegal in non-anarchy systems. "
-    else:
-        result += "This task is legal in all systems. "
+    # else:
+    #     result += "This task is legal in all systems. "
     taskShortCode = None
     for key, value in TASKSHORTCODES.items():
         if taskFullName == value:

@@ -37,3 +37,11 @@ button, select, input[type="text"], input[type="submit"], input[type="email"], t
     max-width: 600px; /* Adjust the width as needed */
     word-wrap: break-word;
 }
+
+.glowing-emoji {
+    font-size: 15px;
+    text-align: left;
+    margin-top: 10px;
+    /* color: #ffcc00;
+    text-shadow: 0 0 10px #ffcc00, 0 0 20px #ffcc00, 0 0 30px #ffcc00, 0 0 40px #ffcc00, 0 0 50px #ffcc00, 0 0 60px #ffcc00, 0 0 70px #ffcc00; */
+}

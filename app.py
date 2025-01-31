@@ -27,6 +27,7 @@ from server.database.database import (
     Station,
     Megaship
 )
+from server.status import status
 from server.tasks.megaships import find_nearest_megaships, get_week_of_cycle
 from contextlib import contextmanager
 
@@ -96,6 +97,8 @@ def index():
         "index.html",
         missions=TASKNAMES,
         powers=POWERNAMES,
+        status_emoji = status()[0],
+        status_text = status()[1]
     )
 
 
