@@ -20,12 +20,13 @@ RUN pip install -r requirements.txt
 #Create cache
 
 # RUN mkdir /home/cache
-RUN touch cache/week1.cache
-RUN touch cache/week2.cache
-RUN touch cache/week3.cache
-RUN touch cache/week4.cache
-RUN touch cache/week5.cache
-RUN touch cache/week6.cache
+# RUN touch cache/week1.cache
+# RUN touch cache/week2.cache
+# RUN touch cache/week3.cache
+# RUN touch cache/week4.cache
+# RUN touch cache/week5.cache
+# RUN touch cache/week6.cache
+# RUN touch cache/values.cache
 
 # Expose ports
 EXPOSE 80

@@ -81,7 +81,7 @@ def find_nearest_anarchy_systems(start_x, start_y, start_z, session):
               of the nearest star system.
     """
 
-    print(f" * Finding nearest systems to ({start_x}, {start_y}, {start_z})")
+    # print(f" * Finding nearest systems to ({start_x}, {start_y}, {start_z})")
 
     distance = func.sqrt(
         (StarSystem.latitude - start_x) * (StarSystem.latitude - start_x) +

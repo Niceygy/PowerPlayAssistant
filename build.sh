@@ -1,5 +1,7 @@
 #!/bin/bash
 
+clear
+
 # Build the Docker image
 docker build -t niceygynet/powerplay_assistant .
 

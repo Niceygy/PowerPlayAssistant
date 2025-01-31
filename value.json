@@ -1,0 +1,22 @@
+{
+  "id": 27,
+  "id64": 10477373803,
+  "name": "Sol",
+  "url": "https://www.edsm.net/en/system/bodies/id/27/name/Sol",
+  "estimatedValue": 605867,
+  "estimatedValueMapped": 2000900,
+  "valuableBodies": [
+    {
+      "bodyId": 7497,
+      "bodyName": "Earth",
+      "distance": 504,
+      "valueMax": 945428
+    },
+    {
+      "bodyId": 1828,
+      "bodyName": "Mars",
+      "distance": 828,
+      "valueMax": 822273
+    }
+  ]
+}
