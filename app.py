@@ -53,7 +53,6 @@ def session_scope():
         raise
     finally:
         print(" * Closing session")
-        CACHE.close()
         session.close()
 
 
@@ -71,7 +70,7 @@ def index():
         selected_task = request.form.get("mission")
         selected_power = request.form.get("power")
 
-        if isTaskACrime(selected_task):
+        if isTaskACrime(selected_task, False):
             return redirect(
                 url_for(
                     "is_crime",
@@ -129,7 +128,7 @@ def is_crime():
             url_for(
                 "results",
                 system=system,
-                task=task,
+                taskName=task,
                 power=power,
                 anarchy=anarchy,
             )
@@ -177,7 +176,7 @@ def results():
             taskName=task,
             taskDescription=TaskDescription(task, power, system, powerInfo, database),
             taskType=getTaskType(task),
-            isIllegal="Is" if isTaskACrime(task) else "isn't",
+            isIllegal="Is" if isTaskACrime(task, isAnarchy(system, database)) else "isn't",
             isOpposingWeakness=isPowersWeakness(power, task),
             extraInfo=extraInfo,
             megaships=megaships,
@@ -192,7 +191,7 @@ def results():
         isAnarchy="YES" if isAnarchy(system, database) else "NO",
         taskName=task,
         taskType=getTaskType(task),
-        isIllegal="Is" if isTaskACrime(task) else "isn't",
+        isIllegal="Is" if isTaskACrime(task, isAnarchy(system, database)) else "isn't",
         isOpposingWeakness=isPowersWeakness(power, task),
         taskDescription=TaskDescription(task, power, system, powerInfo, database),
         systemNotes=systemNotes(power, system, database),

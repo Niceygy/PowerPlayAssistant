@@ -16,7 +16,7 @@
     <p>Would you like to limit your search to anarchy-only systems?</p>
 
     <form action="{{ url_for('is_crime') }}" method="post">
-      <input type="hidden" name="task" value="{{ task }}">
+      <input type="hidden" name="taskName" value="{{ task }}">
       <input type="hidden" name="power" value="{{ power }}">
       <input type="hidden" name="system" value="{{ system }}">
 
@@ -29,6 +29,8 @@
           >
             Yes
           </button>
+        </div>
+        <div class="action_btn">
           <button
             name="anarchy"
             type="submit"

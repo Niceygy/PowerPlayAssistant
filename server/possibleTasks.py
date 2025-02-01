@@ -50,5 +50,5 @@ def isAnarchy(systemName, database):
     if result == None:
         return False
     #invert it, becuase mariadb is weird
-    return False if result.is_anarchy else True
+    return result.is_anarchy#False if result.is_anarchy else True
     
