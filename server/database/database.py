@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String, Float, Boolean, func
 from flask_sqlalchemy import SQLAlchemy
+import math
 
 database = SQLAlchemy()
 
@@ -35,6 +36,7 @@ megaships:
     system6 text
 """
 
+
 class StarSystem(database.Model):
     __tablename__ = "star_systems"
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -55,6 +57,7 @@ class Station(database.Model):
     star_system = Column(String(255))
     station_type = Column(String(255))
 
+
 class Megaship(database.Model):
     __tablename__ = "megaships"
     name = Column(String(255), primary_key=True)
@@ -64,6 +67,39 @@ class Megaship(database.Model):
     SYSTEM4 = Column(String(255))
     SYSTEM5 = Column(String(255))
     SYSTEM6 = Column(String(255))
+
+
+class RareGoods(database.Model):
+    __tablename__ = "Raregoods"
+    good_name = Column(String(255), primary_key=True)
+    system_name = Column(String(255))
+    station_name = Column(String(255))
+
+
+def system_coordinates(system_name, database):
+    """
+    Gets the coordinates for a system
+
+    Requires:
+        - [String] system_name: The name of the system
+        - [Object] database: The current database connection.
+
+    Returns:
+        - [int[]] Coordinates: [latitude, longitude, height]
+    """
+    result = (
+        database.session.query(
+            StarSystem.latitude, StarSystem.longitude, StarSystem.height
+        )
+        .filter(StarSystem.system_name == system_name)
+        .first()
+    )
+
+    if result is None:
+        return [0, 0, 0]
+
+    return [result.latitude, result.longitude, result.height]
+
 
 def find_nearest_anarchy_systems(start_x, start_y, start_z, session):
     """
@@ -81,23 +117,46 @@ def find_nearest_anarchy_systems(start_x, start_y, start_z, session):
               of the nearest star system.
     """
 
-    # print(f" * Finding nearest systems to ({start_x}, {start_y}, {start_z})")
-
     distance = func.sqrt(
-        (StarSystem.latitude - start_x) * (StarSystem.latitude - start_x) +
-        (StarSystem.longitude - start_y) * (StarSystem.longitude - start_y) +
-        (StarSystem.height - start_z) * (StarSystem.height - start_z)
-    ).label('distance')
+        (StarSystem.latitude - start_x) * (StarSystem.latitude - start_x)
+        + (StarSystem.longitude - start_y) * (StarSystem.longitude - start_y)
+        + (StarSystem.height - start_z) * (StarSystem.height - start_z)
+    ).label("distance")
 
-    nearest_systems = session.query(
-        StarSystem.system_name,
-        # StarSystem.latitude,
-        # StarSystem.longitude,
-        # StarSystem.height,
-        distance,
-        StarSystem.is_anarchy,
-        StarSystem.shortcode,
-    ).filter(StarSystem.is_anarchy == True).filter(StarSystem.shortcode != None).order_by(distance).limit(1).all()
-    # print(nearest_systems)
+    nearest_systems = (
+        session.query(
+            StarSystem.system_name,
+            distance,
+            StarSystem.is_anarchy,
+            StarSystem.shortcode,
+        )
+        .filter(StarSystem.is_anarchy == True)
+        .filter(StarSystem.shortcode != None)
+        .order_by(distance)
+        .limit(1)
+        .all()
+    )
 
     return nearest_systems[0].system_name
+
+
+def distance_to_system(start_system, end_system, database):
+    [startx, starty, startz] = system_coordinates(start_system, database)
+    [endx, endy, endz] = system_coordinates(end_system, database)
+
+    #diffrences
+    xdist = endx - startx
+    ydist = endy - starty
+    zdist = endz - startz
+
+    #square them
+    xdistSqr = xdist * xdist
+    ydistSqr = ydist * ydist
+    zdistSqr = zdist * zdist
+
+    #add them all
+    sumOfSqares = xdistSqr + ydistSqr + zdistSqr
+
+    distance =  math.sqrt(sumOfSqares)
+
+    return distance

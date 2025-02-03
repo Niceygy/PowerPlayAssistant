@@ -1,5 +1,5 @@
 from server.constants import POWERCOMMODITIES, POWERS
-from server.possibleTasks import get_system_power_info, power_full_to_short
+from server.powers import get_system_power_info, power_full_to_short
 
 def what_commodity_action(powerFullName, system, database):
     system_controlling_power = get_system_power_info(system, database)[1]
