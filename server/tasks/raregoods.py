@@ -1,17 +1,34 @@
 from server.database.database import RareGoods, distance_to_system
+from server.database.cache import item_in_cache, add_item_to_cache
 
-def best_rare_good(system_name, database):
-    #list all rare goods
+def best_rare_goods(system_name, database):
+    """
+    Finds the 10 rare goods closest to 200 units away from the given system.
 
-    closest = ""
-    closestBy = 0
+    Args:
+        system_name (str): The name of the system.
+        database (object): The current database connection.
 
+    Returns:
+        List of the 10 rare goods closest to 200 units away.
+    """
 
-    results = RareGoods.query().all()
+    cache = item_in_cache(system_name, "NA", False, "RAREGOODS")
+    if cache != None:
+        return cache
+
+    results = database.session.query(RareGoods).all()
+    distances = []
+
     for item in results:
         distance = distance_to_system(system_name, item.system_name, database)
-        if distance < closestBy:
-            closestBy = distance
-            closest = [item.good_name, item.station_name, item.system_name]
+        distance = round(distance)
+        distances.append((distance, item.good_name, item.station_name, item.system_name))
 
-    return closest
+    # Sort the list by the absolute difference from 200
+    distances.sort(key=lambda x: abs(x[0] - 200))
+
+    add_item_to_cache(system_name, "NA", False, distances[:10], "RAREGOODS")
+
+    # Return the 10 rare goods closest to 200 units away
+    return distances[:10]

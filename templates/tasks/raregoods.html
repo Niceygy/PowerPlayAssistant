@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='main.css') }}"
+    />
+    <title>PowerPlay Assistant - Rare goods</title>
+    <script>
+      function copyText(text) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(function() {
+            alert("Copied " + text);
+          }).catch(function(err) {
+            console.error('Could not copy text: ', err);
+          });
+        } else {
+          // Fallback method
+          let textarea = document.createElement("textarea");
+          textarea.value = text;
+          document.body.appendChild(textarea);
+          textarea.select();
+          try {
+            document.execCommand("copy");
+            alert("Copied " + text);
+          } catch (err) {
+            console.error('Fallback: Oops, unable to copy', err);
+          }
+          document.body.removeChild(textarea);
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="main">
+    <h1>Selected Options</h1>
+    <p><strong>System:</strong> {{ system }}</p>
+    <p><strong>For:</strong> {{ power }}</p>
+ 
+    <h1>Selected Task:</h1>
+    <p><strong>Task: </strong> {{ taskName }}</p>
+    <p><strong>Task Type: </strong> {{ taskType }}</p>
+    <p class="task-description"><strong>Task Description: </strong> {{ taskDescription }}</p>
+    <p><strong>This {{ isIllegal }} Illegal </strong></p>
+    <p>
+      <strong
+        >This {{ isOpposingWeakness }} the opposing power's weakness</strong
+      >
+    </p>
+    
+
+    <h1>Rare goods:</h1>
+    <p><strong>{{ extraInfo }}</strong></p>
+    <!-- _GOOD_ at _STATION_ in _SYSTEM_ (_LY_ LY away) -->
+     <!-- [Distance, GoodName, Station, System] -->
+    <ul>
+      {% for raregood in raregoods %}
+      <li>
+        {{ raregood[1] }}: at {{ raregood[2] }}, in
+        <a
+          onclick="copyText('{{ raregood[3] }}')"
+        >{{ raregood[3] }}</a>
+        ({{ raregood[0] }} LY away)
+      </li>
+      {% endfor %}
+    </ul>
+    <br />
+    <p><i>Click the system name to copy it</i></p>
+
+    <a href="{{ url_for('index') }}">Back to Home</a>
+  </div>
+  </body>
+</html>

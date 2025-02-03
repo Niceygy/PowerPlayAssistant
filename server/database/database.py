@@ -95,7 +95,9 @@ def system_coordinates(system_name, database):
         .first()
     )
 
-    if result is None:
+
+    if result == [None, None, None] or result == None:
+        print(f"?? for {system_name}")
         return [0, 0, 0]
 
     return [result.latitude, result.longitude, result.height]
@@ -143,6 +145,15 @@ def find_nearest_anarchy_systems(start_x, start_y, start_z, session):
 def distance_to_system(start_system, end_system, database):
     [startx, starty, startz] = system_coordinates(start_system, database)
     [endx, endy, endz] = system_coordinates(end_system, database)
+
+    if (
+        startx == None or
+        endx == None or
+        starty == None or
+        endy == None or
+        startz == None or
+        endz == None
+    ): return 0
 
     #diffrences
     xdist = endx - startx

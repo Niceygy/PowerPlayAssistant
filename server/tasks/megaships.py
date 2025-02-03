@@ -2,15 +2,14 @@ from datetime import datetime
 from sqlalchemy import func
 from server.database.database import StarSystem, Megaship
 import math
-import json
 from sqlalchemy.orm import class_mapper
-
+from server.database.cache import item_in_cache, add_item_to_cache
 
 def get_week_of_cycle():
     """
-    Determines the current week of a cycle.
+    Determines the current week of the megaship cycle.
     Returns:
-        int: The current week of the cycle (1-based).
+        int: The current week of the cycle (1-6)
     """
     date=datetime.now()
     days_since_start = (date - datetime(2025, 1, 10)).days
@@ -18,63 +17,8 @@ def get_week_of_cycle():
     weeks = weeks + 1
     while weeks > 6:
         weeks = weeks - 6
-    # print(f"Weeks {weeks}")
-    return 4# weeks
+    return weeks
 
-
-def megaships_in_cache(system_name, shortcode, opposing):
-    current_week = get_week_of_cycle()
-    try:
-        #linear search
-        with open(f"cache/week{current_week}.cache", "r") as f:
-            for line in f.read().splitlines():
-                if line == None:
-                    continue
-                temp = line.split("/", 3)
-                _system_name = temp[0]
-                _shortcode = temp[1]
-                _opposing = temp[2]
-                _data = temp[3]
-                if (
-                    _system_name == system_name
-                    and _shortcode == shortcode
-                    and _opposing == str(opposing)
-                ):
-                    f.close()
-                    jsonData = json.loads(_data)
-                    #only return the systems for this week
-                    result =[]
-                    for i in range(len(jsonData)):
-                        entry = jsonData[i]
-                        megaship_name = entry[0]["name"]
-                        system = entry[0][f"SYSTEM{get_week_of_cycle()}"]
-                        result.append([megaship_name, system])
-                    # print(f"Returned {_data} from cache")
-                    # if result == None:
-                    #     print("none")
-                    # else:
-                    #     print("not none")
-                    return result
-            f.close()
-    except FileNotFoundError:
-        #create cache file
-        with open(f"cache/week{current_week}.cache", "w") as f:
-            f.write("")
-            f.close()
-        return None
-    return None
-
-def add_megaship_to_cache(system_name, shortcode, opposing, data):
-    #is it in cache?
-    if megaships_in_cache(system_name, shortcode, opposing) != None:
-        return #yes
-    else:
-        #nope, add it
-        current_week = get_week_of_cycle()
-        with open(f"./cache/week{current_week}.cache", "a") as f:
-            f.write(f"{system_name}/{shortcode}/{opposing}/{json.dumps(data)}\n")
-            f.close()
-        return
 
 
 def row_to_dict(row):
@@ -99,7 +43,7 @@ def find_nearest_megaships(system_name, shortcode, opposing, session):
     Returns:
         List of nearest megaships
     """
-    cache = megaships_in_cache(system_name, shortcode, opposing)
+    cache = item_in_cache(system_name, shortcode, opposing, "MEGASHIP")
     if cache != None:
         return cache
     
@@ -142,7 +86,7 @@ def find_nearest_megaships(system_name, shortcode, opposing, session):
     nearest_megaships_dicts = [(row_to_dict(megaship), distance) for megaship, distance in megaship_distances[:10]]
 
     # Cache the result
-    add_megaship_to_cache(system_name, shortcode, opposing, nearest_megaships_dicts)
+    add_item_to_cache(system_name, shortcode, opposing, nearest_megaships_dicts, "MEGASHIP")
     
     #returned cached result
-    return megaships_in_cache(system_name, shortcode, opposing)
+    return item_in_cache(system_name, shortcode, opposing,"MEGASHIP")

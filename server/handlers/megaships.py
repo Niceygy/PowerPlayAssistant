@@ -14,6 +14,7 @@ def megaships_results(request, power, system, database):
     # calculated boxes
     powerInfo = get_system_power_info(system, database)
     powerShortCode = power_full_to_short(power)
+    choice = request.args.get("choice")
     extraInfo = ""
     if choice == "Undermine":
         extraInfo = f"Found megaships in all but {power}'s systems, nearest to {system}"
@@ -22,9 +23,9 @@ def megaships_results(request, power, system, database):
         extraInfo = f"Found megaships in {power}'s systems, nearest to {system}"
         choice = True
 
-        megaships = find_nearest_megaships(
-            system, powerShortCode, choice, database.session
-        )
+    megaships = find_nearest_megaships(
+        system, powerShortCode, choice, database.session
+    )
     return render_template(
         "tasks/megaships.html",
         type=request.args.get("choice"),
