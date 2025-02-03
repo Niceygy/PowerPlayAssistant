@@ -1,4 +1,7 @@
 print(" * Loading...")
+import os
+pyver = os.getenv("PYTHON_VERSION")
+print(f" * Using Python {pyver}")
 from flask import (
     Flask,
     jsonify,

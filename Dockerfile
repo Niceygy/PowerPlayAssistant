@@ -1,4 +1,4 @@
-FROM python:3.8-slim
+FROM python:slim-bullseye
 
 # Install dependencies
 # RUN apt-get update && apt-get install -y nginx && apt-get clean
