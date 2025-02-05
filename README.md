@@ -64,7 +64,7 @@ version: "3.3"
   powerplay_assistant:
     ports:
       - 5005:5005
-    container_name: PowerPlayAssistant
+    container_name: ppa_server
     stdin_open: true
     tty: true
     image: niceygynet/powerplay_assistant
@@ -77,7 +77,7 @@ version: "3.3"
       - powerplaycache:/home/cache/
   mariadb:
     image: mariadb:latest
-    container_name: MariaDB
+    container_name: ppa_database
     environment:
       MYSQL_ROOT_PASSWORD: root_password
       MYSQL_DATABASE: elite
@@ -88,14 +88,10 @@ version: "3.3"
       - 3306:3306
     volumes:
       - mariadb_data:/var/lib/mysql
-      - /root/code/ED/mysql.cnf:/etc/mysql/my.cnf
     restart: unless-stopped
 networks:
   intranet: {}
 volumes:
   mariadb_data: null
   powerplaycache: null
-x-dockge:
-  urls:
-    - https://elite.niceygy.net
 ```
