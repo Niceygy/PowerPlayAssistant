@@ -1,4 +1,7 @@
 print(" * Loading...")
+"""
+IMPORTS
+"""
 import os
 pyver = os.getenv("PYTHON_VERSION")
 print(f" * Using Python {pyver}")
@@ -28,6 +31,11 @@ from contextlib import contextmanager
 
 print(" * All imports sucsessful")
 
+
+"""
+Flask and database
+"""
+
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_CONNECTION_STRING
 app.config["SQLALCHEMY_POOL_SIZE"] = 10
@@ -53,6 +61,9 @@ def session_scope():
 
 print(f" * Using database connection string: {DATABASE_CONNECTION_STRING}")
 
+"""
+Route Handlers
+"""
 
 @app.route("/", methods=["GET", "POST"])
 def index():

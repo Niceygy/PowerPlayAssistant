@@ -1,9 +1,9 @@
 from datetime import datetime
-from sqlalchemy import func
 from server.database.database import StarSystem, Megaship
 import math
 from sqlalchemy.orm import class_mapper
 from server.database.cache import item_in_cache, add_item_to_cache
+from server.constants import ITEMS_TO_RETURN
 
 def get_week_of_cycle():
     """
@@ -64,8 +64,8 @@ def find_nearest_megaships(system_name, shortcode, opposing, session):
     else:
         megaships_query = session.query(Megaship).join(StarSystem, getattr(Megaship, system_column) == StarSystem.system_name).filter(StarSystem.shortcode == shortcode).limit(500)
 
+    #GET 'EM
     megaships = megaships_query.all()
-    # print(megaships_query)
 
     #sort by distance from the user
     def calculate_distance(coords1, coords2):
@@ -83,7 +83,7 @@ def find_nearest_megaships(system_name, shortcode, opposing, session):
     megaship_distances.sort(key=lambda x: x[1])
 
     # Convert the nearest megaships to dictionaries for caching
-    nearest_megaships_dicts = [(row_to_dict(megaship), distance) for megaship, distance in megaship_distances[:10]]
+    nearest_megaships_dicts = [(row_to_dict(megaship), distance) for megaship, distance in megaship_distances[:ITEMS_TO_RETURN]]
 
     # Cache the result
     add_item_to_cache(system_name, shortcode, opposing, nearest_megaships_dicts, "MEGASHIP")

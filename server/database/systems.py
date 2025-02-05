@@ -1,8 +1,6 @@
 from server.database.database import StarSystem
 
-
-
-def query_star_systems(query, database):
+def query_star_systems(query):
     """"
     Returns a list of 10 systems that roughtly match the query by name.
 

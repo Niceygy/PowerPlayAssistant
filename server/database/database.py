@@ -143,6 +143,9 @@ def find_nearest_anarchy_systems(start_x, start_y, start_z, session):
 
 
 def distance_to_system(start_system, end_system, database):
+    """
+    How far is it from start_system to end_system? In LY
+    """
     [startx, starty, startz] = system_coordinates(start_system, database)
     [endx, endy, endz] = system_coordinates(end_system, database)
 

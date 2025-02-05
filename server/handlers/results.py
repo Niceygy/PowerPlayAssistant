@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for
 
 from server.handlers.megaships import megaships_results
 from server.handlers.raregoods import handle_rare_goods
-from server.powers import get_system_power_info, isAnarchy
+from server.powers import get_system_power_info, is_system_anarchy
 from server.tasks.tasks import (
     TaskDescription,
     getTaskType,
@@ -37,10 +37,10 @@ def handle_results(request, database):
             power=power,
             currentPower=controllingPower,
             currentState=systemState,
-            isAnarchy="YES" if isAnarchy(system, database) else "NO",
+            isAnarchy="YES" if is_system_anarchy(system, database) else "NO",
             taskName=task,
             taskType=getTaskType(task),
-            isIllegal="Is" if isTaskACrime(task, isAnarchy(system, database)) else "isn't",
+            isIllegal="Is" if isTaskACrime(task, is_system_anarchy(system, database)) else "isn't",
             isOpposingWeakness=isPowersWeakness(power, task),
             taskDescription=TaskDescription(task, power, system, powerInfo, database),
             systemNotes=systemNotes(power, system, database),

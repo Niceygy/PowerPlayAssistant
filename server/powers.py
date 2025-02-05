@@ -3,16 +3,21 @@ from server.database.database import StarSystem
 
 
 def power_full_to_short(power):
+    """
+    Returns the shortcode of a power when supplied its full name
+    """
     for key, value in POWERS.items():
         if value == power:
             return key
     return None
 
 def short_to_full_power(power):
+    """
+    Retuns the full name of a power when supplied its shortcode
+    """
     return POWERS[power]
 
 
-#################################
 
 def get_system_power_info(system, database):
     """
@@ -31,7 +36,6 @@ def get_system_power_info(system, database):
         ]
     """
     
-    # returns [state, powerShortCode]
     try:
         result = database.session.query(StarSystem).filter(StarSystem.system_name == system).first()
         if result == None:
@@ -45,7 +49,7 @@ def get_system_power_info(system, database):
         return ["Uncontrolled", "Uncontrolled"]
 
 
-def isAnarchy(systemName, database):
+def is_system_anarchy(systemName, database):
     result = database.session.query(StarSystem).filter(StarSystem.system_name == systemName).first()
     if result == None:
         return False

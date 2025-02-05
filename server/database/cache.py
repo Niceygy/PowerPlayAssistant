@@ -18,6 +18,9 @@ def get_week_of_cycle():
     return weeks
 
 def item_in_cache(system_name, shortcode, opposing, dataType):
+    """
+    Is this thing in cache? If so, return it
+    """
     current_week = get_week_of_cycle()
     try:
         with open(f"cache/week{current_week}.cache", "r") as f:
@@ -59,6 +62,9 @@ def item_in_cache(system_name, shortcode, opposing, dataType):
     return None
 
 def add_item_to_cache(system_name, shortcode, opposing, data, dataType):
+    """
+    Add this thing to the cache
+    """
     if item_in_cache(system_name, shortcode, opposing, dataType) is not None:
         return
     else:

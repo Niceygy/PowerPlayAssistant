@@ -3,6 +3,18 @@ from server.database.database import find_nearest_anarchy_systems, system_coordi
 
 
 def handle_is_crime(request, database):
+    """
+    Handler for page: /is_crime
+
+    If the selected task is a crime, informs the user &
+    asks if they want to find an anarchy system nearby.
+
+    Methods: GET, POST
+
+    Redirects to /results on POST, and adds a ?anarchy=
+    Renders is_crime.html on GET
+
+    """
     if request.method == "GET":
         task = request.args.get("taskName")
         power = request.args.get("power")

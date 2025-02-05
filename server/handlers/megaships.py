@@ -1,5 +1,5 @@
 from flask import render_template
-from server.powers import get_system_power_info, isAnarchy, power_full_to_short
+from server.powers import get_system_power_info, is_system_anarchy, power_full_to_short
 from server.tasks.megaships import find_nearest_megaships
 from server.tasks.tasks import (
     TaskDescription,
@@ -10,6 +10,13 @@ from server.tasks.tasks import (
 
 
 def megaships_results(request, power, system, database):
+    """
+    Handler for /results, when the task is megaships
+
+    Methods: GET
+
+    Renders megaships.html
+    """
     task = "Scan Megaship Datalinks"
     # calculated boxes
     powerInfo = get_system_power_info(system, database)
@@ -34,7 +41,7 @@ def megaships_results(request, power, system, database):
         taskName=task,
         taskDescription=TaskDescription(task, power, system, powerInfo, database),
         taskType=getTaskType(task),
-        isIllegal="Is" if isTaskACrime(task, isAnarchy(system, database)) else "isn't",
+        isIllegal="Is" if isTaskACrime(task, is_system_anarchy(system, database)) else "isn't",
         isOpposingWeakness=isPowersWeakness(power, task),
         extraInfo=extraInfo,
         megaships=megaships,

@@ -2,6 +2,9 @@ from server.constants import POWERCOMMODITIES, POWERS
 from server.powers import get_system_power_info, power_full_to_short
 
 def what_commodity_action(powerFullName, system, database):
+    """
+    What commodity is needed to make this system undermined or reinforced
+    """
     system_controlling_power = get_system_power_info(system, database)[1]
     power_shortcode = power_full_to_short(powerFullName)
     if system_controlling_power == powerFullName:

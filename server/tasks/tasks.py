@@ -1,4 +1,4 @@
-from server.powers import isAnarchy, power_full_to_short, get_system_power_info
+from server.powers import is_system_anarchy, power_full_to_short, get_system_power_info
 from server.constants import TASKSHORTCODES, TASKTYPES, POWERWEAKNESSES, HOMESYSTEMS, PERMITLOCKED
 from server.commodites import what_commodity_action
 from server.database.database import StarSystem 
@@ -110,7 +110,7 @@ def TaskDescription(taskFullName, powerFullName, systemName, systemPowerInfo, da
     if taskFullName == None:
         return ""
     result = ""
-    if isTaskACrime(taskFullName, isAnarchy(systemName, database)):
+    if isTaskACrime(taskFullName, is_system_anarchy(systemName, database)):
         result += "This task is illegal in non-anarchy systems. "
     # else:
     #     result += "This task is legal in all systems. "
