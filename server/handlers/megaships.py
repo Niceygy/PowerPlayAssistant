@@ -1,6 +1,7 @@
 from flask import render_template
 from server.powers import get_system_power_info, is_system_anarchy, power_full_to_short
 from server.tasks.megaships import find_nearest_megaships
+from server.constants import ITEMS_TO_RETURN
 from server.tasks.tasks import (
     TaskDescription,
     getTaskType,
@@ -24,10 +25,10 @@ def megaships_results(request, power, system, database):
     choice = request.args.get("choice")
     extraInfo = ""
     if choice == "Undermine":
-        extraInfo = f"Found megaships in all but {power}'s systems, nearest to {system}"
+        extraInfo = f"Found {ITEMS_TO_RETURN} megaships in all but {power}'s systems, nearest to {system}"
         choice = False
     else:
-        extraInfo = f"Found megaships in {power}'s systems, nearest to {system}"
+        extraInfo = f"Found {ITEMS_TO_RETURN} megaships in {power}'s systems, nearest to {system}"
         choice = True
 
     megaships = find_nearest_megaships(
