@@ -30,7 +30,7 @@ TASKNAMES = [
     "Transfer Power classified data",
     "Transfer Power association and political data",
     "Transfer Power research and Industrial data",
-    "Upload Powerplay malware",
+    "Upload Powerplay Malware",
 ]
 """
 Task Names in an array
@@ -74,7 +74,7 @@ TASKTYPES = {
     "Exploration": ["HICD", "HBRS"],
     "Odyssey": ["RSGD", "TPCL", "TPAD", "TPRD", "UPMW"],
     "Aid": ["CAHM", "CEPD"],
-    "Illegal": ["CMCR", "HSHK", "PKLS"],
+    "Illegal": ["CMCR", "HSHK", "PKLS", "UPMW"],
 }
 
 

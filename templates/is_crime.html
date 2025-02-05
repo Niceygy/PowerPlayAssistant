@@ -7,42 +7,39 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='main.css') }}"
     />
-    <script defer src="https://data.niceygy.net/script.js" data-website-id="5a305d97-fef0-4c86-9528-243ae53470ad"></script>
+    <script
+      defer
+      src="https://data.niceygy.net/script.js"
+      data-website-id="5a305d97-fef0-4c86-9528-243ae53470ad"
+    ></script>
   </head>
   <body>
-    <h1>Warning!</h1>
-    <p><strong>Task:</strong> {{ task }}</p>
-    <br />
-    <p>The task you have selected is illegal, and may incur a fine or bounty</p>
-    <p>Would you like to limit your search to anarchy-only systems?</p>
+    <div style="text-align: center">
+      <h1>Warning!</h1>
+      <p><strong>Task:</strong> {{ task }}</p>
+      <br />
+      <p>
+        The task you have selected is illegal, and may incur a fine or bounty
+      </p>
+      <p>Would you like to limit your search to anarchy-only systems?</p>
 
-    <form action="{{ url_for('is_crime') }}" method="post">
-      <input type="hidden" name="taskName" value="{{ task }}">
-      <input type="hidden" name="power" value="{{ power }}">
-      <input type="hidden" name="system" value="{{ system }}">
+      <form action="{{ url_for('is_crime') }}" method="post">
+        <input type="hidden" name="taskName" value="{{ task }}" />
+        <input type="hidden" name="power" value="{{ power }}" />
+        <input type="hidden" name="system" value="{{ system }}" />
 
-      <div class="buttons" style="text-align: center;">
-        <div class="action_btn">
-          <button
-            name="anarchy"
-            type="submit"
-            value="Yes"
-          >
-            Yes
-          </button>
+        <div class="buttons" style="text-align: center">
+          <div class="action_btn">
+            <button name="anarchy" type="submit" value="Yes">Yes</button>
+          </div>
+          <div class="action_btn">
+            <button name="anarchy" type="submit" value="No">No</button>
+          </div>
         </div>
-        <div class="action_btn">
-          <button
-            name="anarchy"
-            type="submit"
-            value="No"
-          >
-            No
-          </button>
-        </div>
-      </div>
-    </form>
-    <br />
-    <a href="{{ url_for('index') }}">Back to Home</a>
+      </form>
+
+      <br />
+      <a href="{{ url_for('index') }}">Back to Home</a>
+    </div>
   </body>
 </html>

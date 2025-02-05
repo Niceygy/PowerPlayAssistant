@@ -91,6 +91,8 @@ def systemNotes(powerFullName, system_name, database):
         message += f"This system is permit locked."
     if (hasResSite(system_name, database)):
         message += f"This system has a resource extraction site."
+    if get_system_power_info(system_name, database)[0] == "Stronghold":
+        message += " Warning, this system is a stronghold. Opposing powers will not be welcome here"
     if message == "":
         return "N/A"
     else:
@@ -130,9 +132,7 @@ def TaskDescription(task_name, power_name, system_name, system_power_info, datab
     if task_name == "Transport Powerplay commodities":
         result += f". You will need the commodity '{what_commodity_action(power_name, system_name, database)}'."
     if task_name == "Upload Powerplay Malware":
-        result += f"You will need the odyssey data {retrieve_specific_goods(power_name, system_name, database)}. "
-    if system_power_info[0] == "Stronghold":
-        result += " Warning, this system is a stronghold. Opposing powers will not be welcome here"
+        result += f"You will need '{retrieve_specific_goods(power_name, system_name, database)}'. "
     if extraInfo != None:
         result += extraInfo
     return result

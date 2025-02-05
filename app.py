@@ -114,8 +114,8 @@ def database_stats():
 
 @app.route("/search_systems", methods=["GET"])
 def search_systems():
-    query = request.args.get("query", "")
-    results = query_star_systems(query, database)
+    query = request.args.get("query")
+    results = query_star_systems(query)
     return jsonify(results)
 
 

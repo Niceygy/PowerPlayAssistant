@@ -42,7 +42,7 @@ def megaships_results(request, power, system, database):
         taskName=task,
         taskDescription=TaskDescription(task, power, system, powerInfo, database),
         taskType=getTaskType(task),
-        isIllegal="Is" if isTaskACrime(task, is_system_anarchy(system, database)) else "isn't",
+        isIllegal="isn't",
         isOpposingWeakness=isPowersWeakness(power, task),
         extraInfo=extraInfo,
         megaships=megaships,

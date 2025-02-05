@@ -30,7 +30,7 @@ def handle_rare_goods(request, database):
         isAnarchy="YES" if is_system_anarchy(system, database) else "NO",
         taskName=task,
         taskType="Trading",
-        isIllegal="Is" if isTaskACrime(task, is_system_anarchy(system, database)) else "isn't",
+        isIllegal="isn't",
         isOpposingWeakness=isPowersWeakness(power, task),
         taskDescription=TaskDescription(task, power, system, powerInfo, database),
         systemNotes=systemNotes(power, system, database),
