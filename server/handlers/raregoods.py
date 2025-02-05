@@ -12,7 +12,7 @@ def handle_rare_goods(request, database):
 
     Renders raregoods.html
     """
-    systemName = request.args.get("system")
+    system_name = request.args.get("system")
     system = request.args.get("system")
     task = request.args.get("taskName")
     power = request.args.get("power")
@@ -20,7 +20,7 @@ def handle_rare_goods(request, database):
     powerInfo = get_system_power_info(system, database)
     controllingPower = powerInfo[1]
     systemState = powerInfo[0]
-    rare_goods = best_rare_goods(systemName, database)
+    rare_goods = best_rare_goods(system_name, database)
     return render_template(
         "tasks/raregoods.html",
         system=system,

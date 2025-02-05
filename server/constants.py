@@ -60,7 +60,7 @@ TASKSHORTCODES = {
     "TPCL": "Transfer Power classified data",
     "TPAD": "Transfer Power association and political data",
     "TPRD": "Transfer Power research and Industrial data",
-    "UPMW": "Upload Powerplay malware",
+    "UPMW": "Upload Powerplay Malware",
 }
 """
 Task shortcodes and their names
@@ -227,3 +227,8 @@ POWERCOMMODITIES = {
     ],
     "ZMT": ["Torval Trade Agreements", "Torval Deeds", "Torval Political Servants"],
 }
+
+POWERDATA = [
+    "POWER TRACKER MALWARE", #undermine
+    "POWER INJECTION MALWARE" #reinforce
+]

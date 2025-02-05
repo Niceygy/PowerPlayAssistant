@@ -49,8 +49,8 @@ def get_system_power_info(system, database):
         return ["Uncontrolled", "Uncontrolled"]
 
 
-def is_system_anarchy(systemName, database):
-    result = database.session.query(StarSystem).filter(StarSystem.system_name == systemName).first()
+def is_system_anarchy(system_name, database):
+    result = database.session.query(StarSystem).filter(StarSystem.system_name == system_name).first()
     if result == None:
         return False
     #invert it, becuase mariadb is weird

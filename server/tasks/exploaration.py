@@ -5,13 +5,13 @@ LOWER_CREDIT_LIMIT = 40 * 1000 #40k
 LOWER_DISTANCE_LIMIT = 50 #LY
 HIGHER_DISTANCE_LIMIT = 80#LY
 
-def system_value_in_cache(system_name):
+def system_value_in_cache(system_wanted):
     try:
         #linear search
         with open(f"cache/values.cache", "r") as f:
             for line in f.read().splitlines():
-                systemName = line.split("/")[0]
-                if (system_name == systemName):
+                system_name = line.split("/")[0]
+                if (system_wanted == system_name):
                     f.close()
                     return line.split("/")[1]
         return None

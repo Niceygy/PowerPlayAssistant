@@ -2,42 +2,43 @@ from server.powers import is_system_anarchy, power_full_to_short, get_system_pow
 from server.constants import TASKSHORTCODES, TASKTYPES, POWERWEAKNESSES, HOMESYSTEMS, PERMITLOCKED
 from server.commodites import what_commodity_action
 from server.database.database import StarSystem 
+from server.tasks.odyssey import retrieve_specific_goods
 
-def getTaskType(taskFullName):
+def getTaskType(task_name):
     """
     Get the type of a task based on its full name.
 
     Args:
-        taskFullName (str): The full name of the task.
+        task_name (str): The full name of the task.
 
     Returns:
         str: The type of the task (e.g., "Illegal", "Legal").
     """
     taskShortCode = None
     for key, value in TASKSHORTCODES.items():
-        if taskFullName == value:
+        if task_name == value:
             taskShortCode = key
     for taskType, tasks in TASKTYPES.items():
         if taskShortCode in tasks:
             return taskType
     return None
 
-def isPowersWeakness(powerFullName, taskFullName):
+def isPowersWeakness(power_name, task_name):
     """
     Check if a task is the weakness of a power.
 
     Args:
-        powerFullName (str): The full name of the power.
-        taskFullName (str): The full name of the task.
+        power_name (str): The full name of the power.
+        task_name (str): The full name of the task.
 
     Returns:
         str: "is" if the task is the power's weakness, otherwise "is not".
     """
-    power_shortcode = power_full_to_short(powerFullName)
+    power_shortcode = power_full_to_short(power_name)
     taskShortCode = None
     try:
         for key, value in TASKSHORTCODES.items():
-            if taskFullName == value:
+            if task_name == value:
                 taskShortCode = key
         if taskShortCode in POWERWEAKNESSES[power_shortcode]:
             return "is"
@@ -46,77 +47,79 @@ def isPowersWeakness(powerFullName, taskFullName):
         return "is not"
 
     
-def isHomeSystem(systemname):
+def isHomeSystem(system_name):
     """
     Check if a system is a home system.
 
     Args:
-        systemname (str): The name of the system.
+        system_name (str): The name of the system.
 
     Returns:
         bool: True if the system is a home system, otherwise False.
     """
-    return systemname in HOMESYSTEMS
+    return system_name in HOMESYSTEMS
     
-def isPermitLocked(systemName):
+def isPermitLocked(system_name):
     """
     Check if a system is permit locked.
 
     Args:
-        systemName (str): The name of the system.
+        system_name (str): The name of the system.
 
     Returns:
         bool: True if the system is permit locked, otherwise False.
     """
-    return systemName in PERMITLOCKED
+    return system_name in PERMITLOCKED
     
-def systemNotes(powerFullName, systemName, database):
+def systemNotes(powerFullName, system_name, database):
     """
     Get notes about a system.
 
     Args:
         powerFullName (str): The full name of the power.
-        systemName (str): The name of the system.
+        system_name (str): The name of the system.
 
     Returns:
         str: Notes about the system.
     """
     
-    controllingPower = get_system_power_info(systemName, database)[1]
+    controllingPower = get_system_power_info(system_name, database)[1]
     message = ""
-    if (isHomeSystem(systemName)):
+    if (isHomeSystem(system_name)):
         message += f"This is the home system of {controllingPower}. It cannot be undermined or reinforced. "
-    if (isPermitLocked(systemName)):
+    if (isPermitLocked(system_name)):
         message += f"This system is permit locked."
-    if (hasResSite(systemName, database)):
+    if (hasResSite(system_name, database)):
         message += f"This system has a resource extraction site."
     if message == "":
         return "N/A"
     else:
         return message
     
-def TaskDescription(taskFullName, powerFullName, systemName, systemPowerInfo, database, extraInfo=""):
+def TaskDescription(task_name, power_name, system_name, system_power_info, database, extraInfo=""):
     """
     Get the description of a task.
 
-    Args:
-        taskFullName (str): The full name of the task.
-        isAnarchy (function): Function to check if a system is anarchy.
-        systemPowerInfo (array): Power info for the selected system.
+    Expects:
+        - [String] task_name: The full name of the task.
+        - [String] power_name: The full name of the power.
+        - [String] system_name: The system it is being completed in.
+        - [Array[String]] system_power_info: Powerplay info for that system.
+        - [Object] database: Database connection
 
     Returns:
         str: Description of the task.
     """
-    if taskFullName == None:
+    if task_name == None:
         return ""
+    #a crime?
     result = ""
-    if isTaskACrime(taskFullName, is_system_anarchy(systemName, database)):
+    if isTaskACrime(task_name, is_system_anarchy(system_name, database)):
         result += "This task is illegal in non-anarchy systems. "
-    # else:
-    #     result += "This task is legal in all systems. "
+
     taskShortCode = None
     for key, value in TASKSHORTCODES.items():
-        if taskFullName == value:
+        if task_name == value:
             taskShortCode = key
     with open("./static/conf/Descriptions.txt", "r") as f:
         for line in f:
@@ -124,36 +127,39 @@ def TaskDescription(taskFullName, powerFullName, systemName, systemPowerInfo, da
                 continue
             if str(line).startswith(str(taskShortCode)):
                 result += line.split("=")[1]
-    if taskFullName == "Transport Powerplay commodities":
-        result += f". You will need the commodity '{what_commodity_action(powerFullName, systemName, database)}'."
-    if systemPowerInfo[0] == "Stronghold":
+    if task_name == "Transport Powerplay commodities":
+        result += f". You will need the commodity '{what_commodity_action(power_name, system_name, database)}'."
+    if task_name == "Upload Powerplay Malware":
+        result += f"You will need the odyssey data {retrieve_specific_goods(power_name, system_name, database)}. "
+    if system_power_info[0] == "Stronghold":
         result += " Warning, this system is a stronghold. Opposing powers will not be welcome here"
     if extraInfo != None:
         result += extraInfo
     return result
 
-def hasResSite(systemName, database):
+def hasResSite(system_name, database):
     """
     Check if a system has a resource extraction site.
 
     Args:
-        systemName (str): The name of the system.
+        - [String] system_name: The name of the system.
 
     Returns:
         bool: True if the system has a resource extraction site, otherwise False.
     """
     try:
-        result = database.session.query(StarSystem).filter(StarSystem.system_name == systemName).first()
+        result = database.session.query(StarSystem).filter(StarSystem.system_name == system_name).first()
         return result.has_res_sites
     except Exception as e:
         return False
     
-def isTaskACrime(taskName, isAnarchy):
+def isTaskACrime(task_name, isAnarchy):
     """
     Checks if a task is a crime.
 
     Expects:
-        - [String] taskName: The full name of the tasl
+        - [String] task_name: The full name of the task
+        - [Bool] isAnarchy: Is the system the task is being done in anarchy?
 
     Returns:
         - [bool] isACrime: True if it is illegal, false if not.
@@ -166,8 +172,10 @@ def isTaskACrime(taskName, isAnarchy):
     taskShortCode = ""
 
     for key, data in TASKSHORTCODES.items():
-        if data == taskName:
+        if data == task_name:
             taskShortCode = key
+
+    #task in crime list?
     
     if taskShortCode in TASKTYPES["Illegal"]:
         return True
