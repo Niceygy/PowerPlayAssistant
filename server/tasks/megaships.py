@@ -17,7 +17,7 @@ def get_week_of_cycle():
     weeks = weeks + 1
     while weeks > 6:
         weeks = weeks - 6
-    return weeks
+    return 5# weeks
 
 
 

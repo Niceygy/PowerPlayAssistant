@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PowerPlay Assistant - Task Uncompleteable</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <script defer src="https://data.niceygy.net/script.js" data-website-id="5a305d97-fef0-4c86-9528-243ae53470ad"></script>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+</head>
+<body>
+    <!-- <h1>PowerPlay Assistant</h1> -->
+    <h2>Task Uncompleteable!</h2>
+    <p><strong>This task cannot be completed here!</strong></p>
+    <p>This is an anarchy system, and does not provide bounties.</p>
+    <p>Please find a non-anarchy system nearby</p>
+    <br>
+
+</body>
+<div class="footer">
+    <a href="{{ url_for('index') }}">Home</a>
+</div>
+</html>
+
+<!-- 
+30 7 * * 4 /bin/bash -c 'if [ -f /var/elite/cycle.txt ]; then cycle=$(cat /var/elite/cycle.txt); if [ "$cycle" -eq 6 ]; then echo 1 > /var/elite/cycle.txt; else echo $((cycle + 1)) > /var/elite/cycle.txt; fi; else echo 1 > /var/elite/cycle.txt; fi'
+-->

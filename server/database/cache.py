@@ -1,21 +1,38 @@
-from datetime import datetime
+import requests
+from datetime import datetime, timedelta
 import json
 import ast
 import math
 
 def get_week_of_cycle():
     """
-    Determines the current week of the megaship cycle.
+    Determines the current week of the megaship cycle using data from tick.edcd.io.
     Returns:
         int: The current week of the cycle (1-6)
     """
-    date = datetime.now()
-    days_since_start = (date - datetime(2025, 1, 10)).days
-    weeks = math.trunc(days_since_start / 7)
+    # Fetch the latest tick data from tick.edcd.io
+    response = requests.get("https://tick.edcd.io/api/tick")
+    if response.status_code != 200:
+        raise Exception("Failed to fetch tick data")
+
+    tick_data = response.json()
+    latest_tick = tick_data[0]["time"]
+
+    # Convert the latest tick time to a datetime object
+    latest_tick_datetime = datetime.strptime(latest_tick, "%Y-%m-%dT%H:%M:%S.%fZ")
+
+    # Calculate the number of days since the latest tick
+    days_since_tick = (datetime.now(datetime.timezone.utc) - latest_tick_datetime).days
+
+    # Calculate the current week of the cycle
+    weeks = math.trunc(days_since_tick / 7)
     weeks = weeks + 1
     while weeks > 6:
         weeks = weeks - 6
-    return weeks
+
+    print(weeks)
+
+    return 5#weeks
 
 def item_in_cache(system_name, shortcode, opposing, dataType):
     """
