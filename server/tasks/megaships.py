@@ -1,23 +1,10 @@
 from datetime import datetime
+from server.database.cycle import get_cycle_week
 from server.database.database import StarSystem, Megaship
 import math
 from sqlalchemy.orm import class_mapper
 from server.database.cache import item_in_cache, add_item_to_cache
 from server.constants import ITEMS_TO_RETURN
-
-def get_week_of_cycle():
-    """
-    Determines the current week of the megaship cycle.
-    Returns:
-        int: The current week of the cycle (1-6)
-    """
-    date=datetime.now()
-    days_since_start = (date - datetime(2025, 1, 10)).days
-    weeks = math.trunc(days_since_start / 7)
-    weeks = weeks + 1
-    while weeks > 6:
-        weeks = weeks - 6
-    return 5# weeks
 
 
 
@@ -47,7 +34,7 @@ def find_nearest_megaships(system_name, shortcode, opposing, session):
     if cache != None:
         return cache
     
-    current_week = get_week_of_cycle()
+    current_week = get_cycle_week()
     system_column = f"SYSTEM{current_week}"
 
     # Where is the user???

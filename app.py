@@ -26,11 +26,11 @@ from server.database.database import (
     Station,
     Megaship,
 )
-from server.tasks.megaships import get_week_of_cycle
+from server.database.cycle import watch_tick, get_cycle_week
 from contextlib import contextmanager
 
 print(" * All imports sucsessful")
-
+watch_tick()
 
 """
 Flask and database
@@ -109,7 +109,7 @@ def database_stats():
         systems=systems,
         megaships=megaships,
         stations=stations,
-        week=get_week_of_cycle()
+        week=get_cycle_week()
     )
 
 @app.route("/search_systems", methods=["GET"])
