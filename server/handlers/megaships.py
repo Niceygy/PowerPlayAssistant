@@ -31,9 +31,7 @@ def megaships_results(request, power, system, database):
         extraInfo = f"Found {ITEMS_TO_RETURN} megaships in {power}'s systems, nearest to {system}"
         choice = True
 
-    megaships = find_nearest_megaships(
-        system, powerShortCode, choice, database.session
-    )
+    megaships = find_nearest_megaships(system, powerShortCode, choice, database.session)
     return render_template(
         "tasks/megaships.html",
         type=request.args.get("choice"),

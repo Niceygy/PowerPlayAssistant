@@ -13,7 +13,7 @@ def write_cycle_week(week):
 
 def get_cycle_week():
     with open("cache/week.txt", "r") as f:
-        data = f.read()
+        data = f.read().strip()
         f.close()
     return data
 
