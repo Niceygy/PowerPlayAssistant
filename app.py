@@ -3,6 +3,8 @@ print(" * Loading...")
 IMPORTS
 """
 import os
+
+from server.handlers.choice import handle_task_choice
 pyver = os.getenv("PYTHON_VERSION")
 print(f" * Using Python {pyver}")
 from flask import (
@@ -62,55 +64,65 @@ def session_scope():
 print(f" * Using database connection string: {DATABASE_CONNECTION_STRING}")
 
 """
+Error Handler
+"""
+
+def uhoh(error):
+    return render_template(
+        "does_not_work.html",
+        ERRORDATA=error
+    )
+
+"""
 Route Handlers
 """
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    return handle_index(request)
+    try:
+        return handle_index(request)
+    except Exception as e:
+        return uhoh(str(e))
 
 
 @app.route("/is_crime", methods=["GET", "POST"])
 def is_crime():
-    return handle_is_crime(request, database)
+    try:
+        return handle_is_crime(request, database)
+    except Exception as e:
+        return uhoh(str(e))
 
 
 @app.route("/results")
 def results():
-    return handle_results(request, database)
+    try:
+        return handle_results(request, database)
+    except Exception as e:
+        return uhoh(str(e))
 
 
-@app.route("/megaship_choice", methods=["GET", "POST"])
-def megaship_choice():
-    system = request.args.get("system")
-    task = request.args.get("taskName")
-    power = request.args.get("power")
-
-    if request.method == "POST":
-        choice = request.form.get("choice")
-        system = request.form.get("system")
-        task = request.form.get("task")
-        power = request.form.get("power")
-        return redirect(
-            url_for("results", system=system, power=power, taskName=task, choice=choice)
-        )
-
-    return render_template(
-        "tasks/megaship_choice.html", system=system, power=power, taskName=task
-    )
+@app.route("/handle_choice", methods=["GET", "POST"])
+def handle_choice():
+    try:
+        return handle_task_choice(request)
+    except Exception as e:
+        return uhoh(str(e))
 
 @app.route("/database", methods=["GET"])
 def database_stats():
-    systems = database.session.query(func.count(func.distinct(StarSystem.system_name))).scalar()
-    megaships = database.session.query(func.count(func.distinct(Megaship.name))).scalar()
-    stations = database.session.query(func.count(func.distinct(Station.station_name))).scalar()
-    return render_template(
-        "database.html",
-        systems=systems,
-        megaships=megaships,
-        stations=stations,
-        week=get_cycle_week()
-    )
+    try:
+        systems = database.session.query(func.count(func.distinct(StarSystem.system_name))).scalar()
+        megaships = database.session.query(func.count(func.distinct(Megaship.name))).scalar()
+        stations = database.session.query(func.count(func.distinct(Station.station_name))).scalar()
+        return render_template(
+            "database.html",
+            systems=systems,
+            megaships=megaships,
+            stations=stations,
+            week=get_cycle_week()
+        )
+    except Exception as e:
+        return uhoh(str(e))
 
 @app.route("/search_systems", methods=["GET"])
 def search_systems():

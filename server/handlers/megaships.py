@@ -1,5 +1,5 @@
 from flask import render_template
-from server.powers import get_system_power_info, is_system_anarchy, power_full_to_short
+from server.powers import get_system_power_info, power_full_to_short
 from server.tasks.megaships import find_nearest_megaships
 from server.constants import ITEMS_TO_RETURN
 from server.tasks.tasks import (
@@ -8,6 +8,7 @@ from server.tasks.tasks import (
     isPowersWeakness,
     isTaskACrime,
 )
+import functools
 
 
 def megaships_results(request, power, system, database):

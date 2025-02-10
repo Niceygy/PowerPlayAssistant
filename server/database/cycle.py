@@ -38,7 +38,7 @@ def update_cycle_week():
             if now.weekday() == 3:  # Thursday
                 print("Updating cycle week...")
                 try:
-                    edcd_tick = requests.get("https://tick.edcd.io/api/tick", timeout=30).text.replace('"', '')
+                    edcd_tick = requests.get("https://tick.edcd.io/api/tick", timeout=30).text.replace('"', '').strip()
                     tick_time = parse(edcd_tick)
                     if tick_time.isoweekday() == 4:
                         if tick_time.date() == now.date():

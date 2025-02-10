@@ -36,12 +36,23 @@ def handle_is_crime(request, database):
         else:
             anarchy = False
 
-        return redirect(
-            url_for(
-                "results",
-                system=system,
-                taskName=task,
-                power=power,
-                anarchy=anarchy,
+        if task == "Holoscreen Hacking":
+            return redirect(
+                url_for(
+                    "handle_choice",
+                    system=system,
+                    taskName=task,
+                    power=power,
+                    anarchy=anarchy,
+                )
             )
-        )
+        else:
+            return redirect(
+                url_for(
+                    "results",
+                    system=system,
+                    taskName=task,
+                    power=power,
+                    anarchy=anarchy,
+                )
+            )

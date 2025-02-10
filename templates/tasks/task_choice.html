@@ -10,16 +10,17 @@
     <script defer src="https://data.niceygy.net/script.js" data-website-id="5a305d97-fef0-4c86-9528-243ae53470ad"></script>
   </head>
   <body>
-    <h1>Megaship Choice</h1>
-    <p><strong>Task:</strong> {{ task }}</p>
+    <div style="text-align: center">
+    <h1>Task Choice!</h1>
+    <p><strong>Task:</strong> {{ taskName }}</p>
     <br />
-    <p>Would you like to renforce your own power's system,</p>
+    <p>Would you like to renforce your own power's systems,</p>
     <p>or undermine your opponents?</p>
     <!-- <p><i>In the future, you will be able to select if you want to search for megaships in</i></p>
     <p><i>Reinforcing or undermining systems. But for now, just select either.</i></p> -->
 
 
-    <form action="{{ url_for('megaship_choice') }}" method="post">
+    <form action="{{ url_for('handle_choice') }}" method="post">
       <input type="hidden" name="task" value="{{ taskName }}">
       <input type="hidden" name="power" value="{{ power }}">
       <input type="hidden" name="system" value="{{ system }}">
@@ -46,5 +47,6 @@
     </form>
     <br />
     <a href="{{ url_for('index') }}">Back to Home</a>
+    </div>
   </body>
 </html>
