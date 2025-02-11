@@ -5,6 +5,7 @@ IMPORTS
 import os
 
 from server.handlers.choice import handle_task_choice
+from server.status import status, update_status
 pyver = os.getenv("PYTHON_VERSION")
 print(f" * Using Python {pyver}")
 from flask import (
@@ -12,8 +13,6 @@ from flask import (
     jsonify,
     render_template,
     request,
-    redirect,
-    url_for,
     send_from_directory,
 )
 from sqlalchemy import func
@@ -147,6 +146,13 @@ def changelog():
 def robots():
     print(request.headers.get("User-Agent"))
     return send_from_directory(app.static_folder, "robots.txt")
+
+@app.route("/status")
+def status_update():
+    emoji = request.args.get("emoji")       
+    text = request.args.get("text")
+    update_status(text, emoji)
+    return f"Updated to {status()}"
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=5001)

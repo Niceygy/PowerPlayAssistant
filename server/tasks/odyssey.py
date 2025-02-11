@@ -16,5 +16,6 @@ def retrieve_specific_goods(powerFullName, system_name, database):
         #undermine
         return POWERDATA[1]
     
-
+def find_anarchy_settlement():
+    i = 0
 

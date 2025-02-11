@@ -39,8 +39,8 @@ megaships:
 
 class StarSystem(database.Model):
     __tablename__ = "star_systems"
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    system_name = Column(String(255))
+    # id = Column(Integer, , autoincrement=True)
+    system_name = Column(String(255), primary_key=True)
     latitude = Column(Float)
     longitude = Column(Float)
     height = Column(Float)
