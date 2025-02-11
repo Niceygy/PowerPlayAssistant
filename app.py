@@ -15,6 +15,7 @@ from flask import (
     request,
     send_from_directory,
 )
+from flask_caching import Cache
 from sqlalchemy import func
 from server.handlers.index import handle_index
 from server.database.systems import query_star_systems
@@ -44,6 +45,8 @@ app.config["SQLALCHEMY_POOL_TIMEOUT"] = 30
 app.config["SQLALCHEMY_POOL_RECYCLE"] = 280
 app.config["SQLALCHEMY_MAX_OVERFLOW"] = 20
 database.init_app(app)
+cache = Cache(app, config={'CACHE_TYPE': 'simple'})
+
 
 
 @contextmanager
@@ -78,6 +81,7 @@ Route Handlers
 """
 
 @app.route("/", methods=["GET", "POST"])
+@cache.cached(timeout=600)
 def index():
     try:
         return handle_index(request)
@@ -86,6 +90,7 @@ def index():
 
 
 @app.route("/is_crime", methods=["GET", "POST"])
+@cache.cached(timeout=600, query_string=True)
 def is_crime():
     try:
         return handle_is_crime(request, database)
@@ -94,6 +99,7 @@ def is_crime():
 
 
 @app.route("/results")
+@cache.cached(timeout=600, query_string=True)
 def results():
     try:
         return handle_results(request, database)
@@ -108,12 +114,18 @@ def handle_choice():
     except Exception as e:
         return uhoh(str(e))
 
+@cache.memoize(timeout=60)
+def get_database_stats():
+    print("cache")
+    systems = database.session.query(func.count(func.distinct(StarSystem.system_name))).scalar()
+    megaships = database.session.query(func.count(func.distinct(Megaship.name))).scalar()
+    stations = database.session.query(func.count(func.distinct(Station.station_name))).scalar()
+    return systems, megaships, stations
+
 @app.route("/database", methods=["GET"])
 def database_stats():
     try:
-        systems = database.session.query(func.count(func.distinct(StarSystem.system_name))).scalar()
-        megaships = database.session.query(func.count(func.distinct(Megaship.name))).scalar()
-        stations = database.session.query(func.count(func.distinct(Station.station_name))).scalar()
+        systems, megaships, stations = get_database_stats()
         return render_template(
             "database.html",
             systems=systems,
@@ -122,9 +134,10 @@ def database_stats():
             week=get_cycle_week()
         )
     except Exception as e:
-        return uhoh(str(e))
+        return uhoh(str(e)) 
 
 @app.route("/search_systems", methods=["GET"])
+@cache.cached(timeout=60, query_string=True)
 def search_systems():
     query = request.args.get("query")
     results = query_star_systems(query)
@@ -132,14 +145,17 @@ def search_systems():
 
 
 @app.route("/favicon.ico")
+@cache.cached(timeout=60)
 def favicon():
     return send_from_directory(app.static_folder, "favicon.ico")
 
 @app.route("/copy_icon.svg")
+@cache.cached(timeout=60)
 def copy_icon():
     return send_from_directory(app.static_folder, "copy_solid_icon.svg")
 
 @app.route("/changelog", methods=["GET"])
+@cache.cached(timeout=60)
 def changelog():
     return render_template("changelog.html")
 
