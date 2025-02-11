@@ -17,7 +17,7 @@ RMCP=Reboot mission completion: Complete missions that involve rebooting systems
 CMCR=Commit crimes: Engage in criminal activities (E.G Murder, other crimes do not seem to count as much)
 # ODY
 RSGD=Retrieve specific goods: Retrieve specific goods required for missions. 
-TPCL=Transfer Power classified data: Transfer classified data for your power.
-TPAD=Transfer Power association and political data: Transfer association and political data for your power.
-TPRD=Transfer Power research and Industrial data: Transfer research and industrial data for your power.
+TPCL=Download "Power classified data" from odyssey settlements, and return it to a power contact in-system.
+TPAD=Download "Power Political Data" & "Power Association Data" from odyssey settlements, and return it to a power contact in a system your power controls.
+TPRD=Download "Power research data" & "Power Industrial data" from odyssey settlements, and return it to a power contact in a system your power controls.
 UPMW=Get Powerplay malware from your local power contact, and upload it to a settlement data point in the target system. Note: This may trigger the alarms! 

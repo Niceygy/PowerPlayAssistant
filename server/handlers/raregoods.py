@@ -1,7 +1,7 @@
 from flask import render_template
 from server.powers import get_system_power_info, is_system_anarchy
 from server.tasks.raregoods import best_rare_goods
-from server.tasks.tasks import TaskDescription, isPowersWeakness, isTaskACrime, systemNotes
+from server.tasks.tasks import TaskDescription, is_task_own_strength, isPowersWeakness, isTaskACrime, systemNotes
 
 
 def handle_rare_goods(request, database):
@@ -34,5 +34,6 @@ def handle_rare_goods(request, database):
         isOpposingWeakness=isPowersWeakness(power, task),
         taskDescription=TaskDescription(task, power, system, powerInfo, database),
         systemNotes=systemNotes(power, system, database),
-        raregoods=rare_goods
+        raregoods=rare_goods,
+        isOwnStrength="is" if is_task_own_strength(task, controllingPower) else "isn't"
     )

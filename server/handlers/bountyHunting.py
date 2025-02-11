@@ -1,7 +1,7 @@
 from flask import render_template
 from server.powers import get_system_power_info, is_system_anarchy
 from server.tasks.bountyHunting import has_stations
-from server.tasks.tasks import TaskDescription, getTaskType, isPowersWeakness, isTaskACrime, systemNotes
+from server.tasks.tasks import TaskDescription, getTaskType, is_task_own_strength, isPowersWeakness, isTaskACrime, systemNotes
 
 
 def handle_bounty_hunting(request, database):
@@ -39,4 +39,5 @@ def handle_bounty_hunting(request, database):
             isOpposingWeakness=isPowersWeakness(power, task),
             taskDescription=TaskDescription(task, power, system, powerInfo, database),
             systemNotes=systemNotes(power, system, database),
+            isOwnStrength="is" if is_task_own_strength(task, controllingPower) else "isn't"
         )

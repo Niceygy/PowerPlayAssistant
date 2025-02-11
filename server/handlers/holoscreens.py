@@ -4,6 +4,7 @@ from server.tasks.megaships import find_nearest_megaships
 from server.tasks.tasks import (
     TaskDescription,
     getTaskType,
+    is_task_own_strength,
     isPowersWeakness,
 )
 from server.tasks.holoscreens import count_system_stations
@@ -32,5 +33,6 @@ def handle_holoscreens(request, power, system, database):
         isIllegal="is",
         isOpposingWeakness=isPowersWeakness(power, task),
         otherSystems=otherSystems,
-        extraInfo="Found the 10 nearest systems to you, with 2 or more stations"
+        extraInfo="Found the 10 nearest systems to you, with 2 or more stations",
+        isOwnStrength="is" if is_task_own_strength(task, power) else "isn't"
     )

@@ -116,8 +116,8 @@ def TaskDescription(task_name, power_name, system_name, system_power_info, datab
         return ""
     #a crime?
     result = ""
-    if isTaskACrime(task_name, is_system_anarchy(system_name, database)):
-        result += "This task is illegal in non-anarchy systems. "
+    # if isTaskACrime(task_name, is_system_anarchy(system_name, database)):
+    #     result += "This task is illegal in non-anarchy systems. "
 
     taskShortCode = None
     for key, value in TASKSHORTCODES.items():

@@ -5,6 +5,7 @@ from server.constants import ITEMS_TO_RETURN
 from server.tasks.tasks import (
     TaskDescription,
     getTaskType,
+    is_task_own_strength,
     isPowersWeakness,
     isTaskACrime,
 )
@@ -45,4 +46,5 @@ def megaships_results(request, power, system, database):
         isOpposingWeakness=isPowersWeakness(power, task),
         extraInfo=extraInfo,
         megaships=megaships,
+        isOwnStrength="is" if is_task_own_strength(task, power) else "isn't"
     )
