@@ -116,7 +116,6 @@ def handle_choice():
 
 @cache.memoize(timeout=60)
 def get_database_stats():
-    print("cache")
     systems = database.session.query(func.count(func.distinct(StarSystem.system_name))).scalar()
     megaships = database.session.query(func.count(func.distinct(Megaship.name))).scalar()
     stations = database.session.query(func.count(func.distinct(Station.station_name))).scalar()
