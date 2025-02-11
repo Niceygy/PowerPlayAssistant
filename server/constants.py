@@ -76,8 +76,15 @@ TASKTYPES = {
     "Aid": ["CAHM", "CEPD"],
     "Illegal": ["CMCR", "HSHK", "PKLS", "UPMW"],
 }
+"""
+Task types: e.g trading or combat
+"""
 
 CRIMINALTASKS = ["CMCR", "HSHK", "PKLS", "UPMW", "TPRD","TPCL", "TPAD"]
+"""
+Tasks that incur a bounty or fine
+"""
+
 
 POWERWEAKNESSES = {
     "ALD": ["CMCR", "SDLK"],
@@ -93,6 +100,9 @@ POWERWEAKNESSES = {
     "YRG": ["CMCR", "UPMW"],
     "ZMT": ["RSGD", "SMNR"],
 }
+"""
+Tasks powers are weak to
+"""
 
 POWERS = {
     "ALD": "Arissa Lavingy-Duval",
@@ -108,6 +118,10 @@ POWERS = {
     "YRG": "Yuri Grom",
     "ZMT": "Zemina Torval",
 }
+"""
+The powers and their shortcodes
+"""
+
 
 HOMESYSTEMS = {
     "Kamadhenu": "ALD",
@@ -123,11 +137,12 @@ HOMESYSTEMS = {
     "Clayakarma": "YRG",
     "Synteini": "ZMT",
 }
+"""
+Powers home systems
+"""
 
 
-"""
-Permit locked systems
-"""
+
 PERMITLOCKED = [
     # independent
     "Shinrarta Dezhra",
@@ -150,6 +165,9 @@ PERMITLOCKED = [
     # alliance
     "Alioth",
 ]
+"""
+Permit locked systems
+"""
 
 POWERNAMES = [
     "Arissa Lavingy-Duval",
@@ -165,11 +183,10 @@ POWERNAMES = [
     "Yuri Grom",
     "Zemina Torval",
 ]
+"""
+Power's names
+"""
 
-"""
-Activities that this power really likes.
-Uses shortcodes
-"""
 POWERRENFORCEACTIVITIES = {
     "ALD": ["BTHT", "CEPD", "HSHK"],
     "ARD": ["BTHT", "PKLS", "RSGD"],
@@ -184,6 +201,10 @@ POWERRENFORCEACTIVITIES = {
     "YRG": ["BTHT", "CEPD", "HSHK"],
     "ZMT": ["SLFP", "SMNR", "CAHM"],
 }
+"""
+Activities that this power really likes.
+Uses shortcodes
+"""
 
 POWERCOMMODITIES = {
     # power: aquire, reinforce, undermine

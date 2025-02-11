@@ -1,5 +1,5 @@
 from server.powers import is_system_anarchy, power_full_to_short, get_system_power_info
-from server.constants import CRIMINALTASKS, TASKSHORTCODES, TASKTYPES, POWERWEAKNESSES, HOMESYSTEMS, PERMITLOCKED
+from server.constants import CRIMINALTASKS, POWERRENFORCEACTIVITIES, TASKSHORTCODES, TASKTYPES, POWERWEAKNESSES, HOMESYSTEMS, PERMITLOCKED
 from server.commodites import what_commodity_action
 from server.database.database import StarSystem 
 from server.tasks.odyssey import retrieve_specific_goods
@@ -88,9 +88,9 @@ def systemNotes(powerFullName, system_name, database):
     if (isHomeSystem(system_name)):
         message += f"This is the home system of {controllingPower}. It cannot be undermined or reinforced. "
     if (isPermitLocked(system_name)):
-        message += f"This system is permit locked."
+        message += f"This system is permit locked. "
     if (hasResSite(system_name, database)):
-        message += f"This system has a resource extraction site."
+        message += f"This system has a resource extraction site. "
     if get_system_power_info(system_name, database)[0] == "Stronghold":
         message += " Warning, this system is a stronghold. Opposing powers will not be welcome here"
     if message == "":
@@ -181,3 +181,19 @@ def isTaskACrime(task_name, isAnarchy):
         return True
     else:
         return False
+    
+def is_task_own_strength(taskFullName, powerFullName):
+    """
+    Is this task really good for this power?
+    """
+    taskShortCode = None
+    for key, value in TASKSHORTCODES.items():
+        if taskFullName == value:
+            taskShortCode = key
+    powerShortCode = power_full_to_short(powerFullName)
+    if taskShortCode in POWERRENFORCEACTIVITIES[powerShortCode]:
+        return True
+    else:
+        return False
+
+    

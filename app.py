@@ -69,7 +69,8 @@ Error Handler
 def uhoh(error):
     return render_template(
         "does_not_work.html",
-        ERRORDATA=error
+        ERRORDATA=error,
+        ERRORCODE="IRRECONCILABLE"
     )
 
 """

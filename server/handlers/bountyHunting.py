@@ -19,7 +19,11 @@ def handle_bounty_hunting(request, database):
     
     if is_system_anarchy(system, database):
         #bounty hunting dosen't work in anarchy!
-        return render_template("does_not_work.html")
+        return render_template(
+            "does_not_work.html",
+            ERRORDATA="Bounty hunting cannot be completed in anarchy systems",
+            ERRORCODE="INCOMPLETABLE"
+            )
     
     
     return render_template(
