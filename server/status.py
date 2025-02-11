@@ -1,5 +1,5 @@
 global STATUS
-STATUS = "OK"
+STATUS = "ALL OPERATIONAL"
 global STATUS_EMOJI
 STATUS_EMOJI = "🟢"
 

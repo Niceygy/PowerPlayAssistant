@@ -1,5 +1,5 @@
 from server.powers import is_system_anarchy, power_full_to_short, get_system_power_info
-from server.constants import TASKSHORTCODES, TASKTYPES, POWERWEAKNESSES, HOMESYSTEMS, PERMITLOCKED
+from server.constants import CRIMINALTASKS, TASKSHORTCODES, TASKTYPES, POWERWEAKNESSES, HOMESYSTEMS, PERMITLOCKED
 from server.commodites import what_commodity_action
 from server.database.database import StarSystem 
 from server.tasks.odyssey import retrieve_specific_goods
@@ -177,7 +177,7 @@ def isTaskACrime(task_name, isAnarchy):
 
     #task in crime list?
     
-    if taskShortCode in TASKTYPES["Illegal"]:
+    if taskShortCode in CRIMINALTASKS:
         return True
     else:
         return False

@@ -16,12 +16,13 @@
   <body>
     <div style="text-align: center">
       <h1>Warning!</h1>
-      <p><strong>Task:</strong> {{ task }}</p>
+      <h3><strong>Task:</strong> {{ task }}</h3>
       <br />
       <p>
         The task you have selected is illegal, and may incur a fine or bounty
       </p>
       <p>Would you like to limit your search to anarchy-only systems?</p>
+      <p><i>(Commiting crimes in anarchy systems does not issue a fine or bounty)</i></p>
 
       <form action="{{ url_for('is_crime') }}" method="post">
         <input type="hidden" name="taskName" value="{{ task }}" />

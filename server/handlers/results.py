@@ -1,5 +1,6 @@
 from flask import render_template, redirect, url_for
 
+from server.handlers.bountyHunting import handle_bounty_hunting
 from server.handlers.holoscreens import handle_holoscreens
 from server.handlers.megaships import megaships_results
 from server.handlers.raregoods import handle_rare_goods
@@ -33,6 +34,8 @@ def handle_results(request, database):
         return handle_rare_goods(request, database)
     elif task == "Holoscreen Hacking":
         return handle_holoscreens(request, power, system, database)
+    elif task == "Bounty Hunting":
+        return handle_bounty_hunting(request, database)
     else:
         return render_template(
             "tasks/general.html",

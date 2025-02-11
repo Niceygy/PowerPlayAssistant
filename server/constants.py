@@ -77,6 +77,7 @@ TASKTYPES = {
     "Illegal": ["CMCR", "HSHK", "PKLS", "UPMW"],
 }
 
+CRIMINALTASKS = ["CMCR", "HSHK", "PKLS", "UPMW", "TPRD","TPCL", "TPAD"]
 
 POWERWEAKNESSES = {
     "ALD": ["CMCR", "SDLK"],
