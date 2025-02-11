@@ -35,7 +35,7 @@ def handle_results(request, database):
         return handle_rare_goods(request, database)
     elif task == "Holoscreen Hacking":
         return handle_holoscreens(request, power, system, database)
-    elif task == "Bounty Hunting":
+    elif task == "Bounty hunting":
         return handle_bounty_hunting(request, database)
     else:
         return render_template(

@@ -16,7 +16,6 @@ def handle_bounty_hunting(request, database):
     powerInfo = get_system_power_info(system, database)
     systemState = powerInfo[0]
     controllingPower = powerInfo[1]
-    
     if is_system_anarchy(system, database):
         #bounty hunting dosen't work in anarchy!
         return render_template(
