@@ -24,7 +24,7 @@ from server.handlers.index import handle_index
 from server.database.systems import query_star_systems
 from server.handlers.is_crime import handle_is_crime
 from server.handlers.results import handle_results
-from server.database.cycle import watch_tick, get_cycle_week
+from server.database.cycle import watch_tick, get_cycle_week, write_cycle_week
 from server.database.database import (
     database,
     StarSystem,
@@ -128,6 +128,13 @@ def meritminer():
     return render_template(
         "meritminer.html"
     )
+
+@app.route("/tickset", methods=["GET"])
+def tickset():
+    week = request.args.get("week")
+    write_cycle_week(int(week))
+    return f"Set week to {week}"
+
 
 @cache.memoize(timeout=60)
 def get_database_stats():
