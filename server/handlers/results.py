@@ -27,7 +27,7 @@ def handle_results(request, database):
 
     if task == "Scan Megaship Datalinks" and megaship_sys_type_choice == None:
         return redirect(
-            url_for("task_choice", system=system, power=power, taskName=task)
+            url_for("handle_choice", system=system, power=power, taskName=task)
         )
     elif task == "Scan Megaship Datalinks" and megaship_sys_type_choice != None:
         return megaships_results(request, power, system, database)
