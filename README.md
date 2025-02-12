@@ -41,7 +41,7 @@ PowerPlay assistant requires two things:
 - A MariaDB Database
 
 All python requirements can be installed using `python3 -m pip3 install -r requirements.txt`
-
+I would reccomend using a venv! `python3 -m venv .venv`
 The MariaDB can be set up with the following sql commands.
 
 Systems table: `CREATE TABLE IF NOT EXISTS star_systems (id BIGINT PRIMARY KEY AUTO_INCREMENT, system_name VARCHAR(255), latitude DOUBLE, longitude DOUBLE, height DOUBLE, state VARCHAR(255), shortcode VARCHAR(255), is_anarchy DOUBLE, has_res_sites DOUBLE);`
@@ -59,15 +59,15 @@ If you need help with any part, feel free to contact me on [BlueSky](https://go.
 PowerPlay Assistant uses the following docker-compose.yml.
 
 ``` yaml
-version: "3.3"
- services:
+# The docker compose file that runs powerplay assistant
+services:
   powerplay_assistant:
     ports:
       - 5005:5005
-    container_name: ppa_server
+    container_name: PowerPlayAssistant
     stdin_open: true
     tty: true
-    image: niceygynet/powerplay_assistant
+    image: ghcr.io/niceygy/powerplayassistant
     restart: unless-stopped
     networks:
       - intranet
@@ -77,7 +77,7 @@ version: "3.3"
       - powerplaycache:/home/cache/
   mariadb:
     image: mariadb:latest
-    container_name: ppa_database
+    container_name: MariaDB
     environment:
       MYSQL_ROOT_PASSWORD: root_password
       MYSQL_DATABASE: elite
@@ -88,10 +88,24 @@ version: "3.3"
       - 3306:3306
     volumes:
       - mariadb_data:/var/lib/mysql
+      - /root/code/ED/mysql.cnf:/etc/mysql/my.cnf
     restart: unless-stopped
+  data_collector:
+    container_name: EDDataCollector
+    stdin_open: true
+    tty: true
+    image: ghcr.io/niceygy/eddatacollector
+    restart: unless-stopped
+    networks:
+      - intranet
+    depends_on:
+      - mariadb
 networks:
   intranet: {}
 volumes:
   mariadb_data: null
   powerplaycache: null
+x-dockge:
+  urls:
+    - https://elite.niceygy.net
 ```
