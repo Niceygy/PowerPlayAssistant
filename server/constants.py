@@ -14,7 +14,7 @@ TASKNAMES = [
     "Power Kills",
     "Scan Megaship Datalinks",
     "Sell for large profits",
-    "Sell mined resources",
+    "Sell Mined Resources",
     "Sell rare goods",
     "Transport Powerplay commodities",
     "Complete aid and humanitarian missions",

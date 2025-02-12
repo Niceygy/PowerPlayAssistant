@@ -18,6 +18,9 @@ def get_cycle_week():
     return data
 
 def get_seconds_until_target(target_hour=7, target_minute=0):
+    """
+    How many seconds until the target time?
+    """
     now = datetime.now()
     target = now.replace(hour=target_hour, minute=target_minute, second=0, microsecond=0)
     
@@ -26,12 +29,15 @@ def get_seconds_until_target(target_hour=7, target_minute=0):
     
     return (target - now).total_seconds()
 
-def update_cycle_week():    
+def update_cycle_week():
+    """
+    Watches for the tick, and updates accordingly
+    """
     print(" * Started tick watcher")
     while True:
         try:
             # Calculate initial delay to target time (e.g. 7:00)
-            delay = get_seconds_until_target(8, 0)
+            delay = get_seconds_until_target(8, 30)
             time.sleep(delay)
             
             now = datetime.now()
@@ -58,7 +64,9 @@ def update_cycle_week():
 
 
 def watch_tick():
-    # Start the update_cycle_week function in a separate thread
+    """
+    Starts the tick watcher in a seperate thread
+    """
     thread = threading.Thread(target=update_cycle_week)
     thread.daemon = True
     thread.start()

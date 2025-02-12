@@ -3,14 +3,12 @@ from flask_sqlalchemy import SQLAlchemy
 import math
 
 database = SQLAlchemy()
-
 """
 TABLES:
 
 star_systems:
 
-    id: int pri key
-    system_name text
+    system_name text pri key
     latitude float
     longitude float
     height float
@@ -39,7 +37,6 @@ megaships:
 
 class StarSystem(database.Model):
     __tablename__ = "star_systems"
-    # id = Column(Integer, , autoincrement=True)
     system_name = Column(String(255), primary_key=True)
     latitude = Column(Float)
     longitude = Column(Float)

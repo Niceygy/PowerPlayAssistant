@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PowerPlay Assistant - Pending Redirect</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <script defer src="https://data.niceygy.net/script.js" data-website-id="5a305d97-fef0-4c86-9528-243ae53470ad"></script>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+</head>
+<script>
+    function redirect() {
+        window.location.href = "https://meritminer.cc/"
+    }
+</script>
+<body>
+    <div style="text-align: center">
+    <!-- <h1>PowerPlay Assistant</h1> -->
+    <h2>Pending Redirect</h2>
+    <p><strong>There is a better tool for this!</strong></p>
+    <p>The tool MeritMiner is better suited to helping you with this task.</p>
+    <p><i>Will redirect to: https://meritminer.cc/</i></p>
+
+    <button onclick="redirect()">Go!</button>
+    <br>
+    <br></br>
+
+</body>
+<div class="footer">
+    <a href="{{ url_for('index') }}">Home</a>
+</div>
+</div>
+</html>
+
+<!-- 
+30 7 * * 4 /bin/bash -c 'if [ -f /var/elite/cycle.txt ]; then cycle=$(cat /var/elite/cycle.txt); if [ "$cycle" -eq 6 ]; then echo 1 > /var/elite/cycle.txt; else echo $((cycle + 1)) > /var/elite/cycle.txt; fi; else echo 1 > /var/elite/cycle.txt; fi'
+-->

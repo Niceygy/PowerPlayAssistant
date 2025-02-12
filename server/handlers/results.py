@@ -37,6 +37,8 @@ def handle_results(request, database):
         return handle_holoscreens(request, power, system, database)
     elif task == "Bounty hunting":
         return handle_bounty_hunting(request, database)
+    elif task == "Sell Mined Resources":
+        return redirect(url_for("meritminer"))
     else:
         return render_template(
             "tasks/general.html",
