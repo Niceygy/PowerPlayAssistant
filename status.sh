@@ -3,6 +3,7 @@
 # Check if the correct number of arguments is provided
 if [ "$#" -ne 2 ]; then
     echo "Usage: $0 <text> <emoji>"
+    echo "Replace spaces in text with +"
     exit 1
 fi
 

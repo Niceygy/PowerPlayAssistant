@@ -98,7 +98,7 @@ def systemNotes(powerFullName, system_name, database):
     else:
         return message
     
-def TaskDescription(task_name, power_name, system_name, system_power_info, database, extraInfo=""):
+def TaskDescription(task_name: str, power_name: str, system_name: str, system_power_info, database, extraInfo=""):
     """
     Get the description of a task.
 
@@ -137,7 +137,7 @@ def TaskDescription(task_name, power_name, system_name, system_power_info, datab
         result += extraInfo
     return result
 
-def hasResSite(system_name, database):
+def hasResSite(system_name: str, database):
     """
     Check if a system has a resource extraction site.
 
@@ -153,7 +153,7 @@ def hasResSite(system_name, database):
     except Exception as e:
         return False
     
-def isTaskACrime(task_name, isAnarchy):
+def isTaskACrime(task_name: str, isAnarchy: bool):
     """
     Checks if a task is a crime.
 
@@ -182,7 +182,7 @@ def isTaskACrime(task_name, isAnarchy):
     else:
         return False
     
-def is_task_own_strength(taskFullName, powerFullName):
+def is_task_own_strength(taskFullName: str, powerFullName: str):
     """
     Is this task really good for this power?
     """

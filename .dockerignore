@@ -4,3 +4,9 @@ __pycache__
 __pycache__/*
 cache/*
 cache/
+build/
+status.sh
+build.sh
+.git
+.git/*
+.gitignore
