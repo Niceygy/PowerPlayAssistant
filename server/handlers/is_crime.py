@@ -29,7 +29,15 @@ def handle_is_crime(request, database):
         if anarchy == "Yes":
             anarchy = True
             # we need to find an anarchy system!
-            start_x, start_y, start_z = system_coordinates(system, database)
+            coords = system_coordinates(system, database)
+            if coords == None:
+                    return render_template(
+                        "does_not_work.html", ERRORDATA="System could not be found", ERRORCODE="IRRETREVABLE"
+                    )
+            start_x = coords[0]
+            start_y = coords[1]
+            start_z = coords[2]
+            
             system = find_nearest_anarchy_systems(
                 start_x, start_y, start_z, database.session
             )

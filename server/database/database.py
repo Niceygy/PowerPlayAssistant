@@ -95,7 +95,7 @@ def system_coordinates(system_name, database):
 
     if result == [None, None, None] or result == None:
         print(f"?? for {system_name}")
-        return [0, 0, 0]
+        return None
 
     return [result.latitude, result.longitude, result.height]
 
