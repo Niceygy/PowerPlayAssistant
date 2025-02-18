@@ -7,7 +7,6 @@ from server.database.cache import item_in_cache, add_item_to_cache
 from server.constants import ITEMS_TO_RETURN
 
 
-
 def row_to_dict(row):
     """
     Convert a SQLAlchemy row object to a dictionary.
@@ -30,50 +29,58 @@ def find_nearest_megaships(system_name, shortcode, opposing, session):
     Returns:
         List of nearest megaships
     """
-    cache = item_in_cache(system_name, shortcode, opposing, "MEGASHIP")
-    if cache != None:
-        return cache
-    
-    current_week = get_cycle_week()
-    system_column = f"SYSTEM{current_week}"
+    try:
+        cache = item_in_cache(system_name, shortcode, opposing, "MEGASHIP")
+        if cache is not None:
+            return cache
 
-    # Where is the user???
-    user_system = session.query(StarSystem).filter_by(system_name=system_name).first()
-    if not user_system:
-        #nowhere.....
+        current_week = get_cycle_week()
+        system_column = f"SYSTEM{current_week}"
+
+        # Where is the user???
+        user_system = session.query(StarSystem).filter_by(system_name=system_name).first()
+        if not user_system:
+            #nowhere.....
+            return []
+
+        user_coords = (user_system.longitude, user_system.latitude, user_system.height)
+
+        # find megaships
+        if not opposing:
+            megaships_query = session.query(Megaship).join(StarSystem, getattr(Megaship, system_column) == StarSystem.system_name).filter(StarSystem.shortcode != shortcode).limit(500)
+        else:
+            megaships_query = session.query(Megaship).join(StarSystem, getattr(Megaship, system_column) == StarSystem.system_name).filter(StarSystem.shortcode == shortcode).limit(500)
+
+        #GET 'EM
+        megaships = megaships_query.all()
+
+        #sort by distance from the user
+        def calculate_distance(coords1, coords2):
+            return ((coords1[0] - coords2[0]) ** 2 + (coords1[1] - coords2[1]) ** 2 + (coords1[2] - coords2[2]) ** 2) ** 0.5
+
+        megaship_distances = []
+        for megaship in megaships:
+            megaship_system = session.query(StarSystem).filter_by(system_name=getattr(megaship, system_column)).first()
+            if megaship_system:
+                megaship_coords = (megaship_system.longitude, megaship_system.latitude, megaship_system.height)
+                if None in megaship_coords:
+                    print(f"Skipping megaship {megaship.id} due to None coordinates.")
+                    continue
+                distance = calculate_distance(user_coords, megaship_coords)
+                megaship_distances.append((megaship, distance))
+
+        # Sort by distance and return the 10 nearest megaships
+        # print(f"Found {len(megaship_distances)} entries")
+        megaship_distances.sort(key=lambda x: x[1])
+
+        # Convert the nearest megaships to dictionaries for caching
+        nearest_megaships_dicts = [(row_to_dict(megaship), distance) for megaship, distance in megaship_distances[:ITEMS_TO_RETURN]]
+
+        # Cache the result
+        add_item_to_cache(system_name, shortcode, opposing, nearest_megaships_dicts, "MEGASHIP")
+
+        #returned cached result
+        return item_in_cache(system_name, shortcode, opposing,"MEGASHIP")
+    except Exception as e:
+        print(f"An error occurred: {e}")
         return []
-
-    user_coords = (user_system.longitude, user_system.latitude, user_system.height)
-
-    # find megaships
-    if not opposing:
-        megaships_query = session.query(Megaship).join(StarSystem, getattr(Megaship, system_column) == StarSystem.system_name).filter(StarSystem.shortcode != shortcode).limit(500)
-    else:
-        megaships_query = session.query(Megaship).join(StarSystem, getattr(Megaship, system_column) == StarSystem.system_name).filter(StarSystem.shortcode == shortcode).limit(500)
-
-    #GET 'EM
-    megaships = megaships_query.all()
-
-    #sort by distance from the user
-    def calculate_distance(coords1, coords2):
-        return ((coords1[0] - coords2[0]) ** 2 + (coords1[1] - coords2[1]) ** 2 + (coords1[2] - coords2[2]) ** 2) ** 0.5
-
-    megaship_distances = []
-    for megaship in megaships:
-        megaship_system = session.query(StarSystem).filter_by(system_name=getattr(megaship, system_column)).first()
-        if megaship_system:
-            distance = calculate_distance(user_coords, (megaship_system.longitude, megaship_system.latitude, megaship_system.height))
-            megaship_distances.append((megaship, distance))
-
-    # Sort by distance and return the 10 nearest megaships
-    # print(f"Found {len(megaship_distances)} entries")
-    megaship_distances.sort(key=lambda x: x[1])
-
-    # Convert the nearest megaships to dictionaries for caching
-    nearest_megaships_dicts = [(row_to_dict(megaship), distance) for megaship, distance in megaship_distances[:ITEMS_TO_RETURN]]
-
-    # Cache the result
-    add_item_to_cache(system_name, shortcode, opposing, nearest_megaships_dicts, "MEGASHIP")
-    
-    #returned cached result
-    return item_in_cache(system_name, shortcode, opposing,"MEGASHIP")
