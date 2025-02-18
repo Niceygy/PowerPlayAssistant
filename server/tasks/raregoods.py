@@ -23,8 +23,9 @@ def best_rare_goods(system_name, database):
 
     for item in results:
         distance = distance_to_system(system_name, item.system_name, database)
-        distance = round(distance)
-        distances.append((distance, item.good_name, item.station_name, item.system_name))
+        if distance != None:
+                distance = round(distance)
+                distances.append((distance, item.good_name, item.station_name, item.system_name))
 
     # Sort the list by the absolute difference from 200
     distances.sort(key=lambda x: abs(x[0] - 200))
