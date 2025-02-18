@@ -64,7 +64,7 @@ def find_nearest_megaships(system_name, shortcode, opposing, session):
             if megaship_system:
                 megaship_coords = (megaship_system.longitude, megaship_system.latitude, megaship_system.height)
                 if None in megaship_coords:
-                    print(f"Skipping megaship {megaship.id} due to None coordinates.")
+                    print(f"Skipping megaship {megaship.name} due to None coordinates.")
                     continue
                 distance = calculate_distance(user_coords, megaship_coords)
                 megaship_distances.append((megaship, distance))
