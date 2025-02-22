@@ -126,7 +126,9 @@ def handle_choice():
 #@cache.cached(timeout=600)
 def meritminer():
     return render_template(
-        "meritminer.html"
+        "redirect.html",
+        description="The tool MeritMiner is better suited to helping you with this task.",
+        url="https://meritminer.cc/"
     )
 
 @app.route("/tickset", methods=["GET"])

@@ -10,7 +10,7 @@
 </head>
 <script>
     function redirect() {
-        window.location.href = "https://meritminer.cc/"
+        window.location.href = "{{ url }}"
     }
 </script>
 <body>
@@ -18,10 +18,10 @@
     <!-- <h1>PowerPlay Assistant</h1> -->
     <h2>Pending Redirect</h2>
     <p><strong>There is a better tool for this!</strong></p>
-    <p>The tool MeritMiner is better suited to helping you with this task.</p>
-    <p><i>Will redirect to: https://meritminer.cc/</i></p>
-
+    <p>{{ description }} </p>
+    
     <button onclick="redirect()">Go!</button>
+    <p><i>Will redirect to: {{ url }}</i></p>
     <br>
     <br></br>
 

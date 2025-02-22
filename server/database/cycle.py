@@ -15,7 +15,7 @@ def get_cycle_week():
     with open("cache/week.txt", "r") as f:
         data = f.read().strip()
         f.close()
-    return data
+    return 1 #  data
 
 def get_seconds_until_target(target_hour=7, target_minute=0):
     """
@@ -43,17 +43,10 @@ def update_cycle_week():
             now = datetime.now()
             if now.weekday() == 3:  # Thursday
                 print("Updating cycle week...")
-                try:
-                    edcd_tick = requests.get("https://tick.edcd.io/api/tick", timeout=30).text.replace('"', '').strip()
-                    tick_time = parse(edcd_tick)
-                    if tick_time.isoweekday() == 4:
-                        if tick_time.date() == now.date():
-                            write_cycle_week(get_cycle_week() + 1) 
-                            if get_cycle_week() > 6:
-                                write_cycle_week(1)
-                            print(f"CYCLE_WEEK updated to: {get_cycle_week()}")
-                except (requests.RequestException, ValueError) as e:
-                    print(f"Error fetching tick data: {e}")
+                write_cycle_week(get_cycle_week() + 1) 
+                if get_cycle_week() > 6:
+                    write_cycle_week(1)
+                    print(f"CYCLE_WEEK updated to: {get_cycle_week()}")
 
             # Sleep until next check (24 hours)
             time.sleep(24 * 60 * 60)
@@ -67,7 +60,7 @@ def watch_tick():
     """
     Starts the tick watcher in a seperate thread
     """
-    thread = threading.Thread(target=update_cycle_week)
-    thread.daemon = True
-    thread.start()
+   # thread = threading.Thread(target=update_cycle_week)
+    #thread.daemon = True
+    #thread.start()
     return

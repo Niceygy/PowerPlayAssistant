@@ -5,27 +5,14 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Debug ED PowerPlay Assistant",
+      "name": "Debug PowerPlay Assistant",
       "type": "debugpy",
-      "request": "attach",
-      "connect": {
-        "host": "127.0.0.1",
-        "port": 0
-      },
-      // "module": "flask",
-      // "cwd": "${workspaceFolder}",
-      // "python": "${workspaceFolder}/.venv/bin/python3",
-      // "autoReload": {
-      //   "enable": true,
-      //   "path": "${workspaceFolder}"
-      // },
-      // "env": {
-      //   "FLASK_APP": "app.py",
-      //   "FLASK_DEBUG": "1",
-      //   "PYTHONPATH": "${workspaceFolder}:${workspaceFolder}/server:${workspaceFolder}/server/handlers"
-      // },
-      // "args": ["run", "--host=0.0.0.0"],
-      "jinja": true
+      "request": "launch",
+      "module": "flask",
+      "env": { "FLASK_APP": "app.py", "FLASK_DEBUG": "1" },
+      "args": ["run", "--no-debugger", "--no-reload", "--host=0.0.0.0"],
+      "jinja": true,
+      "autoStartBrowser": false
     }
   ]
 }

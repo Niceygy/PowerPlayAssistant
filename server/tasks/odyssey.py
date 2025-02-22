@@ -16,6 +16,6 @@ def retrieve_specific_goods(powerFullName, system_name, database):
         #undermine
         return POWERDATA[1]
     
-def find_anarchy_settlement():
-    i = 0
-
+def find_nearby_stronghold(powerFullName: str, system_name: str):
+    powerShortCode = power_full_to_short(powerFullName)
+    
