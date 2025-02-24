@@ -121,6 +121,9 @@ def handle_choice():
     except Exception as e:
         return uhoh(str(e))
 
+@app.route("/about", methods=["GET"])
+def about():
+    return render_template("about.html")
 
 @app.route("/meritminer", methods=["GET"])
 #@cache.cached(timeout=600)
