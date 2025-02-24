@@ -1,53 +1,65 @@
 /* templates/main.css */
 @font-face {
-    font-family: 'EUROCAPS';
-    src: url("fonts/EUROCAPS.TTF");
+  font-family: "EUROCAPS";
+  src: url("fonts/EUROCAPS.TTF");
 }
 
 body {
-    background-color: #000;
-    color: rgb(230, 129, 14);
-    font-family: 'EUROCAPS', Arial, sans-serif;
+  background-color: #000;
+  color: rgb(230, 129, 14);
+  font-family: "EUROCAPS", Arial, sans-serif;
 }
 
 h1 {
-    color: rgb(230, 129, 14);
+  color: rgb(230, 129, 14);
 }
 
 form {
-    margin: 20px;
+  margin: 20px;
 }
 
-button, select, input[type="text"], input[type="submit"], input[type="email"], textarea, label {
-    font-family: 'EUROCAPS', Arial, sans-serif;
-    background-color: #000;
-    color: rgb(230, 129, 14);
+button,
+select,
+input[type="text"],
+input[type="submit"],
+input[type="email"],
+textarea,
+label {
+  font-family: "EUROCAPS", Arial, sans-serif;
+  background-color: #000;
+  color: rgb(230, 129, 14);
 }
 
 .copy_system {
-    background: url("/copy_icon.svg") no-repeat center center;
-    background-size: contain;
-    border: none;
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-  }
+  background: url("/copy_icon.svg") no-repeat center center;
+  background-size: contain;
+  border: none;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
 
 .task-description {
-    max-width: 600px; /* Adjust the width as needed */
-    word-wrap: break-word;
+  max-width: 600px; /* Adjust the width as needed */
+  word-wrap: break-word;
 }
 
 .glowing-emoji {
-    font-size: 15px;
-    text-align: left;
-    margin-top: 10px;
-    /* color: #ffcc00;
+  font-size: 15px;
+  text-align: left;
+  margin-top: 10px;
+  /* color: #ffcc00;
     text-shadow: 0 0 10px #ffcc00, 0 0 20px #ffcc00, 0 0 30px #ffcc00, 0 0 40px #ffcc00, 0 0 50px #ffcc00, 0 0 60px #ffcc00, 0 0 70px #ffcc00; */
 }
 
 .action_btn {
-    width: 200px;
-    margin: 0 auto;
-    display: inline;
+  width: 200px;
+  margin: 0 auto;
+  display: inline;
+}
+.loadingIcon {
+  width: 100%;
+  height: 200px;
+  /* background-color: lightblue; */
+  
 }

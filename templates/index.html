@@ -6,9 +6,9 @@
     <title>PowerPlay Assistant</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
     <script defer src="https://data.niceygy.net/script.js" data-website-id="5a305d97-fef0-4c86-9528-243ae53470ad"></script>
-    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ url_for('static', filename='icons/favicon.ico') }}" type="image/x-icon">
     <meta name='description' content='PowerPlay Assistant is a compainon website for Elite: Dangerous, to help commanders with their powerplay 2.0 tasks.'>
-    <script>
+    <script defer>
         async function searchSystems(isTwo=false) {
             let elementID = "system";
             if (isTwo) {elementID = "system2";}
@@ -23,8 +23,20 @@
                 datalist.appendChild(option);
             });
         }
+        function toggleLoadingBtn() {
+            var x = document.getElementById("loadingIcon");
+            console.log(x)
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+        
+        window.onload = function(){  
+            document.getElementById("loadingIcon").style.display = "none";
+        }
     </script>
-</head>
 <body>
     <h1>PowerPlay Assistant</h1>
     <div class="specifyTask">
@@ -48,8 +60,11 @@
             {% endfor %}
         </select><br><br>
 
-        <button type="submit">Go!</button>
+        <button type="submit" onclick="toggleLoadingBtn()">Go!</button>
     </form>
+    <div class="loadingIcon"    >
+        <img id="loadingIcon" src="{{  url_for('static', filename='icons/edloader.svg')}}" width="50" height="50">
+    </div>
     </div>
 
 </body>
