@@ -1,5 +1,6 @@
 from sqlalchemy import func
 from server.database.database import StarSystem, Station
+from server.powers import power_full_to_short
 
 # Global cache dictionary
 cache = {}
@@ -36,14 +37,23 @@ def count_system_stations(user_system_name, power, opposing, session):
     ).label("distance")
 
     # Find the 100 nearest systems
-    nearest_systems = session.query(StarSystem.system_name).order_by(distance).limit(500).all()
-    nearest_system_names = [system.system_name for system in nearest_systems]
+    nearest_systems = None
+    nearest_system_names = None
+
+    if opposing == False:
+        #make own stronger
+        nearest_systems = session.query(StarSystem.system_name).filter(StarSystem.is_anarchy == 0, StarSystem.shortcode == power_full_to_short(power)).order_by(distance).limit(250).all()
+        nearest_system_names = [system.system_name for system in nearest_systems]
+    else:
+        #make other weaker
+        nearest_systems = session.query(StarSystem.system_name).filter(StarSystem.is_anarchy == 0, StarSystem.shortcode != power_full_to_short(power)).order_by(distance).limit(250).all()
+        nearest_system_names = [system.system_name for system in nearest_systems]
 
     result = []
     # for system_name in nearest_system_names:
     i = 0
     sucsesses = 0
-    while sucsesses < 10:
+    while sucsesses < 15:
         system_name = nearest_system_names[i]
         starport_count = session.query(Station).filter(
             Station.star_system == system_name,
@@ -64,6 +74,7 @@ def count_system_stations(user_system_name, power, opposing, session):
         else:
             i+=1
 
+    print(f"Took {i} attempts")
     # Store the result in the cache
     cache[user_system_name] = result
 

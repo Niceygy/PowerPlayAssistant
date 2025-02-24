@@ -80,9 +80,10 @@ TASKTYPES = {
 Task types: e.g trading or combat
 """
 
-CRIMINALTASKS = ["CMCR", "HSHK", "PKLS", "UPMW", "TPRD","TPCL", "TPAD"]
+CRIMINALTASKS = ["CMCR", "PKLS", "UPMW", "TPRD","TPCL", "TPAD"]
 """
-Tasks that incur a bounty or fine
+Tasks that incur a bounty or fine.
+"HSHK" is removed
 """
 
 

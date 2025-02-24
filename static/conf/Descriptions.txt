@@ -1,6 +1,6 @@
 BTHT=Hunt pirates with bounties in-system. These can be found at resource extraction sites & at navigation beacons. Not applicable in anarchy systems.
 CEPD=Collect Escape Pods: Collect escape pods (occupied or damaged) from signal sources or destroyed ships. Can be paired with bounty hunting.
-HSHK=Use a recon limpet to hack holoads. Note that holoads in your own power's system may only be hacked if they are showing an ad for an opposing power. This does not apply for ads in enemy & uncontrolled systems.
+HSHK=Use a recon limpet to hack holoads. Note that holoads in your own power's system may only be hacked if they are showing an ad for an opposing power. This does not apply for ads in enemy & uncontrolled systems. This also does not work in anarchy systems
 PKLS=Kill members of opposing powers. Will incur bounties & fines. Works best in anarchy systems.
 SDLK=First Find a megaship (as listed below) and scan it with the datalink scanner. Then find the "Megaship Log Uplink" and scan that too.
 SLFP=Trade commodites across systems for a large profit. Merits apply to destination system.

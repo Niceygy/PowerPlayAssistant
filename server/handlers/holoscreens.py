@@ -21,6 +21,7 @@ def handle_holoscreens(request, power, system, database):
     task = "Holoscreen Hacking"
     # calculated boxes
     powerInfo = get_system_power_info(system, database)
+    opposing = True if request.args.get("choice") == "Opposing" else False
 
     otherSystems = count_system_stations(system, power, False, database.session)
     return render_template(
@@ -33,6 +34,6 @@ def handle_holoscreens(request, power, system, database):
         isIllegal="is",
         isOpposingWeakness=isPowersWeakness(power, task),
         otherSystems=otherSystems,
-        extraInfo="Found the 10 nearest systems to you, with 2 or more stations",
+        extraInfo="Found the 15 nearest systems to you with 2 or more stations, in all but your power's systems" if opposing else "Found the 15 nearest systems to you with 2 or more stations, in only your power's systems",
         isOwnStrength="is" if is_task_own_strength(task, power) else "isn't"
     )
