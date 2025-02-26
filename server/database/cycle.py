@@ -1,21 +1,18 @@
-import threading
 import time
 from datetime import datetime, timedelta
-from dateutil.parser import parse
-import requests
-
+import threading
 
 def write_cycle_week(week):
-    with open(f"cache/week.txt", "w") as f:
+    with open(f"week.txt", "w") as f:
         f.write(week)
         f.close()
     return
 
 def get_cycle_week():
-    with open("cache/week.txt", "r") as f:
+    with open("week.txt", "r") as f:
         data = f.read().strip()
         f.close()
-    return 1 #  data
+    return data
 
 def get_seconds_until_target(target_hour=7, target_minute=0):
     """
@@ -34,10 +31,12 @@ def update_cycle_week():
     Watches for the tick, and updates accordingly
     """
     print(" * Started tick watcher")
+    print(f" * Week is {get_cycle_week()}")
     while True:
         try:
             # Calculate initial delay to target time (e.g. 7:00)
             delay = get_seconds_until_target(8, 30)
+            print(f" * There are {delay} seconds until tick")
             time.sleep(delay)
             
             now = datetime.now()
@@ -60,7 +59,7 @@ def watch_tick():
     """
     Starts the tick watcher in a seperate thread
     """
-   # thread = threading.Thread(target=update_cycle_week)
-    #thread.daemon = True
-    #thread.start()
+    thread = threading.Thread(target=update_cycle_week)
+    thread.daemon = True
+    thread.start()
     return

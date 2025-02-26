@@ -1,0 +1,1 @@
+SELECT * FROM star_systems WHERE shortcode = " " AND state = " ";
