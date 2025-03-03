@@ -1,1 +1,1 @@
-SELECT * FROM star_systems WHERE shortcode = " " AND state = " ";
+SELECT * FROM star_systems WHERE system_name LIKE "%5318008%";
