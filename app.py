@@ -6,8 +6,8 @@ import os
 
 # PACKAGES
 from contextlib import contextmanager
-from flask_caching import Cache
 from sqlalchemy import func
+from dotenv import load_dotenv
 from flask import (
     Flask,
     jsonify,
@@ -17,7 +17,6 @@ from flask import (
 )
 
 # OWN CODE
-from server.constants import DATABASE_CONNECTION_STRING
 from server.handlers.choice import handle_task_choice
 from server.status import status, update_status
 from server.handlers.index import handle_index
@@ -36,20 +35,20 @@ from server.database.database import (
 pyver = os.getenv("PYTHON_VERSION")
 print(f" * Using Python {pyver}")
 print(" * All imports sucsessful")
-watch_tick()
+
 
 """
 Flask and database
 """
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_CONNECTION_STRING
+load_dotenv()
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_CONNECTION_STRING")
 app.config["SQLALCHEMY_POOL_SIZE"] = 10
 app.config["SQLALCHEMY_POOL_TIMEOUT"] = 30
 app.config["SQLALCHEMY_POOL_RECYCLE"] = 280
 app.config["SQLALCHEMY_MAX_OVERFLOW"] = 20
 database.init_app(app)
-cache = Cache(app, config={"CACHE_TYPE": "simple"})
 
 
 @contextmanager
@@ -64,9 +63,6 @@ def session_scope():
     finally:
         print(" * Closing session")
         session.close()
-
-
-print(f" * Using database connection string: {DATABASE_CONNECTION_STRING}")
 
 """
 Error Handler
@@ -88,7 +84,6 @@ Route Handlers
 
 
 @app.route("/", methods=["GET", "POST"])
-#@cache.cached(timeout=600)
 def index():
     try:
         return handle_index(request)
@@ -97,7 +92,6 @@ def index():
 
 
 @app.route("/is_crime", methods=["GET", "POST"])
-#@cache.cached(timeout=600, query_string=True)
 def is_crime():
     try:
         return handle_is_crime(request, database)
@@ -106,7 +100,6 @@ def is_crime():
 
 
 @app.route("/results")
-#@cache.cached(timeout=600, query_string=True)
 def results():
     try:
         return handle_results(request, database)
@@ -126,7 +119,6 @@ def about():
     return render_template("about.html")
 
 @app.route("/meritminer", methods=["GET"])
-#@cache.cached(timeout=600)
 def meritminer():
     return render_template(
         "redirect.html",
@@ -141,7 +133,6 @@ def tickset():
     return f"Set week to {week}"
 
 
-#@cache.memoize(timeout=60)
 def get_database_stats():
     """
     Returns the number of systems, megaships and stations in the database
@@ -174,7 +165,6 @@ def database_stats():
 
 
 @app.route("/search_systems", methods=["GET"])
-#@cache.cached(timeout=60, query_string=True)
 def search_systems():
     query = request.args.get("query")
     results = query_star_systems(query)
@@ -182,19 +172,16 @@ def search_systems():
 
 
 @app.route("/favicon.ico")
-#@cache.cached(timeout=60)
 def favicon():
     return send_from_directory(app.static_folder, "favicon.ico")
 
 
 @app.route("/copy_icon.svg")
-#@cache.cached(timeout=60)
 def copy_icon():
     return send_from_directory(app.static_folder, "copy_solid_icon.svg")
 
 
 @app.route("/changelog", methods=["GET"])
-#@cache.cached(timeout=60)
 def changelog():
     return render_template("changelog.html")
 

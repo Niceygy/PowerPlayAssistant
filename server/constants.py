@@ -1,5 +1,3 @@
-DATABASE_CONNECTION_STRING = "mysql+pymysql://assistant:6548@10.0.0.52/elite"
-
 ITEMS_TO_RETURN = 15
 """
 How many items to return in a list.
