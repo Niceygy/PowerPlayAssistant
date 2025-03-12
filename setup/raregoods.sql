@@ -1,4 +1,5 @@
-DELETE FROM Raregoods;
+DROP TABLE IF EXISTS Raregoods;
+CREATE TABLE Raregoods (good_name VARCHAR(255) PRIMARY KEY, system_name VARCHAR(255), station_name VARCHAR(255));
 INSERT INTO Raregoods (good_name, system_name, station_name) VALUES ("Aepyornis Egg", "47 Ceti", "Glushko Station");
 INSERT INTO Raregoods (good_name, system_name, station_name) VALUES ("Aganippe Rush", "Aganippe", "Julian Market");
 INSERT INTO Raregoods (good_name, system_name, station_name) VALUES ("Alacarakmo Skin Art", "Alacarakmo", "Weyl Gateway");
