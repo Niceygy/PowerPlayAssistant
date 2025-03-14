@@ -15,7 +15,6 @@ star_systems:
     state text (powerplay state)
     shortcode text (power shortcode)
     is_anarchy bool
-    has_res_sites bool
 
 stations:
 
@@ -44,7 +43,7 @@ class StarSystem(database.Model):
     state = Column(String(255))
     shortcode = Column(String(255))
     is_anarchy = Column(Boolean)
-    has_res_sites = Column(Boolean)
+   # has_res_sites = Column(Boolean)
 
 
 class Station(database.Model):
