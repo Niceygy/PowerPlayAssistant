@@ -23,7 +23,7 @@ from server.handlers.index import handle_index
 from server.database.systems import query_star_systems
 from server.handlers.is_crime import handle_is_crime
 from server.handlers.results import handle_results
-from server.database.cycle import watch_tick, get_cycle_week, write_cycle_week
+from server.database.cycle import get_cycle_week, write_cycle_week
 from server.database.database import (
     database,
     StarSystem,

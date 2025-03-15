@@ -1,6 +1,6 @@
 from server.constants import POWERS
 from server.database.database import StarSystem
-
+import traceback
 
 def power_full_to_short(power):
     """
@@ -15,6 +15,8 @@ def short_to_full_power(power):
     """
     Retuns the full name of a power when supplied its shortcode
     """
+    if power == '':
+        return None
     return POWERS[power]
 
 
@@ -42,6 +44,9 @@ def get_system_power_info(system, database):
             return ["Uncontrolled", "Uncontrolled"]
         powerShortCode = result.shortcode
         systemState = result.state
+        if powerShortCode == None or systemState == '':
+            #no powerplay activity here
+            return ["Uncontrolled", "Uncontrolled"]    
         powerFullName = short_to_full_power(powerShortCode)
         return [systemState, powerFullName]
     except Exception as e:

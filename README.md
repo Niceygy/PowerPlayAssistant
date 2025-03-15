@@ -27,7 +27,7 @@ Megaships table: `CREATE TABLE IF NOT EXISTS megaships (name VARCHAR(255) PRIMAR
 <br></br>
 Stations table: `CREATE TABLE IF NOT EXISTS stations (id BIGINT PRIMARY KEY AUTO_INCREMENT, station_name VARCHAR(255), star_system VARCHAR(255), station_type VARCHAR(255), economy VARCHAR(255));`
 <br></br>
-You also need to run the 
+You also need to run the commands in setup/raregoods.sql
 
 ## Help
 
