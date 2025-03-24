@@ -1,6 +1,7 @@
 from server.database.cycle import get_cycle_week
 import json
 import ast
+import os
 
 def item_in_cache(system_name, shortcode, opposing, dataType):
     """
@@ -58,3 +59,10 @@ def add_item_to_cache(system_name, shortcode, opposing, data, dataType):
             f.write(f"{dataType}:{system_name}/{shortcode}/{opposing}/{json.dumps(data)}\n")
             f.close()
         return
+
+def clean_caches():
+    for i in range(5):
+        try:
+            open(f"cache/week{i}.cache", "w").close()
+        except FileNotFoundError:
+            open(f"cache/week{i}.cache", "r").write(" ")

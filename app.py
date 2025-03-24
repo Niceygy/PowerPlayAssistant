@@ -24,6 +24,7 @@ from server.database.systems import query_star_systems
 from server.handlers.is_crime import handle_is_crime
 from server.handlers.results import handle_results
 from server.database.cycle import get_cycle_week, write_cycle_week
+from server.database.cache import clean_caches
 from server.database.database import (
     database,
     StarSystem,
@@ -35,6 +36,8 @@ from server.database.database import (
 pyver = os.getenv("PYTHON_VERSION")
 print(f" * Using Python {pyver}")
 print(" * All imports sucsessful")
+clean_caches()
+print(" * Caches cleaned")
 
 
 """

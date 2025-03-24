@@ -1,5 +1,5 @@
 from server.constants import POWERS
-from server.database.database import StarSystem
+from server.database.database import StarSystem, PowerData
 import traceback
 
 def power_full_to_short(power):
@@ -39,7 +39,7 @@ def get_system_power_info(system, database):
     """
     
     try:
-        result = database.session.query(StarSystem).filter(StarSystem.system_name == system).first()
+        result = database.session.query(PowerData).filter(PowerData.system_name == system).first()
         if result == None:
             return ["Uncontrolled", "Uncontrolled"]
         powerShortCode = result.shortcode

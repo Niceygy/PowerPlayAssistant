@@ -65,8 +65,9 @@ def find_nearest_megaships(system_name, shortcode, opposing, session):
                     StarSystem,
                     getattr(Megaship, system_column) == StarSystem.system_name,
                 )
-                .filter(StarSystem.shortcode == shortcode)
-                .limit(500)
+                .join(PowerData, StarSystem.system_name == PowerData.system_name)
+                .filter(PowerData.shortcode != shortcode)
+                .limit(50)
             )
 
         # GET 'EM
