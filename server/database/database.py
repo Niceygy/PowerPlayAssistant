@@ -40,10 +40,9 @@ class StarSystem(database.Model):
     latitude = Column(Float)
     longitude = Column(Float)
     height = Column(Float)
-    state = Column(String(255))
-    shortcode = Column(String(255))
+    #state = Column(String(255))
+    #shortcode = Column(String(255))
     is_anarchy = Column(Boolean)
-   # has_res_sites = Column(Boolean)
 
 
 class Station(database.Model):
@@ -52,6 +51,7 @@ class Station(database.Model):
     station_name = Column(String(255))
     star_system = Column(String(255))
     station_type = Column(String(255))
+    economy = Column(String(255))
 
 
 class Megaship(database.Model):
@@ -63,6 +63,14 @@ class Megaship(database.Model):
     SYSTEM4 = Column(String(255))
     SYSTEM5 = Column(String(255))
     SYSTEM6 = Column(String(255))
+    
+class PowerData(database.Model):
+    __tablename__ = "powerdata"
+    system_name = Column(String(50), primary_key=True)
+    state = Column(String(20))
+    shortcode = Column(String(4))
+    controlPointsStart = Column(Float())
+    controlPointsLatest = Column(Float())
 
 
 class RareGoods(database.Model):
@@ -126,10 +134,10 @@ def find_nearest_anarchy_systems(start_x, start_y, start_z, session):
             StarSystem.system_name,
             distance,
             StarSystem.is_anarchy,
-            StarSystem.shortcode,
         )
         .filter(StarSystem.is_anarchy == True)
-        .filter(StarSystem.shortcode != None)
+        .join(PowerData, StarSystem.system_name == PowerData.system_name)
+        .filter(PowerData.shortcode != None)
         .order_by(distance)
         .limit(1)
         .all()

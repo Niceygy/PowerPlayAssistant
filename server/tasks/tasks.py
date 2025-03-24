@@ -186,14 +186,16 @@ def is_task_own_strength(taskFullName: str, powerFullName: str):
     """
     Is this task really good for this power?
     """
-    taskShortCode = None
-    for key, value in TASKSHORTCODES.items():
-        if taskFullName == value:
-            taskShortCode = key
-    powerShortCode = power_full_to_short(powerFullName)
-    if taskShortCode in POWERRENFORCEACTIVITIES[powerShortCode]:
-        return True
-    else:
+    try:
+        taskShortCode = None
+        for key, value in TASKSHORTCODES.items():
+            if taskFullName == value:
+                taskShortCode = key
+        powerShortCode = power_full_to_short(powerFullName)
+        if taskShortCode in POWERRENFORCEACTIVITIES[powerShortCode]:
+            return True
+        else:
+            return False
+    except Exception:
         return False
-
     
