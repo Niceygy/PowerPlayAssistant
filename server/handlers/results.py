@@ -1,6 +1,7 @@
 from flask import render_template, redirect, url_for
 
 from server.handlers.bountyHunting import handle_bounty_hunting
+from server.handlers.commodities import handle_commodites
 from server.handlers.holoscreens import handle_holoscreens
 from server.handlers.megaships import megaships_results
 from server.handlers.raregoods import handle_rare_goods
@@ -39,6 +40,8 @@ def handle_results(request, database):
         return handle_bounty_hunting(request, database)
     elif task == "Sell Mined Resources":
         return redirect(url_for("meritminer"))
+    elif task == "Transport Powerplay commodities":
+        return handle_commodites(request, power, system, database)
     else:
         return render_template(
             "tasks/general.html",

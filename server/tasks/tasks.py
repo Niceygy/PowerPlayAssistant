@@ -1,6 +1,6 @@
 from server.powers import is_system_anarchy, power_full_to_short, get_system_power_info
 from server.constants import CRIMINALTASKS, POWERRENFORCEACTIVITIES, TASKSHORTCODES, TASKTYPES, POWERWEAKNESSES, HOMESYSTEMS, PERMITLOCKED
-from server.commodites import what_commodity_action
+from server.tasks.commodites import what_commodity_action
 from server.database.database import StarSystem 
 from server.tasks.odyssey import retrieve_specific_goods
 

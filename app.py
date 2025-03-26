@@ -176,7 +176,7 @@ def search_systems():
 
 @app.route("/favicon.ico")
 def favicon():
-    return send_from_directory(app.static_folder, "favicon.ico")
+    return send_from_directory(app.static_folder, "icons/favicon.ico")
 
 
 @app.route("/copy_icon.svg")

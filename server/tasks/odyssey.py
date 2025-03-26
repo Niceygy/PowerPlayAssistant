@@ -23,16 +23,3 @@ def retrieve_specific_goods(powerFullName: str, system_name: str, database):
     else:
         # undermine
         return POWERDATA[1]
-
-
-def find_goods_system(powerFullName: str, system_name: str, action: str, database):
-    systems_query = (
-        database.session.query(StarSystem)
-        .join(
-            PowerData, StarSystem.system_name == PowerData.system_name
-        )
-        .filter(PowerData.shortcode != power_full_to_short(powerFullName))
-        .filter(PowerData.state == "Stronghold")
-        
-        .limit(50)
-    )
