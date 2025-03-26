@@ -21,7 +21,9 @@ def what_commodity_action(powerFullName, system, database) -> str:
         return POWERCOMMODITIES[power_shortcode][0]
 
 
-def is_system_in_range(powerFullName: str, system_name: str, database) -> tuple[bool, str]:
+def is_system_in_range(
+    powerFullName: str, system_name: str, database
+) -> tuple[bool, str]:
     """Is the system within 30LY of a stronghold or 20LY of a fortified?
 
     Args:
@@ -30,31 +32,33 @@ def is_system_in_range(powerFullName: str, system_name: str, database) -> tuple[
         database (_type_): Database object
     """
 
-    coords = system_coordinates(system_name, database)
-    if None in coords:
-        print("None")
-        return False, ""
-    print(coords)
+    # Where is the user???
+    user_system = (
+        database.session.query(StarSystem).filter_by(system_name=system_name).first()
+    )
+    if not user_system:
+        # nowhere.....
+        return []
+
+    user_coords = (user_system.longitude, user_system.latitude, user_system.height)
 
     distance = func.sqrt(
-        func.pow(StarSystem.longitude - coords[0], 2)
-        + func.pow(StarSystem.latitude - coords[1], 2)
-        + func.pow(StarSystem.height - coords[2], 2)
+        func.pow(StarSystem.longitude - user_coords[0], 2)
+        + func.pow(StarSystem.latitude - user_coords[1], 2)
+        + func.pow(StarSystem.height - user_coords[2], 2)
     ).label("distance")
-    
+
     powerShortCode = power_full_to_short(powerFullName)
 
-    print(f"Checking range for system '{system_name}' with coordinates {coords}")
 
     strongholds_within_range = (
         database.session.query(StarSystem, distance)
         .join(PowerData, StarSystem.system_name == PowerData.system_name)
         .filter(PowerData.shortcode == powerShortCode)
         .filter(PowerData.state == "Stronghold")
-        .filter(distance <= 150)  # Ensure this filter is applied after the join
+        .filter(distance <= 30)  # Ensure this filter is applied after the join
         .all()
     )
-    print(f"Strongholds within range: {[(s.system_name, d) for s, d in strongholds_within_range]}")
 
     fortified_within_range = (
         database.session.query(StarSystem, distance)
@@ -64,19 +68,10 @@ def is_system_in_range(powerFullName: str, system_name: str, database) -> tuple[
         .filter(distance <= 20)  # Ensure this filter is applied after the join
         .all()
     )
-    print(f"Fortified systems within range: {[(s.system_name, d) for s, d in fortified_within_range]}")
 
     if fortified_within_range:
         return True, fortified_within_range[0].system_name
     elif strongholds_within_range:
         return True, strongholds_within_range[0].system_name
-    else:
-        return False, ""
-    
-    if (
-        fortified_within_range != [] 
-        or strongholds_within_range != []
-    ):
-        return True, strongholds_within_range[0]
     else:
         return False, ""
