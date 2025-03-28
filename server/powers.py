@@ -2,7 +2,7 @@ from server.constants import POWERS
 from server.database.database import StarSystem, PowerData
 import traceback
 
-def power_full_to_short(power):
+def power_full_to_short(power: str) -> str:
     """
     Returns the shortcode of a power when supplied its full name
     """
@@ -11,7 +11,7 @@ def power_full_to_short(power):
             return key
     return None
 
-def short_to_full_power(power):
+def short_to_full_power(power: str) -> str:
     """
     Retuns the full name of a power when supplied its shortcode
     """
@@ -34,7 +34,7 @@ def get_system_power_info(system, database):
     Returns:
         - [
             system state,
-            system occuping power
+            occuping power full name
         ]
     """
     

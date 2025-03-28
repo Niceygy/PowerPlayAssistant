@@ -84,7 +84,6 @@ Tasks that incur a bounty or fine.
 "HSHK" is removed
 """
 
-
 POWERWEAKNESSES = {
     "ALD": ["CMCR", "SDLK"],
     "ARD": ["BTHT", "PKLS"],

@@ -173,6 +173,12 @@ def search_systems():
     results = query_star_systems(query)
     return jsonify(results)
 
+@app.after_request
+def apply_headers(response):
+    response.headers["X-Powered-By"] = "Nightspeed Connect"
+    response.headers["Server"] = "Flask/3.1.0"
+    response.headers["X-Created-By"] = "Niceygy (Ava Whale) - niceygy@niceygy.net"
+    return response
 
 @app.route("/favicon.ico")
 def favicon():
