@@ -1,5 +1,5 @@
 from sqlalchemy import func
-from server.database.database import StarSystem, Station
+from server.database.database import PowerData, StarSystem, Station
 from server.powers import power_full_to_short
 
 # Global cache dictionary
@@ -42,11 +42,25 @@ def count_system_stations(user_system_name, power, opposing, session):
 
     if opposing == False:
         #make own stronger
-        nearest_systems = session.query(StarSystem.system_name).filter(StarSystem.is_anarchy == 0, StarSystem.shortcode == power_full_to_short(power)).order_by(distance).limit(250).all()
+        nearest_systems = (
+            session.query(StarSystem.system_name)
+            .join(PowerData, StarSystem.system_name == PowerData.system_name)
+            .filter(StarSystem.is_anarchy == 0, PowerData.shortcode == power_full_to_short(power))
+            .order_by(distance)
+            .limit(30)
+            .all()
+            )
         nearest_system_names = [system.system_name for system in nearest_systems]
     else:
         #make other weaker
-        nearest_systems = session.query(StarSystem.system_name).filter(StarSystem.is_anarchy == 0, StarSystem.shortcode != power_full_to_short(power)).order_by(distance).limit(250).all()
+        nearest_systems = (
+            session.query(StarSystem.system_name)
+            .join(PowerData, StarSystem.system_name == PowerData.system_name)
+            .filter(StarSystem.is_anarchy == 0, PowerData.shortcode != power_full_to_short(power))
+            .order_by(distance)
+            .limit(30)
+            .all()
+            )
         nearest_system_names = [system.system_name for system in nearest_systems]
 
     result = []
