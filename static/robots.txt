@@ -2,3 +2,5 @@ User-agent: *
 Disallow: /*
 Allow: /robots.txt
 Allow: /
+Allow: /changelog
+Allow: /about
