@@ -9,6 +9,11 @@
     />
     <link rel="icon" href="{{ url_for('static', filename='icons/favicon.ico') }}" type="image/x-icon">
     <script defer src="https://data.niceygy.net/script.js" data-website-id="5a305d97-fef0-4c86-9528-243ae53470ad"></script>
+    <script>
+      function redirect(url) {
+        window.location.href = url
+      }
+    </script>
   </head>
   <body>
     <h1>Selected Options</h1>
@@ -22,11 +27,12 @@
     <p><strong>Notes: </strong> {{ systemNotes }} </p>
 
     <h1>Possible Tasks:</h1>
-    {{% for task in possibleTasks %}}
+    {% for task in possibleTasks %}
       <li>
         <!-- [name, description, link] -->
-         {{ task[0] }}: {{ task[1] }} <button href="{{task[3]}}">Go!</button>
+         {{ task[0] }}: <i>{{ task[1] }} </i><button onclick="redirect('{{task[2]}}')">Go!</button>
       </li>
+      {% endfor %}
     <br />
 
 

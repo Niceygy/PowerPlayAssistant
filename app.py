@@ -46,7 +46,7 @@ Flask and database
 
 app = Flask(__name__)
 load_dotenv()
-app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_CONNECTION_STRING_PA")
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://powerplay_assistant:elite.niceygy.net@10.0.0.52/elite"#os.getenv("DATABASE_CONNECTION_STRING_PA")
 app.config["SQLALCHEMY_POOL_SIZE"] = 10
 app.config["SQLALCHEMY_POOL_TIMEOUT"] = 30
 app.config["SQLALCHEMY_POOL_RECYCLE"] = 280
