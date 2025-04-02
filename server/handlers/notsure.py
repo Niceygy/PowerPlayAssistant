@@ -1,5 +1,5 @@
 from server.powers import get_system_power_info, power_full_to_short
-from server.constants import POWERRENFORCEACTIVITIES, TASKSHORTCODES
+from server.constants import POWERRENFORCEACTIVITIES, POWERWEAKNESSES, TASKSHORTCODES
 
 
 def what_can_you_do(system_name: str, powerFullName: str, database) -> str:
@@ -7,7 +7,14 @@ def what_can_you_do(system_name: str, powerFullName: str, database) -> str:
     if powerFullName == current_power:
         #reinforce!
         activities = POWERRENFORCEACTIVITIES[power_full_to_short(powerFullName)]
-        result = "You can do: "
+        result = []
         for item in activities:
-            result += f"{TASKSHORTCODES[item]} "
+            result.append(TASKSHORTCODES[item])
+        return result
+    else:
+        activities = POWERWEAKNESSES[power_full_to_short(powerFullName)]
+        result = []
+        for item in activities:
+            taskfullname = TASKSHORTCODES[item]
+            taskinfo = 
         return result

@@ -4,6 +4,32 @@ How many items to return in a list.
 Used in megaships and rare goods 
 """
 
+TASKDESCRIPTIONS = {
+    "BTHT": "Hunt pirates with bounties in-system. These can be found at resource extraction sites & at navigation beacons. Not applicable in anarchy systems.",
+    "CEPD": "Collect Escape Pods: Collect escape pods (occupied or damaged) from signal sources or destroyed ships. Can be paired with bounty hunting.",
+    "HSHK": "Use a recon limpet to hack holoads. Note that holoads in your own power's system may only be hacked if they are showing an ad for an opposing power. This does not apply for ads in enemy & uncontrolled systems.",
+    "PKLS": "Kill members of opposing powers. Will incur bounties & fines. Works best in anarchy systems.",
+    "SDLK": "First Find a megaship (as listed below) and scan it with the datalink scanner. Then find the 'Megaship Log Uplink' and scan that too.",
+    "SLFP": "Trade commodites across systems for a large profit. Merits apply to destination system.",
+    "SMNR": "Sell mined resources in a system you wish to influence. For undermining they have to be mined in-system. If reinforcing, it does not matter where they have been mined.",
+    "SRGD": "Sell rare goods to the target system. Most efficient when the rare good comes form 200LY away. Merits earned depends on profit.",
+    "TPCD": "First go to a Stronghold or Fortified system nearby. Stronghold systems have a range of 30LY, and Fortified have one of 20LY. Take the commodity to a target system within range, and hand it in at any port",
+    "CAHM": "Complete missions that provide aid and humanitarian support to systems. E.G Donation Missions.",
+    "FMLV": "Sell low value goods in large quantities to flood the market. Biowaste seems to work well with this.",
+    "SSWK": "Scan ships in supercruse or around a point of interest (E.G Station, Nav Beacon). Scanning FSD wakes also works.",
+    "HBRS": "Collect and hand in exobio data.",
+    "HICD": "Hand in cartography data: Collect and hand in cartography data.",
+    "HISV": "Hand in salvage: Collect and hand in salvage from signal sources or destroyed ships.",
+    "RMCP": "Reboot mission completion: Complete missions that involve rebooting systems or equipment.",
+    "CMCR": "Commit crimes: Engage in criminal activities (E.G Murder, other crimes do not seem to count as much)",
+    # ODY
+    "RSGD": "Retrieve specific goods from powerplay containers in settlements. Hand into the power contact in a station.",
+    "TPCL": "Download 'Power classified data' from odyssey settlements, and return it to a power contact in-system.",
+    "TPAD": "Download 'Power Political Data' & 'Power Association Data' from odyssey settlements, and return it to a power contact in a system your power controls.",
+    "TPRD": "Download 'Power research data' & 'Power Industrial data' from odyssey settlements, and return it to a power contact in a system your power controls.",
+    "UPMW": "Get Powerplay malware from your local power contact, and upload it to a settlement data point in the target system. Note: This may trigger the alarms!",
+}
+
 
 TASKNAMES = [
     "Bounty hunting",
@@ -29,6 +55,8 @@ TASKNAMES = [
     "Transfer Power association and political data",
     "Transfer Power research and Industrial data",
     "Upload Powerplay Malware",
+    # not sure
+    "notsure",
 ]
 """
 Task Names in an array
@@ -78,7 +106,7 @@ TASKTYPES = {
 Task types: e.g trading or combat
 """
 
-CRIMINALTASKS = ["CMCR", "PKLS", "UPMW", "TPRD","TPCL", "TPAD"]
+CRIMINALTASKS = ["CMCR", "PKLS", "UPMW", "TPRD", "TPCL", "TPAD"]
 """
 Tasks that incur a bounty or fine.
 "HSHK" is removed
@@ -138,7 +166,6 @@ HOMESYSTEMS = {
 """
 Powers home systems
 """
-
 
 
 PERMITLOCKED = [
@@ -249,6 +276,6 @@ POWERCOMMODITIES = {
 }
 
 POWERDATA = [
-    "POWER TRACKER MALWARE", #undermine
-    "POWER INJECTION MALWARE" #reinforce
+    "POWER TRACKER MALWARE",  # undermine
+    "POWER INJECTION MALWARE",  # reinforce
 ]

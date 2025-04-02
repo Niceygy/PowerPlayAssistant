@@ -2,9 +2,9 @@ print(" * Loading...")
 """
 IMPORTS
 """
-import os
 
 # PACKAGES
+import os
 from contextlib import contextmanager
 from sqlalchemy import func
 from dotenv import load_dotenv

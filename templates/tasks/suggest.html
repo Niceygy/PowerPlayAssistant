@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>PowerPlay Assistant - Suggestions</title>
+    <title>PowerPlay Assistant - What Can You Do?</title>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='main.css') }}"
@@ -22,7 +22,11 @@
     <p><strong>Notes: </strong> {{ systemNotes }} </p>
 
     <h1>Possible Tasks:</h1>
-    
+    {{% for task in possibleTasks %}}
+      <li>
+        <!-- [name, description, link] -->
+         {{ task[0] }}: {{ task[1] }} <button href="{{task[3]}}">Go!</button>
+      </li>
     <br />
 
 

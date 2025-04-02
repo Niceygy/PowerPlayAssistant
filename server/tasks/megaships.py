@@ -97,3 +97,5 @@ def find_nearest_megaships(system_name, shortcode, opposing, session):
     except Exception as e:
         print(f"An error occurred: {e}")
         return []
+    
+

@@ -6,6 +6,7 @@ from server.handlers.holoscreens import handle_holoscreens
 from server.handlers.megaships import megaships_results
 from server.handlers.raregoods import handle_rare_goods
 from server.powers import get_system_power_info, is_system_anarchy
+from server.tasks.suggest import handle_not_sure
 from server.tasks.tasks import (
     TaskDescription,
     getTaskType,
@@ -42,6 +43,8 @@ def handle_results(request, database):
         return redirect(url_for("meritminer"))
     elif task == "Transport Powerplay commodities":
         return handle_commodites(request, power, system, database)
+    elif task == "notsure":
+        return handle_not_sure(request, power, database)
     else:
         return render_template(
             "tasks/general.html",
