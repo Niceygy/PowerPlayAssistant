@@ -3,7 +3,7 @@ import json
 import ast
 import os
 
-def item_in_cache(system_name, shortcode, opposing, dataType):
+def item_in_cache(system_name: str, shortcode: str, opposing: bool, dataType: str) -> str | None:
     """
     Is this thing in cache? If so, return it
     """
@@ -47,7 +47,7 @@ def item_in_cache(system_name, shortcode, opposing, dataType):
         return None
     return None
 
-def add_item_to_cache(system_name, shortcode, opposing, data, dataType):
+def add_item_to_cache(system_name: str, shortcode: str, opposing: bool, data: str, dataType: str):
     """
     Add this thing to the cache
     """
