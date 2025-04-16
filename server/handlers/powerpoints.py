@@ -26,3 +26,11 @@ def handle_powerpoints(request, database):
         "powerpoints.html",
         powerdata=result
     )
+
+def handle_powerpoints_raw(request, database):
+    result = []
+    for key, item in POWERS.items():
+        exploited, fortified, stronghold, total = how_many_systems(item, database)
+        points = calculate_powerpoints(exploited, fortified, stronghold)
+        result.append([exploited, fortified, stronghold, points])
+    return result
