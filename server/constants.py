@@ -151,7 +151,7 @@ The powers and their shortcodes
 
 HOMESYSTEMS = {
     "Kamadhenu": "ALD",
-    "Achenar": "ARD",
+    "Harma": "ARD",
     "Cubeo": "ASD",
     "Eotienses": "DPT",
     "Gateway": "EMH",

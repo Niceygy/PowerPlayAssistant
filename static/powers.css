@@ -1,0 +1,81 @@
+/*case "Edmund Mahon":
+shortcode = "EMH"
+case "A. Lavigny-Duval":
+shortcode = "ALD"
+case "Aisling Duval":
+shortcode = "ASD"
+case "Yuri Grom":
+shortcode = "YRG"
+case "Pranav Antal":
+shortcode = "PRA"
+case "Denton Patreus":
+shortcode = "DPT"
+case "Jerome Archer":
+shortcode = "JRA"
+case "Nakato Kaine":
+shortcode = "NAK"
+case "Archon Delane":
+shortcode = "ARD"
+case "Li Yong-Rui":
+shortcode = "LYR"
+case "Felicia Winters":
+shortcode = "FLW"
+case "Zemina Torval":
+shortcode = "ZMT" 
+  "A. Lavigny-Duval": "#8c00fb",
+  "Li Yong-Rui": "#00fe62",
+  "Aisling Duval": "#00a3fc",
+  "Yuri Grom": "#ff4e00",
+  "Nakato Kaine": "#8aff00",
+  "Felicia Winters": "#ff8c00",
+  "Denton Patreus": "#11c9ca",
+  "Pranav Antal": "#fff400",
+  "Edmund Mahon": "#008306",
+  "Archon Delaine": "#d41213",
+  "Zemina Torval": "#004dfe",
+  "Jerome Archer": "#ff00fe",
+*/
+
+.ALD { /*arissa*/
+    background-color: #8c00fb;
+}
+
+.ASD { /*aisling*/
+    background-color: #00a3fc;
+}
+
+.ARD { /*archon*/
+    background-color: #d41213;
+}
+
+.YRG { /*yuri*/
+    background-color: #ff4e00;
+}
+
+.NAK { /*nakto*/
+    background-color: #8aff00;
+}
+
+.FLW { /*felicia*/
+    background-color: #ff8c00;
+}
+
+.DPT { /*denton*/
+    background-color: #11c9ca;
+}
+
+.PRA { /*pranav*/
+    background-color: #fff400;
+}
+
+.EMH { /*edmund*/
+    background-color: #008306;
+}
+
+.ZMT { /*zemina*/
+    background-color: #004dfe;
+}
+
+.JRA { /*jerome*/
+    background-color: #ff00fe;
+}

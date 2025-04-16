@@ -1,6 +1,5 @@
 from server.constants import POWERS
 from server.database.database import StarSystem, PowerData
-import traceback
 
 def power_full_to_short(power: str) -> str:
     """
@@ -61,3 +60,54 @@ def is_system_anarchy(system_name, database):
     #invert it, becuase mariadb is weird
     return result.is_anarchy#False if result.is_anarchy else True
     
+    
+def how_many_systems(powerFullName: str, database) -> list[int]:
+    """Returns how many systems of each type a power has
+
+    Args:
+        powerFullName (str): _description_
+
+    Returns:
+        list[int]: [exploited, fortified, stronghold, total]
+    """
+    exploited = (
+        database.session.query(
+            PowerData
+        ).filter(
+            PowerData.shortcode == power_full_to_short(powerFullName)
+        ).filter(
+            PowerData.state == "Exploited"
+        ).count()
+    )
+    fortified = (
+        database.session.query(
+            PowerData
+        ).filter(
+            PowerData.shortcode == power_full_to_short(powerFullName)
+        ).filter(
+            PowerData.state == "Fortified"
+        ).count()
+    )
+    stronghold = (
+        database.session.query(
+            PowerData
+        ).filter(
+            PowerData.shortcode == power_full_to_short(powerFullName)
+        ).filter(
+            PowerData.state == "Stronghold"
+        ).count()
+    )
+    
+    total = fortified + exploited + stronghold
+    
+    return [exploited, fortified, stronghold, total]
+
+def calculate_powerpoints(powerFullName: str, database):
+    exploited, fortified, stronghold, total = how_many_systems(powerFullName, database)
+    points = (
+        exploited + 
+        (fortified * 2) + 
+        (stronghold * 4)
+    )
+    
+    return [points, total]
