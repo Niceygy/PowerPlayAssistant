@@ -37,45 +37,61 @@ shortcode = "ZMT"
 */
 
 .ALD { /*arissa*/
-    background-color: #8c00fb;
+    color: #8c00fb;
+    filter: invert(9%) sepia(97%) saturate(7434%) hue-rotate(276deg) brightness(104%) contrast(118%);
 }
 
 .ASD { /*aisling*/
-    background-color: #00a3fc;
+    color: #00a3fc;
+    filter: invert(50%) sepia(53%) saturate(5061%) hue-rotate(177deg) brightness(106%) contrast(102%);
 }
 
 .ARD { /*archon*/
-    background-color: #d41213;
+    color: #d41213;
+    filter: invert(26%) sepia(80%) saturate(4238%) hue-rotate(346deg) brightness(78%) contrast(114%);
 }
 
 .YRG { /*yuri*/
-    background-color: #ff4e00;
+    color: #ff4e00;
+    filter: invert(37%) sepia(50%) saturate(2993%) hue-rotate(358deg) brightness(98%) contrast(112%);
 }
 
 .NAK { /*nakto*/
-    background-color: #8aff00;
+    color: #8aff00;
+    /* filter: invert(91%) sepia(66%) saturate(2401%) hue-rotate(27deg) brightness(94%) contrast(116%); */
 }
 
 .FLW { /*felicia*/
-    background-color: #ff8c00;
+    color: #ff8c00;
+    filter: invert(60%) sepia(33%) saturate(4524%) hue-rotate(360deg) brightness(102%) contrast(106%);
 }
 
 .DPT { /*denton*/
-    background-color: #11c9ca;
+    color: #11c9ca;
+    filter: invert(79%) sepia(55%) saturate(4516%) hue-rotate(132deg) brightness(96%) contrast(87%);
 }
 
 .PRA { /*pranav*/
-    background-color: #fff400;
+    /* color: #fff400; */
+    filter: invert(90%) sepia(26%) saturate(4121%) hue-rotate(4deg) brightness(110%) contrast(104%);
 }
 
 .EMH { /*edmund*/
-    background-color: #008306;
+    color: #008306;
+    filter: invert(28%) sepia(97%) saturate(1106%) hue-rotate(97deg) brightness(96%) contrast(106%);
 }
 
 .ZMT { /*zemina*/
-    background-color: #004dfe;
+    color: #004dfe;
+    filter: invert(17%) sepia(100%) saturate(3314%) hue-rotate(223deg) brightness(103%) contrast(113%);
 }
 
 .JRA { /*jerome*/
-    background-color: #ff00fe;
+    color: #ff00fe;
+    filter: invert(17%) sepia(100%) saturate(2941%) hue-rotate(292deg) brightness(123%) contrast(134%);
+}
+
+.LYR { /*li-yong-rui*/
+    color: #00fe62;
+    filter: invert(60%) sepia(91%) saturate(1014%) hue-rotate(90deg) brightness(110%) contrast(109%);
 }

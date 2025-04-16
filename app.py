@@ -25,6 +25,7 @@ from server.handlers.is_crime import handle_is_crime
 from server.handlers.results import handle_results
 from server.database.cycle import get_cycle_week, write_cycle_week
 from server.database.cache import clean_caches
+from server.handlers.powerpoints import handle_powerpoints
 from server.database.database import (
     database,
     StarSystem,
@@ -116,6 +117,10 @@ def handle_choice():
         return handle_task_choice(request)
     except Exception as e:
         return uhoh(str(e))
+
+@app.route("/powerpoints", methods=["GET"])
+def powerpoints():
+    return handle_powerpoints(request, database)
 
 @app.route("/about", methods=["GET"])
 def about():
