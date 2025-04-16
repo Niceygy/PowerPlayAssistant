@@ -63,16 +63,30 @@ shortcode = "ZMT"
 
 .FLW { /*felicia*/
     color: #ff8c00;
+    /* filter: invert(60%) sepia(33%) saturate(4524%) hue-rotate(360deg) brightness(102%) contrast(106%); */
+}
+
+.FLW img { /*felicia*/
+    /* color: #ff8c00; */
     filter: invert(60%) sepia(33%) saturate(4524%) hue-rotate(360deg) brightness(102%) contrast(106%);
 }
 
 .DPT { /*denton*/
+    /* filter: invert(79%) sepia(55%) saturate(4516%) hue-rotate(132deg) brightness(96%) contrast(87%); */
+    color: #11c9ca;
+    /* color: white; */
+}
+
+.DPT img { /* Apply filter only to images inside .DPT */
     filter: invert(79%) sepia(55%) saturate(4516%) hue-rotate(132deg) brightness(96%) contrast(87%);
-    /* color: #11c9ca; */
-    color: white;
 }
 
 .PRA { /*pranav*/
+    color: #fff400;
+    /* filter: invert(90%) sepia(26%) saturate(4121%) hue-rotate(4deg) brightness(110%) contrast(104%); */
+}
+
+.PRA img { /*pranav*/
     /* color: #fff400; */
     filter: invert(90%) sepia(26%) saturate(4121%) hue-rotate(4deg) brightness(110%) contrast(104%);
 }
