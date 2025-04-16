@@ -1,3 +1,2 @@
-SELECT COUNT(system_name)
-FROM powerdata
-WHERE shortcode = "ALD";
+SELECT COUNT(shortcode)
+FROM powerdata;

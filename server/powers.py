@@ -102,12 +102,11 @@ def how_many_systems(powerFullName: str, database) -> list[int]:
     
     return [exploited, fortified, stronghold, total]
 
-def calculate_powerpoints(powerFullName: str, database):
-    exploited, fortified, stronghold, total = how_many_systems(powerFullName, database)
+def calculate_powerpoints(exploited: int, fortified: int, stronghold: int):
     points = (
         exploited + 
         (fortified * 2) + 
         (stronghold * 4)
     )
     
-    return [points, total]
+    return points

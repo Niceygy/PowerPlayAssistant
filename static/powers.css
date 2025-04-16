@@ -67,8 +67,9 @@ shortcode = "ZMT"
 }
 
 .DPT { /*denton*/
-    color: #11c9ca;
     filter: invert(79%) sepia(55%) saturate(4516%) hue-rotate(132deg) brightness(96%) contrast(87%);
+    /* color: #11c9ca; */
+    color: white;
 }
 
 .PRA { /*pranav*/
@@ -94,4 +95,11 @@ shortcode = "ZMT"
 .LYR { /*li-yong-rui*/
     color: #00fe62;
     filter: invert(60%) sepia(91%) saturate(1014%) hue-rotate(90deg) brightness(110%) contrast(109%);
+}
+
+.power-icon {
+    float: center;
+    width: 50px;
+    height: 50px;
+    margin-left: 0px;
 }
