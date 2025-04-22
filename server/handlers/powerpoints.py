@@ -1,5 +1,5 @@
 import json, math
-from datetime import datetime
+from datetime import datetime, timedelta
 from flask import render_template
 from server.powers import calculate_powerpoints, how_many_systems, short_to_full_power
 from server.constants import POWERS
@@ -38,7 +38,8 @@ def handle_powerpoints(request, database):
         result.append([key, item, message, 0, points])
 
     # Save current week's powerpoints only if not already updated this week
-    current_week = datetime.now().isocalendar()[1]  # Get the current week number
+    current_week = (datetime.now() - timedelta(days=(datetime.now().weekday() - 3) % 7)).isocalendar()[1]
+    # make sure the week starts on the tick (thurs)!
     if last_updated != current_week:
         with open("cache/last_week_powerpoints.json", "w") as f:
             last_week_data["_last_updated"] = current_week
