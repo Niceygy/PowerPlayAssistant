@@ -1,5 +1,6 @@
 User-agent: *
-Disallow: /*
+Disallow: /results
+Disallow: /powerpoints
 Allow: /robots.txt
 Allow: /
 Allow: /changelog
