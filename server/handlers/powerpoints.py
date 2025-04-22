@@ -18,7 +18,7 @@ def handle_powerpoints(request, database):
         math.isclose(
             POWERPOINT_CACHE["time"],
             (datetime.utcnow() - datetime(1970, 1, 1)).total_seconds(),
-            500,
+            abs_tol = 500,
         )
         and POWERPOINT_CACHE["data"] is not []
     ):
