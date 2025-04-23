@@ -10,6 +10,12 @@ body {
   font-family: "EUROCAPS", Arial, sans-serif;
 }
 
+.welcomeMessage {
+  text-align: right;
+  float: right; /* Add this to make the div float to the right */
+  margin-left: 0; /* Ensure no gap is left on the left */
+}
+
 h1 {
   color: rgb(230, 129, 14);
 }

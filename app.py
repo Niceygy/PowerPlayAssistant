@@ -17,6 +17,7 @@ from flask import (
 )
 
 # OWN CODE
+from server.handlers.capi import handle_capi
 from server.handlers.choice import handle_task_choice
 from server.status import status, update_status
 from server.handlers.index import handle_index
@@ -111,6 +112,13 @@ def results():
         return uhoh(str(e))
 
 
+@app.route("/import", methods=["GET"])
+def handle_import():
+    try:
+        return handle_capi(request, database)
+    except Exception as e:
+        return uhoh(e)
+
 @app.route("/handle_choice", methods=["GET", "POST"])
 def handle_choice():
     try:
@@ -134,6 +142,7 @@ def about():
 def meritminer():
     return render_template(
         "redirect.html",
+        strong="There is a better tool for this!",
         description="The tool MeritMiner is better suited to helping you with this task.",
         url="https://meritminer.cc/"
     )
