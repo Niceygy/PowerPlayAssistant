@@ -9,7 +9,7 @@ rm requirements.txt && pip freeze >> requirements.txt
 # Build the Docker image
 docker build -t niceygy/powerplayassistant .
 
-# Tag the Docker image (optional)
+# Tag the Docker image
 docker tag niceygy/powerplayassistant ghcr.io/niceygy/powerplayassistant:latest
 
 # Push the Docker image to GH registry

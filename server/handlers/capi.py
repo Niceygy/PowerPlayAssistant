@@ -17,9 +17,9 @@ def handle_capi(request, database):
             url_for("index")
         )
     )
-    response.set_cookie("ppa_cmdrname", cmdr_name, secure=False)
-    response.set_cookie("ppa_power", power, secure=False)
-    response.set_cookie("ppa_last_system", system_name, secure=False, expires=datetime.now() + timedelta(seconds=500))
+    response.set_cookie("ppa_cmdrname", cmdr_name, secure=False, expires=datetime.now() + timedelta(days=30))
+    response.set_cookie("ppa_power", power, secure=False, expires=datetime.now() + timedelta(days=30))
+    response.set_cookie("ppa_last_system", system_name, secure=False, expires=datetime.now() + timedelta(days=30))
     
     return response
     
