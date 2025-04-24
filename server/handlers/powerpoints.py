@@ -27,11 +27,11 @@ def handle_powerpoints(request, database):
 
     # Load last week's powerpoints and timestamp
     try:
-        with open("cache/last_week_powerpoints.json", "r") as f:
+        with open("cache/week_before_last_powerpoints.json", "r") as f:
             last_week_data = json.load(f)
             last_updated = last_week_data.get("_last_updated", None)
     except FileNotFoundError:
-        open("cache/last_week_powerpoints.json", "w").write("{\n}")
+        open("cache/week_before_last_powerpoints.json", "w").write("{\n}")
         last_week_data = {}
         last_updated = None
 
@@ -66,6 +66,10 @@ def handle_powerpoints(request, database):
     ).isocalendar()[1]
     # make sure the week starts on the tick (thurs)!
     if last_updated != current_week:
+        with open("cache/last_week_powerpoints.json", "r") as f:
+            week_before_last_data = f.read()  # Save current last week's data
+        with open("cache/week_before_last_powerpoints.json", "w") as f:
+            f.write(week_before_last_data)  # Write it to a new file
         with open("cache/last_week_powerpoints.json", "w") as f:
             last_week_data["_last_updated"] = current_week
             json.dump(

@@ -134,6 +134,13 @@ def powerpoints():
 def powerpoints_raw():
     return handle_powerpoints_raw(request, database)
 
+@app.route("/week", methods=["GET"])
+def week():
+    try:
+        return get_cycle_week()
+    except Exception as e:
+        return uhoh(e)
+
 @app.route("/archnotepad", methods=["GET"])
 def archnotepad():
     return render_template(
