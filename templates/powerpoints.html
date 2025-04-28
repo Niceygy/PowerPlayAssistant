@@ -1,36 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PowerPlay Assistant - PowerPoints</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='powers.css') }}">
-    <script defer src="https://data.niceygy.net/script.js" data-website-id="5a305d97-fef0-4c86-9528-243ae53470ad"></script>
-    <link rel="icon" href="{{ url_for('static', filename='icons/favicon.ico') }}" type="image/x-icon">
-</head>
-<body>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='powers.css') }}"/>
+    <script defer src="https://data.niceygy.net/script.js"data-website-id="5a305d97-fef0-4c86-9528-243ae53470ad"></script>
+    <link rel="icon" href="{{ url_for('static', filename='icons/favicon.ico') }}"type="image/x-icon"/>
+
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      td,
+      th {
+        border: 1px solid #dddddd;
+        text-align: center;
+        padding: 8px;
+      }
+
+      tr:nth-child(even) {
+        background-color: #dddddd;
+      }
+    </style>
+  </head>
+  <body>
     <!-- <h1>PowerPlay Assistant</h1> -->
-    <h2 style="text-align: center;">PowerPoints!</h2>
-    <div style="text-align: center;">
-    <h4>How is your power doing?</h4>
-    {% for power in powerdata %}
-    <!-- [powerShortCode, PowerFullName, message, place] -->
-    <div class="{{power[0]}}">
-        <h3>[{{power[3]}}]: {{ power[1] }}:</h3>
-        <img src="static/icons/powers/{{power[0]}}.svg" class="power-icon" />
-        <p>{{ power[2][0] }}</p>
-        <p>{{ power[2][1] }}</p>
-        <p>{{ power[2][2] }}</p>
+    <h2 style="text-align: center">PowerPoints!</h2>
+    <div style="text-align: center">
+      <h4>How is your power doing?</h4>
+      <table>
+        <tr>
+          <th>Place</th>
+          <th>Power</th>
+          <th>Points</th>
+          <th>Systems</th>
+        </tr>
+      </table>
+      {% for power in powerdata %}
+      <!-- [powerShortCode, PowerFullName, message, place] -->
+      <table>
+        <tr>
+          <th class="{{power[0]}}">{{ power[3] }}</th>
+          <th class="{{power[0]}}">{{ power[2][0] }}</th>
+          <th class="{{power[0]}}">{{ power[2][2] }}</th>
+          <th class="{{power[0]}}">{{ power[2][1] }}</th>
+        </tr>
+      </table>
 
+      {% endfor %}
+      <br />
     </div>
-    {% endfor %}
-    <br>
-</div>
-
-</body>
-<div class="footer">
-    <p><i>Please note that this is using data from the EDDN. Somthing seem wrong? <a href="https://go.niceygy.net/powerplay_assist_thread">Submit a bug report</a></i></p>
+  </body>
+  <div class="footer">
+    <p>
+      <i
+        >Please note that this is using data from the EDDN. Somthing seem wrong?
+        <a href="https://go.niceygy.net/powerplay_assist_thread"
+          >Submit a bug report</a
+        ></i
+      >
+    </p>
     <a href="{{ url_for('index') }}">Home</a>
-</div>
+  </div>
 </html>

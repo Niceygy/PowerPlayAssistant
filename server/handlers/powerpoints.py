@@ -39,25 +39,26 @@ def handle_powerpoints(request, database):
     for key, item in POWERS.items():
         exploited, fortified, stronghold, total = how_many_systems(item, database)
         points = calculate_powerpoints(exploited, fortified, stronghold)
-        last_week_points = last_week_data.get(key, 0)  # Default to 0 if no data exists
-
+        last_week_points = last_week_data.get(key, 0)  # Default to 0 
+        
         # comparison
         comparison_message = ""
         if last_week_points > points:
-            comparison_message = f"They are down {last_week_points - points} points this week, from {last_week_points} last week"
+            comparison_message = f"⬇️ {last_week_points - points} pts"
         elif last_week_points < points:
-            comparison_message = f"They are up {points - last_week_points} points this week, from {last_week_points} last week"
+            comparison_message = f"⬆️ {points - last_week_points} pts "
         else:
-            comparison_message = f"They have not changed points this week from last weeks total of {last_week_points}"
+            comparison_message = f"0 pts"
 
         # assemble message
         message = ["", "", "", "", "", ""]
-        message[0] = f"{item} has {points} points, from {total} systems"
+        message[0] = item
         message[1] = (
             f"({exploited} Exploited systems, {fortified} fortified & {stronghold} strongholds)"
         )
         message[2] = comparison_message
 
+        
         result.append([key, item, message, 0, points])
 
     # Save current week's powerpoints only if not already updated this week
@@ -83,18 +84,11 @@ def handle_powerpoints(request, database):
     # GH Copilot Magic, orders them from most to least points
     result.sort(key=lambda x: x[4], reverse=True)
 
-    # points comparison across powers
-    last_powers_points = 0
-    last_power = ""
     place = 0
     for item in result:
         item[3] = place
         place += 1
-        if last_powers_points != 0:
-            if math.isclose(last_powers_points, item[4], abs_tol=30):
-                item[2][2] += f", & are close to {last_power}"
-        last_powers_points = item[4]
-        last_power = short_to_full_power(item[0])
+
 
     # and return!
     POWERPOINT_CACHE["data"] = result
