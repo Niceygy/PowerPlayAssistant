@@ -9,6 +9,27 @@ POWERPOINT_CACHE = {
     "time": 0,  # how many times it has only been read from cache.
 }
 
+def save_powerpoints(last_updated, last_week_data, result) -> None:
+    # Save current week's powerpoints only if not already updated this week
+    current_week = (
+        datetime.now() - timedelta(days=(datetime.now().weekday() - 3) % 7)
+    ).isocalendar()[1]
+    # make sure the week starts on the tick (thurs)!
+    if last_updated != current_week:
+        with open("cache/last_week_powerpoints.json", "r") as f:
+            week_before_last_data = f.read()  # Save current last week's data
+        with open("cache/week_before_last_powerpoints.json", "w") as f:
+            f.write(week_before_last_data)  # Write it to a new file
+        with open("cache/last_week_powerpoints.json", "w") as f:
+            last_week_data["_last_updated"] = current_week
+            json.dump(
+                {
+                    **{item[0]: item[4] for item in result},
+                    "_last_updated": current_week,
+                },
+                f,
+            )
+    return
 
 def handle_powerpoints(request, database):
 
@@ -44,49 +65,33 @@ def handle_powerpoints(request, database):
         # comparison
         comparison_message = ""
         if last_week_points > points:
-            comparison_message = f"⬇️ {last_week_points - points} pts"
+            comparison_message = f"{last_week_points - points} pts [{points}]"
         elif last_week_points < points:
-            comparison_message = f"⬆️ {points - last_week_points} pts "
+            comparison_message = f"{points - last_week_points} pts [{points}]"
         else:
-            comparison_message = f"0 pts"
-
-        # assemble message
-        message = ["", "", "", "", "", ""]
-        message[0] = item
-        message[1] = (
-            f"({exploited} Exploited systems, {fortified} fortified & {stronghold} strongholds)"
-        )
-        message[2] = comparison_message
-
+            comparison_message = f"0 pts [{points}]"
         
-        result.append([key, item, message, 0, points])
+        data = {
+            'place': 0,
+            'shortcode': key,
+            'name': item,
+            'systems': f"{exploited} Exploited, {fortified} fortified & {stronghold} strongholds [{total} total]",
+            'total_systems': total,
+            'comparison': comparison_message,
+            'comparison_icon': "up_icon.svg",
+            'points': points
+        }
 
-    # Save current week's powerpoints only if not already updated this week
-    current_week = (
-        datetime.now() - timedelta(days=(datetime.now().weekday() - 3) % 7)
-    ).isocalendar()[1]
-    # make sure the week starts on the tick (thurs)!
-    if last_updated != current_week:
-        with open("cache/last_week_powerpoints.json", "r") as f:
-            week_before_last_data = f.read()  # Save current last week's data
-        with open("cache/week_before_last_powerpoints.json", "w") as f:
-            f.write(week_before_last_data)  # Write it to a new file
-        with open("cache/last_week_powerpoints.json", "w") as f:
-            last_week_data["_last_updated"] = current_week
-            json.dump(
-                {
-                    **{item[0]: item[4] for item in result},
-                    "_last_updated": current_week,
-                },
-                f,
-            )
+        result.append(data)
+
+    save_powerpoints(last_updated, last_week_data, result)
 
     # GH Copilot Magic, orders them from most to least points
-    result.sort(key=lambda x: x[4], reverse=True)
+    result.sort(key=lambda x: x['points'], reverse=True)
 
     place = 0
     for item in result:
-        item[3] = place
+        item['place'] = place
         place += 1
 
 

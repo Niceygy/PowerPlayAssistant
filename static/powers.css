@@ -1,27 +1,4 @@
-/*case "Edmund Mahon":
-shortcode = "EMH"
-case "A. Lavigny-Duval":
-shortcode = "ALD"
-case "Aisling Duval":
-shortcode = "ASD"
-case "Yuri Grom":
-shortcode = "YRG"
-case "Pranav Antal":
-shortcode = "PRA"
-case "Denton Patreus":
-shortcode = "DPT"
-case "Jerome Archer":
-shortcode = "JRA"
-case "Nakato Kaine":
-shortcode = "NAK"
-case "Archon Delane":
-shortcode = "ARD"
-case "Li Yong-Rui":
-shortcode = "LYR"
-case "Felicia Winters":
-shortcode = "FLW"
-case "Zemina Torval":
-shortcode = "ZMT" 
+/*
   "A. Lavigny-Duval": "#8c00fb",
   "Li Yong-Rui": "#00fe62",
   "Aisling Duval": "#00a3fc",
@@ -115,5 +92,12 @@ shortcode = "ZMT"
     float: center;
     width: 50px;
     height: 50px;
+    margin-left: 0px;
+}
+
+.power-icon img {
+    float: center;
+    width: 30px;
+    height: 30px;
     margin-left: 0px;
 }
