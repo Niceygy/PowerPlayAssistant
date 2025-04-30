@@ -20,7 +20,7 @@ from flask import (
 from server.handlers.capi import handle_capi
 from server.handlers.choice import handle_task_choice
 from server.intro.pledge import handle_pledge
-from server.status import status, update_status
+from server.status import get_status, set_status
 from server.handlers.index import handle_index
 from server.database.systems import query_star_systems
 from server.handlers.is_crime import handle_is_crime
@@ -250,8 +250,8 @@ def robots():
 def status_update():
     emoji = request.args.get("emoji")
     text = request.args.get("text")
-    update_status(text, emoji)
-    return f"Updated to {status()}"
+    set_status(text, emoji)
+    return f"Updated to {get_status()}"
 
 
 if __name__ == "__main__":

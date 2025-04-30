@@ -9,9 +9,8 @@
     <link rel="icon" href="{{ url_for('static', filename='icons/favicon.ico') }}" type="image/x-icon">
     <meta name='description' content='PowerPlay Assistant is a compainon website for Elite: Dangerous, to help commanders with their powerplay 2.0 tasks.'>
     <script defer>
-        async function searchSystems(isTwo=false) {
+        async function searchSystems() {
             let elementID = "system";
-            if (isTwo) {elementID = "system2";}
             const query = document.getElementById(elementID).value;
             const response = await fetch(`/search_systems?query=${query}`);
             const results = await response.json();
@@ -25,7 +24,6 @@
         }
         function toggleLoadingBtn() {
             var x = document.getElementById("loadingIcon");
-            console.log(x)
             if (x.style.display === "none") {
                 x.style.display = "block";
             } else {
@@ -70,7 +68,7 @@
         <img id="loadingIcon" src="{{  url_for('static', filename='icons/edloader.svg')}}" width="50" height="50">
     </div>
     </div>
-
+    
 </body>
 <div class="footer">
     <a href="{{ url_for('changelog') }}">Changelog</a>
