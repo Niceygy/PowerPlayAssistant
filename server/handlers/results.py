@@ -2,6 +2,7 @@ from flask import render_template, redirect, url_for
 
 from server.handlers.bountyHunting import handle_bounty_hunting
 from server.handlers.commodities import handle_commodites
+from server.handlers.escapePods import handle_escape_pods
 from server.handlers.holoscreens import handle_holoscreens
 from server.handlers.megaships import megaships_results
 from server.handlers.raregoods import handle_rare_goods
@@ -43,6 +44,8 @@ def handle_results(request, database):
         return redirect(url_for("meritminer"))
     elif task == "Transport Powerplay commodities":
         return handle_commodites(request, power, system, database)
+    elif task == "Collect Escape Pods":
+        return handle_escape_pods(request, database)
     elif task == "notsure":
         return handle_not_sure(request, power, database)
     else:

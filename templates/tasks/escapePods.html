@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>PowerPlay Assistant - Task Not Longer Possible</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
+    <link rel="icon" href="{{ url_for('static', filename='icons/favicon.ico') }}" type="image/x-icon" />
+    <script defer src="https://data.niceygy.net/script.js" data-website-id="5a305d97-fef0-4c86-9528-243ae53470ad"></script>
+    <script>
+      function toggleLoadingIcon() {
+        var x = document.getElementById("loadingIcon");
+        if (x.style.display === "none") {
+          x.style.display = "block";
+        } else {
+          x.style.display = "none";
+        }
+      }
+
+      window.onload = function () {
+        document.getElementById("loadingIcon").style.display = "none";
+      };
+    </script>
+  </head>
+  <body>
+    <div style="text-align: center">
+      <h1>Task Not Longer Possible</h1>
+      <p><strong>Task:</strong> {{ taskName }}</p>
+      <p><strong>System:</strong> {{ system }}</p>
+      <p><strong>Power:</strong> {{ power }}</p>
+      <br />
+      <p>This task is no longer possible!</p>
+      <p>As of Trailblazers Update 3, escape pods have been disabled. Click below to continue with the replacement task</p>
+
+      <form action="{{ url_for('results') }}" method="get">
+        <input type="hidden" name="taskName" value="{{ task_replacement }}" />
+        <input type="hidden" name="power" value="{{ power }}" />
+        <input type="hidden" name="system" value="{{ system }}" />
+
+        <div class="buttons" style="text-align: center">
+          <div class="action_btn">
+            <button name="choice" type="submit" value="{{task_replacement}}" onclick="toggleLoadingIcon()">Continue</button>
+          </div>
+        </div>
+      </form>
+      <div class="loadingIcon" style="text-align: center">
+        <img id="loadingIcon" src="{{  url_for('static', filename='icons/edloader.svg')}}" width="50" height="50" />
+      </div>
+      <br />
+      <a href="{{ url_for('index') }}">Back to Home</a>
+    </div>
+  </body>
+</html>

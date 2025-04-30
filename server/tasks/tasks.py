@@ -1,5 +1,5 @@
-from server.powers import is_system_anarchy, power_full_to_short, get_system_power_info
-from server.constants import CRIMINALTASKS, POWERRENFORCEACTIVITIES, TASKSHORTCODES, TASKTYPES, POWERWEAKNESSES, HOMESYSTEMS, PERMITLOCKED
+from server.powers import power_full_to_short, get_system_power_info
+from server.constants import CRIMINALTASKS, POWERRENFORCEACTIVITIES, TASKSHORTCODES, TASKTYPES, POWERWEAKNESSES, HOMESYSTEMS, PERMITLOCKED, TASKDESCRIPTIONS
 from server.tasks.commodites import what_commodity_action
 from server.database.database import StarSystem 
 from server.tasks.odyssey import retrieve_specific_goods
@@ -123,12 +123,13 @@ def TaskDescription(task_name: str, power_name: str, system_name: str, system_po
     for key, value in TASKSHORTCODES.items():
         if task_name == value:
             taskShortCode = key
-    with open("./static/conf/Descriptions.txt", "r") as f:
-        for line in f:
-            if line.startswith("#"):
-                continue
-            if str(line).startswith(str(taskShortCode)):
-                result += line.split("=")[1]
+    # with open("./static/conf/Descriptions.txt", "r") as f:
+    #     for line in f:
+    #         if line.startswith("#"):
+    #             continue
+    #         if str(line).startswith(str(taskShortCode)):
+    #             result += line.split("=")[1]
+    result += TASKDESCRIPTIONS[taskShortCode]
     if task_name == "Transport Powerplay commodities":
         result += f". You will need the commodity '{what_commodity_action(power_name, system_name, database)}'."
     if task_name == "Upload Powerplay Malware":
@@ -147,6 +148,7 @@ def hasResSite(system_name: str, database):
     Returns:
         bool: True if the system has a resource extraction site, otherwise False.
     """
+    return False
     try:
         result = database.session.query(StarSystem).filter(StarSystem.system_name == system_name).first()
         return result.has_res_sites
