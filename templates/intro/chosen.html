@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PowerPlay Assistant - About</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='powers.css') }}" />
+    <script defer src="https://data.niceygy.net/script.js" data-website-id="5a305d97-fef0-4c86-9528-243ae53470ad"></script>
+    <link rel="icon" href="{{ url_for('static', filename='icons/favicon.ico') }}" type="image/x-icon" />
+    <script>
+      function choosePower(power) {
+        window.location.href = `${window.location.hostname}/intro/choose?power=${power}`
+      }
+    </script>
+  
+  </head>
+  <body>
+    <!-- <h1>PowerPlay Assistant</h1> -->
+    <h1>Pledge Complete</h1>
+    
+    <p>Make sure that you have also pledged in-game</p>
+
+  </body>
+  <div class="footer">
+    <a href="{{ url_for('index') }}">Home</a>
+  </div>
+</html>

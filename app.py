@@ -19,6 +19,7 @@ from flask import (
 # OWN CODE
 from server.handlers.capi import handle_capi
 from server.handlers.choice import handle_task_choice
+from server.intro.pledge import handle_pledge
 from server.status import status, update_status
 from server.handlers.index import handle_index
 from server.database.systems import query_star_systems
@@ -128,7 +129,17 @@ def handle_choice():
 
 @app.route("/powerpoints", methods=["GET"])
 def powerpoints():
-    return handle_powerpoints(request, database)
+    try:
+        return handle_powerpoints(request, database)
+    except Exception as e:
+        return uhoh(e)
+
+@app.route("/intro", methods=["GET"])
+def intro():
+    try: 
+        return handle_pledge(request, database)
+    except Exception as e:
+        return uhoh(e)
 
 @app.route("/powerpoints/raw", methods=["GET"])
 def powerpoints_raw():

@@ -231,6 +231,60 @@ Activities that this power really likes.
 Uses shortcodes
 """
 
+POWER_ABOUT = {
+    "ALD": "Arissa Lavingy-Duval is the current Emperor, and leader of the imperial senate. Her political platform is built on honour, and she has a focus on tackling corruption.",
+    "ARD": "Archon Delane is the king of the Kumo Crew, one of the most influetial crime synicates of the core systems. He is known for his ruthlessness and strict enforcement to moral codes.",
+    "ASD": "Aisling Duval is a imperial princess, most known for her popularity amoungst the younger memebers of imperial society. Known as the 'People's Princess', she is firmly against imperial slaves",
+    "DPT": "Denton Patrus is the leader of the imperial navy. He is well-liked in imperial circles, but resented elsewhere across the galaxy for his ruthless use of loans to force whole star systems into debt.",
+    "EMH": "Edmund Mahon is the current prime minister of the Alliance, from the Diso system. He is from a strong academic background, with a thorough knowledge of alliance law and politics.",
+    "FLW": "Felicia Winters is the current federal president. She became the leader of the federal party when the then-president jasmina halsey disapeared. ",
+    "JRA": "Jerome Archer is the shadow federal president and sucsessor of zachary hudson. Formely the Director of the Federal Intelligence Agency, and had a long career in law enforcement.",
+    "LYR": "Li Yong-Rui is the owner & CEO of the Sirius Corporation. He is a member of the prestigious Li dynasty, a pillar of Sirius Corporation for centuries, and holds doctorates in physics, politics, and economics.",
+    "NAK": "Nakato Kaine is the alliance councillor for Tionisla. She has strong support among the Old Worlds, and is known for her forceful speeches before the Assembly.",
+    "PRA": "Pranav Antal is the leader of the Utopia movement, which seeks to elevate humanity by embracing technology. He is the guru of the Utopia Sim-Archive, a project dedicated to storing the memories of those who have died.",
+    "YRG": "Yuri Grom is the self-proclaimed Dictator of the EG Pilots, an independent faction based out of Euryale that formed from breakaway elements of the Federation. He was formally the leader of the federal navy.",
+    "ZMT": "Zemina Torval is the matriarch of the Torval family & the Imperial Senator of Synteini. She is one of the Empire's most powerful and wealthy figures and splits her time between business and politics.",
+}
+"""
+Powers descriptions
+"""
+
+POWER_PERKS = {
+    "ALD": "+100% Bounty Payouts, -30% Weapon Costs",
+    "ARD": f"+30% black market profits, -100% reduced value on bounties placed on you",
+    "ASD": f"+100% minor faction rep gain, +200% search & rescue payout",
+    "DPT": f"+80% bounty payouts, -90% rearm prices & -40% weapon cost",
+    "EMH": f"+100% minor faction gain, +50% bonds for rare goods & +25% trade bonds",
+    "FLW": f"+60% food & medicine profits, +100% minor faction gain & +100% salvage profits",
+    "JRA": f"+100% bounty payouts & -30% weapon costs",
+    "LYR": f"-100% R/R/R costs, +25% trade bonds",
+    "NAK": f"+50% mining profits, +150% minor faction rep gain & +120% S&R profits",
+    "PRA": f"+30& exobio profits, +150% minor faction rep gain & +50% tech trade profits",
+    "YRG": f"",
+    "ZMT": f"Zemina Torval",
+}
+"""
+Perks that powers offer
+"""
+
+POWER_BEST_FOR = {
+    "ALD": "Bounty Hunters",
+    "ARD": "Smugglers",
+    "ASD": "Background Simulation Players",
+    "DPT": "Bounty Hunters",
+    "EMH": "Traders",
+    "FLW": "Search & Rescue",
+    "JRA": "Bounty Hunters",
+    "LYR": "Explorers",
+    "NAK": "Search & Rescue",
+    "PRA": "Exobiologists",
+    "YRG": "Bounty Hunters",
+    "ZMT": "Miners",
+}
+"""
+The powers and their shortcodes
+"""
+
 POWERCOMMODITIES = {
     # power: aquire, reinforce, undermine
     "ALD": [

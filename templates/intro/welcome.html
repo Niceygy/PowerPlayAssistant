@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PowerPlay Assistant - About</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='powers.css') }}" />
+    <script defer src="https://data.niceygy.net/script.js" data-website-id="5a305d97-fef0-4c86-9528-243ae53470ad"></script>
+    <link rel="icon" href="{{ url_for('static', filename='icons/favicon.ico') }}" type="image/x-icon" />
+    <script>
+      function choosePower(power) {
+        window.location.href = `${window.location.hostname}/intro/choose?power=${power}`
+      }
+    </script>
+  
+  </head>
+  <body>
+    <!-- <h1>PowerPlay Assistant</h1> -->
+    <h1>Welcome to powerplay:</h1>
+    
+    <p>So, you have decided to pledge to a power? Lets get you started!</p>
+    <p>The first step is to choose a power. You can choose one that matches your gameplay, area of space or simply by charater</p>
+
+    <h3>Powers</h3>
+    <table style="align-items: center; overflow: auto;">
+        <tr>
+          <th>Icon</th>
+          <th>Power</th>
+          <th>About</th>
+          <th>Perks</th>
+          <th>Best For</th>
+          <th>Choose them</th>
+        </tr>
+        {% for power in powerdata %}
+        <tr>
+          <th class="{{power['shortcode']}}">
+            <img src="static/icons/powers/{{power['shortcode']}}.svg" class="power-icon" />
+          </th>
+          <th class="{{power['shortcode']}}">{{ power['name'] }}</th>
+          <th class="{{power['shortcode']}}">
+            {{ power['about'] }}
+          </th>
+          <th class="{{power['shortcode']}}">{{ power['perks'] }}</th>
+          <th class="{{power['shortcode']}}">{{ power['best_for'] }}</th> 
+          <th><button onclick="choosePower('{{power['shortcode']}}')">Choose</button></th>
+        </tr>
+
+        {% endfor %}
+      </table>
+  </body>
+  <div class="footer">
+    <a href="{{ url_for('index') }}">Home</a>
+  </div>
+</html>
