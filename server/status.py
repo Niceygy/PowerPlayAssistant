@@ -9,7 +9,7 @@ def ed_status() -> str:
     resp = requests.get("https://ed-server-status.orerve.net")
     if resp.ok:
         json_data = resp.json()
-        if json_data['status'] == "Online":
+        if json_data['status'] == "Good":
             return "🟢 Online"
         else:
             return f"🔴 {json_data['status']}"

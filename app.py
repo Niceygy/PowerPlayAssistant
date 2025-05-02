@@ -70,6 +70,7 @@ def session_scope():
         print(" * Closing session")
         session.close()
 
+
 """
 Error Handler
 """
@@ -120,12 +121,14 @@ def handle_import():
     except Exception as e:
         return uhoh(e)
 
+
 @app.route("/handle_choice", methods=["GET", "POST"])
 def handle_choice():
     try:
         return handle_task_choice(request)
     except Exception as e:
         return uhoh(str(e))
+
 
 @app.route("/powerpoints", methods=["GET"])
 def powerpoints():
@@ -134,16 +137,19 @@ def powerpoints():
     except Exception as e:
         return uhoh(e)
 
+
 @app.route("/intro", methods=["GET"])
 def intro():
-    try: 
+    try:
         return handle_pledge(request, database)
     except Exception as e:
         return uhoh(e)
 
+
 @app.route("/powerpoints/raw", methods=["GET"])
 def powerpoints_raw():
     return handle_powerpoints_raw(request, database)
+
 
 @app.route("/week", methods=["GET"])
 def week():
@@ -152,18 +158,21 @@ def week():
     except Exception as e:
         return uhoh(e)
 
+
 @app.route("/archnotepad", methods=["GET"])
 def archnotepad():
     return render_template(
         "redirect.html",
         strong="Tool no longer in service",
         description="Architect's notepad has now been depriciated. I have linked to Inara, but other tools are also avalible.",
-        url="https://inara.cz/elite/cmdr-architect/"
+        url="https://inara.cz/elite/cmdr-architect/",
     )
+
 
 @app.route("/about", methods=["GET"])
 def about():
     return render_template("about.html")
+
 
 @app.route("/meritminer", methods=["GET"])
 def meritminer():
@@ -171,8 +180,9 @@ def meritminer():
         "redirect.html",
         strong="There is a better tool for this!",
         description="The tool MeritMiner is better suited to helping you with this task.",
-        url="https://meritminer.cc/"
+        url="https://meritminer.cc/",
     )
+
 
 @app.route("/tickset", methods=["GET"])
 def tickset():
@@ -181,26 +191,18 @@ def tickset():
     return f"Set week to {week}"
 
 
-def get_database_stats():
-    """
-    Returns the number of systems, megaships and stations in the database
-    """
-    systems = database.session.query(
-        func.count(func.distinct(StarSystem.system_name))
-    ).scalar()
-    megaships = database.session.query(
-        func.count(func.distinct(Megaship.name))
-    ).scalar()
-    stations = database.session.query(
-        func.count(func.distinct(Station.station_name))
-    ).scalar()
-    return systems, megaships, stations
-
-
 @app.route("/database", methods=["GET"])
 def database_stats():
     try:
-        systems, megaships, stations = get_database_stats()
+        systems = database.session.query(
+            func.count(func.distinct(StarSystem.system_name))
+        ).scalar()
+        megaships = database.session.query(
+            func.count(func.distinct(Megaship.name))
+        ).scalar()
+        stations = database.session.query(
+            func.count(func.distinct(Station.station_name))
+        ).scalar()
         return render_template(
             "database.html",
             systems=systems,
@@ -218,6 +220,7 @@ def search_systems():
     results = query_star_systems(query)
     return jsonify(results)
 
+
 @app.after_request
 def apply_headers(response):
     response.headers["X-Powered-By"] = "Nightspeed Connect"
@@ -225,14 +228,10 @@ def apply_headers(response):
     response.headers["X-Created-By"] = "Niceygy (Ava Whale) - niceygy@niceygy.net"
     return response
 
+
 @app.route("/favicon.ico")
 def favicon():
     return send_from_directory(app.static_folder, "icons/favicon.ico")
-
-
-@app.route("/copy_icon.svg")
-def copy_icon():
-    return send_from_directory(app.static_folder, "copy_solid_icon.svg")
 
 
 @app.route("/changelog", methods=["GET"])

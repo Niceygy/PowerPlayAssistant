@@ -3,49 +3,34 @@ from flask_sqlalchemy import SQLAlchemy
 import math
 
 database = SQLAlchemy()
-"""
-TABLES:
-
-star_systems:
-
-    system_name text pri key
-    latitude float
-    longitude float
-    height float
-    state text (powerplay state)
-    shortcode text (power shortcode)
-    is_anarchy bool
-
-stations:
-
-    id int pri key
-    name text
-    system text
-    type text (Starport, Outpost, PlanetaryPort, Settlement, EngineerBase)
-
-megaships: 
-    name text pri key
-    system1 text
-    system2 text
-    system3 text
-    system4 text
-    system5 text
-    system6 text
-"""
-
 
 class StarSystem(database.Model):
+    """
+    star_systems:
+
+    - system_name: text pri key,
+    - latitude: float,
+    - longitude: float,
+    - height: float,
+    - is_anarchy: bool,
+    """
     __tablename__ = "star_systems"
     system_name = Column(String(255), primary_key=True)
     latitude = Column(Float)
     longitude = Column(Float)
     height = Column(Float)
-    #state = Column(String(255))
-    #shortcode = Column(String(255))
     is_anarchy = Column(Boolean)
 
 
 class Station(database.Model):
+    """
+    stations:
+
+    - id: int pri key
+    - name: text
+    - system: text
+    - type: text (Starport, Outpost, PlanetaryPort, Settlement, EngineerBase)
+    """
     __tablename__ = "stations"
     id = Column(Integer, primary_key=True, autoincrement=True)
     station_name = Column(String(255))
@@ -55,6 +40,16 @@ class Station(database.Model):
 
 
 class Megaship(database.Model):
+    """
+    megaships: 
+    - name: text pri key
+    - system1: text
+    - system2: text
+    - system3: text
+    - system4: text
+    - system5: text
+    - system6: text
+    """
     __tablename__ = "megaships"
     name = Column(String(255), primary_key=True)
     SYSTEM1 = Column(String(255))
@@ -65,13 +60,17 @@ class Megaship(database.Model):
     SYSTEM6 = Column(String(255))
     
 class PowerData(database.Model):
+    """
+    PowerData:
+    
+    - system_name: text pri key
+    - state: text
+    - shortcode: test (power short code)
+    """
     __tablename__ = "powerdata"
     system_name = Column(String(50), primary_key=True)
     state = Column(String(20))
     shortcode = Column(String(4))
-    # controlPointsStart = Column(Float())
-    # controlPointsLatest = Column(Float())
-
 
 class RareGoods(database.Model):
     __tablename__ = "Raregoods"
