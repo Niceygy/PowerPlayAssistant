@@ -110,12 +110,3 @@ def how_many_systems(powerFullName: str, database) -> list[int]:
     # add_item_to_cache(powerFullName, "NA", True, f"{exploited},{fortified},{stronghold}" "POWERPOINTS")
     
     return [exploited, fortified, stronghold, total]
-
-def calculate_powerpoints(exploited: int, fortified: int, stronghold: int):
-    points = (
-        exploited + 
-        (fortified * 2) + 
-        (stronghold * 4)
-    )
-    
-    return points

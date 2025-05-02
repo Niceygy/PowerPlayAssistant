@@ -27,7 +27,7 @@ from server.handlers.is_crime import handle_is_crime
 from server.handlers.results import handle_results
 from server.database.cycle import get_cycle_week, write_cycle_week
 from server.database.cache import clean_caches
-from server.handlers.powerpoints import handle_powerpoints, handle_powerpoints_raw
+from server.handlers.powerpoints import handle_powerpoints#, handle_powerpoints_raw
 from server.database.database import (
     database,
     StarSystem,
@@ -152,9 +152,9 @@ def intro():
         return uhoh(e)
 
 
-@app.route("/powerpoints/raw", methods=["GET"])
-def powerpoints_raw():
-    return handle_powerpoints_raw(request, database)
+# @app.route("/powerpoints/raw", methods=["GET"])
+# def powerpoints_raw():
+#     return handle_powerpoints_raw(request, database)
 
 
 @app.route("/week", methods=["GET"])
