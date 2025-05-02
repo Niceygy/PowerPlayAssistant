@@ -10,6 +10,7 @@ POWERPOINT_CACHE = {
 }
 
 def save_powerpoints(last_updated, last_week_data, result) -> None:
+    return
     # Save current week's powerpoints only if not already updated this week
     current_week = (
         datetime.now() - timedelta(days=(datetime.now().weekday() - 3) % 7)
@@ -22,6 +23,7 @@ def save_powerpoints(last_updated, last_week_data, result) -> None:
             f.write(week_before_last_data)  # Write it to a new file
         with open("cache/last_week_powerpoints.json", "w") as f:
             last_week_data["_last_updated"] = current_week
+            print(result)
             json.dump(
                 {
                     **{item[0]: item[4] for item in result},

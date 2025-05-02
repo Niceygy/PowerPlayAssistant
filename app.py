@@ -49,7 +49,7 @@ Flask and database
 
 app = Flask(__name__)
 load_dotenv()
-app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_CONNECTION_STRING_PA")
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://assistant:6548@10.0.0.52/elite"#os.getenv("DATABASE_CONNECTION_STRING_PA")
 app.config["SQLALCHEMY_POOL_SIZE"] = 10
 app.config["SQLALCHEMY_POOL_TIMEOUT"] = 30
 app.config["SQLALCHEMY_POOL_RECYCLE"] = 280
@@ -137,6 +137,7 @@ def handle_choice():
 
 @app.route("/powerpoints", methods=["GET"])
 def powerpoints():
+    return handle_powerpoints(request, database)
     try:
         return handle_powerpoints(request, database)
     except Exception as e:
