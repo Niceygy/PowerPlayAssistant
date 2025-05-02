@@ -72,19 +72,24 @@ def session_scope():
 
 
 """
-Error Handler
+Error Handlers
 """
 
 
 def uhoh(error):
     """
-    Returns an error page, when somthing goes REALLY WRONGs
+    Returns an error page, when somthing goes REALLY WRONG
     """
     return render_template(
         "does_not_work.html", ERRORDATA=error, ERRORCODE="IRRECONCILABLE"
     )
 
 
+@app.errorhandler(404)
+def not_found(request):
+    return render_template(
+        "errors/404.html"
+    )
 """
 Route Handlers
 """

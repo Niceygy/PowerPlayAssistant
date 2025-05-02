@@ -2,7 +2,8 @@ from flask import make_response, redirect, render_template, url_for
 from datetime import datetime, timedelta
 from server.constants import POWERNAMES, TASKNAMES
 from server.status import get_status
-from server.tasks.tasks import isTaskACrime        
+from server.tasks.tasks import isTaskACrime       
+
 
 def handle_index(request):
     selected_system = None
