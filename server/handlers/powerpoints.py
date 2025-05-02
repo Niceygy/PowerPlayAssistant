@@ -1,7 +1,6 @@
-from flask import render_template, request
-from server.database.powerpoints import nicey_powerpoints, kruger_powerpoints
-# from server.powers import calculate_powerpoints, how_many_systems
-from server.constants import POWERS
+from flask import render_template
+from server.database.powerpoints import nicey_powerpoints, kruger_powerpoints, fdev_powerpoints
+import random
 
 POWERPOINT_CACHE = {
     "data": [],  # the data itself
@@ -37,7 +36,7 @@ def handle_powerpoints(request, database):
         case "nicey":
             result = nicey_powerpoints(database)
         case "fdev":
-            print()
+            result = fdev_powerpoints(database)
         case "kruger":
             result = kruger_powerpoints(database)
 
@@ -54,7 +53,9 @@ def handle_powerpoints(request, database):
     # POWERPOINT_CACHE["time"] = (
     #     datetime.utcnow() - datetime(1970, 1, 1)
     # ).total_seconds()
-    return render_template("powerpoints.html", powerdata=result)
+    title = "Short PP Report" if random.randint(0, 10) == 1 else "How is your power doing?"
+    
+    return render_template("powerpoints.html", powerdata=result, title=title)
 
 
 # def handle_powerpoints_raw(request, database):

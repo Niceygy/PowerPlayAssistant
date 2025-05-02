@@ -26,6 +26,7 @@ def save_powerpoints(last_updated, last_week_data, result) -> None:
             )
     return
 
+
 def last_weeks_ppoints():
     try:
         with open("cache/week_before_last_powerpoints.json", "r") as f:
@@ -77,17 +78,43 @@ def nicey_powerpoints(database):
     return result
 
 
+def fdev_powerpoints(database):
+    result = []
+    for key, item in POWERS.items():
+        exploited, fortified, stronghold, total = how_many_systems(item, database)
+        points = total
+
+        data = {
+            "place": 0,
+            "shortcode": key,
+            "name": item,
+            "systems": f"{exploited} Exploited, {fortified} fortified & {stronghold} strongholds [{total} total]",
+            "total_systems": total,
+            "comparison": f"{points} systems total",
+            "comparison_icon": ("up_icon.svg"),
+            "points": points,
+        }
+
+        result.append(data)
+
+    return result
+
+
 def kruger_powerpoints(database):
     exploited_points = 12
     fortified_points = 45
     stronghold_points = 113
-    
+
     result = []
     for key, item in POWERS.items():
         exploited, fortified, stronghold, total = how_many_systems(item, database)
-        
-        points = (exploited_points * exploited) + (fortified_points * fortified) + (stronghold_points * stronghold)
-        
+
+        points = (
+            (exploited_points * exploited)
+            + (fortified_points * fortified)
+            + (stronghold_points * stronghold)
+        )
+
         last_week_data = {}
         last_week_points = last_week_data.get(key, 0)  # Default to 0
 
@@ -116,5 +143,5 @@ def kruger_powerpoints(database):
         result.append(data)
 
         # save_powerpoints(last_updated, last_week_data, result)
-        
+
     return result

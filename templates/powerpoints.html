@@ -27,8 +27,17 @@
   </head>
   <body>
     <h2 style="text-align: center">PowerPoints!</h2>
+    
     <div style="text-align: center">
-      <h4>How is your power doing?</h4>
+      <h4>{{ title }}</h4>
+      <form method="get" action="{{ url_for('powerpoints') }}">
+        <label for="system">Select System:</label>
+        <select id="system" name="system" onchange="this.form.submit()">
+          <option value="nicey" {% if request.args.get('system') == 'nicey' %}selected{% endif %}>Nicey</option>
+          <option value="kruger" {% if request.args.get('system') == 'kruger' %}selected{% endif %}>Kruger</option>
+          <option value="fdev" {% if request.args.get('system') == 'fdev' %}selected{% endif %}>FDev</option>
+        </select>
+      </form>
       <table style="align-items: center">
         <tr>
           <th>Place</th>
