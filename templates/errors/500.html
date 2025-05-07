@@ -11,7 +11,8 @@
     <script>
       window.onload = function() {
         document.getElementById("functionResult").textContent = window.location.pathname;
-        umami.track("error_500");
+        
+        umami.track(`error_500_${window.location.pathname}`);
     };
     </script>
   </head>
