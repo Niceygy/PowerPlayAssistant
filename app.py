@@ -27,7 +27,7 @@ from server.handlers.is_crime import handle_is_crime
 from server.handlers.results import handle_results
 from server.database.cycle import get_cycle_week, write_cycle_week
 from server.database.cache import clean_caches
-from server.handlers.powerpoints import handle_powerpoints#, handle_powerpoints_raw
+from server.handlers.powerpoints import handle_powerpoints  # , handle_powerpoints_raw
 from server.database.database import (
     database,
     StarSystem,
@@ -49,7 +49,9 @@ Flask and database
 
 app = Flask(__name__)
 load_dotenv()
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://assistant:6548@10.0.0.52/elite"#os.getenv("DATABASE_CONNECTION_STRING_PA")
+app.config["SQLALCHEMY_DATABASE_URI"] = (
+    "mysql+pymysql://assistant:6548@10.0.0.52/elite"  # os.getenv("DATABASE_CONNECTION_STRING_PA")
+)
 app.config["SQLALCHEMY_POOL_SIZE"] = 10
 app.config["SQLALCHEMY_POOL_TIMEOUT"] = 30
 app.config["SQLALCHEMY_POOL_RECYCLE"] = 280
@@ -74,22 +76,16 @@ def session_scope():
 """
 Error Handlers
 """
-
-
-def uhoh(error):
-    """
-    Returns an error page, when somthing goes REALLY WRONG
-    """
-    return render_template(
-        "does_not_work.html", ERRORDATA=error, ERRORCODE="IRRECONCILABLE"
-    )
-
-
 @app.errorhandler(404)
 def not_found(request):
-    return render_template(
-        "errors/404.html"
-    )
+    return render_template("errors/404.html")
+
+
+@app.errorhandler(500)
+def not_found(request):
+    return render_template("errors/500.html")
+
+
 """
 Route Handlers
 """
@@ -97,72 +93,42 @@ Route Handlers
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    try:
-        return handle_index(request)
-    except Exception as e:
-        return uhoh(str(e))
+    return handle_index(request)
 
 
 @app.route("/is_crime", methods=["GET", "POST"])
 def is_crime():
-    try:
-        return handle_is_crime(request, database)
-    except Exception as e:
-        return uhoh(str(e))
+    return handle_is_crime(request, database)
 
 
 @app.route("/results")
 def results():
-    try:
-        return handle_results(request, database)
-    except Exception as e:
-        return uhoh(str(e))
+    return handle_results(request, database)
 
 
 @app.route("/import", methods=["GET"])
 def handle_import():
-    try:
-        return handle_capi(request, database)
-    except Exception as e:
-        return uhoh(e)
+    return handle_capi(request, database)
 
 
 @app.route("/handle_choice", methods=["GET", "POST"])
 def handle_choice():
-    try:
-        return handle_task_choice(request)
-    except Exception as e:
-        return uhoh(str(e))
+    return handle_task_choice(request)
 
 
 @app.route("/powerpoints", methods=["GET"])
 def powerpoints():
     return handle_powerpoints(request, database)
-    try:
-        return handle_powerpoints(request, database)
-    except Exception as e:
-        return uhoh(e)
 
 
 @app.route("/intro", methods=["GET"])
 def intro():
-    try:
-        return handle_pledge(request, database)
-    except Exception as e:
-        return uhoh(e)
-
-
-# @app.route("/powerpoints/raw", methods=["GET"])
-# def powerpoints_raw():
-#     return handle_powerpoints_raw(request, database)
+    return handle_pledge(request, database)
 
 
 @app.route("/week", methods=["GET"])
 def week():
-    try:
-        return get_cycle_week()
-    except Exception as e:
-        return uhoh(e)
+    return get_cycle_week()
 
 
 @app.route("/archnotepad", methods=["GET"])
@@ -199,25 +165,22 @@ def tickset():
 
 @app.route("/database", methods=["GET"])
 def database_stats():
-    try:
-        systems = database.session.query(
-            func.count(func.distinct(StarSystem.system_name))
-        ).scalar()
-        megaships = database.session.query(
-            func.count(func.distinct(Megaship.name))
-        ).scalar()
-        stations = database.session.query(
-            func.count(func.distinct(Station.station_name))
-        ).scalar()
-        return render_template(
-            "database.html",
-            systems=systems,
-            megaships=megaships,
-            stations=stations,
-            week=get_cycle_week(),
-        )
-    except Exception as e:
-        return uhoh(str(e))
+    systems = database.session.query(
+        func.count(func.distinct(StarSystem.system_name))
+    ).scalar()
+    megaships = database.session.query(
+        func.count(func.distinct(Megaship.name))
+    ).scalar()
+    stations = database.session.query(
+        func.count(func.distinct(Station.station_name))
+    ).scalar()
+    return render_template(
+        "database.html",
+        systems=systems,
+        megaships=megaships,
+        stations=stations,
+        week=get_cycle_week(),
+    )
 
 
 @app.route("/search_systems", methods=["GET"])

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PowerPlay Assistant - 404!</title>
+    <title>PowerPlay Assistant - 500!</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
     <script defer src="https://data.niceygy.net/script.js" data-website-id="5a305d97-fef0-4c86-9528-243ae53470ad"></script>
     <link rel="icon" href="{{ url_for('static', filename='icons/favicon.ico') }}" type="image/x-icon" />
@@ -11,13 +11,13 @@
     <script>
       window.onload = function() {
         document.getElementById("functionResult").textContent = window.location.pathname;
-        umami.track("error_404");
-      };
+        umami.track("error_500");
+    };
     </script>
   </head>
   <body>
     <h1>PowerPlay Assistant</h1>
-    <p>Well... that's annoying. It seems like the page you have requested ('<span id="functionResult"></span>') can't be found</p>
+    <p>Well... that's annoying. It seems like the page you have requested ('<span id="functionResult"></span>') has an error with it</p>
     <p>Please double-check your link is correct, and report a bug <a href="https://go.niceygy.net/powerplay_assist_thread">here</a> if it is.</p>
   </body>
   <div class="footer">
