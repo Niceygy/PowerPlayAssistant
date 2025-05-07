@@ -38,6 +38,11 @@
     /* filter: invert(91%) sepia(66%) saturate(2401%) hue-rotate(27deg) brightness(94%) contrast(116%); */
 }
 
+.NAK img { /*nakto*/
+    /* color: #8aff00; */
+    filter: invert(91%) sepia(66%) saturate(2401%) hue-rotate(27deg) brightness(94%) contrast(116%);
+}
+
 .FLW { /*felicia*/
     color: #ff8c00;
     /* filter: invert(60%) sepia(33%) saturate(4524%) hue-rotate(360deg) brightness(102%) contrast(106%); */
