@@ -82,7 +82,7 @@ def not_found(request):
 
 
 @app.errorhandler(500)
-def not_found(request):
+def not_found():
     return render_template("errors/500.html")
 
 
