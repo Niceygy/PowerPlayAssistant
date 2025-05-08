@@ -1,9 +1,10 @@
 from server.database.cycle import get_cycle_week
 from server.database.database import StarSystem, Megaship, PowerData
 from sqlalchemy.orm import class_mapper
-from server.database.cache import item_in_cache, add_item_to_cache
+from server.database.cache import Cache
 from server.constants import ITEMS_TO_RETURN
 from sqlalchemy import func
+import json
 
 
 def row_to_dict(row):
@@ -30,9 +31,10 @@ def find_nearest_megaships(system_name, shortcode, opposing, session):
         List of nearest megaships
     """
     try:
-        cache = item_in_cache(system_name, shortcode, opposing, "MEGASHIP")
-        if cache is not None:
-            return cache
+        cache = Cache()
+        cache_res = cache.get(f"{system_name}_{shortcode}_{opposing}", "megaship")
+        if cache_res is not None:
+            return json.loads(cache_res[0])
 
         current_week = get_cycle_week()
         system_column = f"SYSTEM{current_week}"
@@ -86,14 +88,20 @@ def find_nearest_megaships(system_name, shortcode, opposing, session):
         nearest_megaships_dicts = [
             (row_to_dict(megaship), distance) for megaship, distance in megaships
         ]
+        
+        #Format
+        result = []
+        for item in nearest_megaships_dicts:
+            result.append({
+                'name': item[0]['name'],
+                'system': item[0][f'SYSTEM{current_week}']
+            })
 
-        # Cache the result
-        add_item_to_cache(
-            system_name, shortcode, opposing, nearest_megaships_dicts, "MEGASHIP"
-        )
-
-        # returned cached result
-        return item_in_cache(system_name, shortcode, opposing, "MEGASHIP")
+        #Cache result
+        cache.add(f"{system_name}_{shortcode}_{opposing}", json.dumps(result), "megaship")
+        
+        # return result
+        return result
     except Exception as e:
         print(f"An error occurred: {e}")
         return []

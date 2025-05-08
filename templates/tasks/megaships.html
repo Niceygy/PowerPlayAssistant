@@ -3,21 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='main.css') }}"
-    />
-    <link rel="icon" href="{{ url_for('static', filename='icons/favicon.ico') }}" type="image/x-icon">
+    <meta name="description" content="Megaships results from PowerPlay Assistant!" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
+    <link rel="icon" href="{{ url_for('static', filename='icons/favicon.ico') }}" type="image/x-icon" />
     <script defer src="https://data.niceygy.net/script.js" data-website-id="5a305d97-fef0-4c86-9528-243ae53470ad"></script>
     <title>PowerPlay Assistant - Megaships</title>
     <script>
       function copyText(text) {
         if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(text).then(function() {
-            alert("Copied " + text);
-          }).catch(function(err) {
-            console.error('Could not copy text: ', err);
-          });
+          navigator.clipboard
+            .writeText(text)
+            .then(function () {
+              alert("Copied " + text);
+            })
+            .catch(function (err) {
+              console.error("Could not copy text: ", err);
+            });
         } else {
           // Fallback method
           let textarea = document.createElement("textarea");
@@ -28,7 +29,8 @@
             document.execCommand("copy");
             alert("Copied " + text);
           } catch (err) {
-            console.error('Fallback: Oops, unable to copy', err);
+            console.error("Fallback: Oops, unable to copy", err);
+            alert("Failed to copy :( Please report this")
           }
           document.body.removeChild(textarea);
         }
@@ -37,40 +39,35 @@
   </head>
   <body>
     <div class="main">
-    <h1>Selected Options</h1>
-    <p><strong>System:</strong> {{ system }}</p>
-    <p><strong>For:</strong> {{ power }}</p>
-    <p><strong>Type:</strong> {{ type }}</p>
+      <h1>Selected Options</h1>
+      <p><strong>System:</strong> {{ system }}</p>
+      <p><strong>For:</strong> {{ power }}</p>
+      <p><strong>Type:</strong> {{ type }}</p>
 
-    <h1>Selected Task:</h1>
-    <p><strong>Task: </strong> {{ taskName }}</p>
-    <p><strong>Task Type: </strong> {{ taskType }}</p>
-    <p class="task-description"><strong>Task Description: </strong> {{ taskDescription }}</p>
-    <p><strong>This {{ isIllegal }} Illegal </strong></p>
-    <p>
-      <strong
-        >This {{ isOpposingWeakness }} the opposing power's weakness</strong
-      >
-    </p>
-    <p><strong>This {{ isOwnStrength }} your power's strength</strong></p>
-    
+      <h1>Selected Task:</h1>
+      <p><strong>Task: </strong> {{ taskName }}</p>
+      <p><strong>Task Type: </strong> {{ taskType }}</p>
+      <p class="task-description"><strong>Task Description: </strong> {{ taskDescription }}</p>
+      <p><strong>This {{ isIllegal }} Illegal </strong></p>
+      <p>
+        <strong>This {{ isOpposingWeakness }} the opposing power's weakness</strong>
+      </p>
+      <p><strong>This {{ isOwnStrength }} your power's strength</strong></p>
 
-    <h1>Megaships:</h1>
-    <p><strong>{{ extraInfo }}</strong></p>
-    <ul>
-      {% for megaship in megaships %}
-      <li>
-        {{ megaship[0] }} - In 
-        <a
-          onclick="copyText('{{ megaship[1] }}')"
-        >{{ megaship[1] }}</a>
-      </li>
-      {% endfor %}
-    </ul>
-    <br />
-    <p><i>Click the system name to copy it</i></p>
+      <h1>Megaships:</h1>
+      <p><strong>{{ extraInfo }}</strong></p>
+      <ul>
+        {% for megaship in megaships %}
+        <li>
+          {{ megaship['name'] }} - In
+          <a onclick="copyText('{{ megaship['system'] }}')">{{ megaship['system'] }}</a>
+        </li>
+        {% endfor %}
+      </ul>
+      <br />
+      <p><i>Click the system name to copy it</i></p>
 
-    <a href="{{ url_for('index') }}">Back to Home</a>
-  </div>
+      <a href="{{ url_for('index') }}">Back to Home</a>
+    </div>
   </body>
 </html>

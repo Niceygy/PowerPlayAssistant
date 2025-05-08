@@ -14,7 +14,6 @@ from flask import (
     render_template,
     request,
     send_from_directory,
-    Response
 )
 
 # OWN CODE
@@ -28,7 +27,7 @@ from server.handlers.is_crime import handle_is_crime
 from server.handlers.results import handle_results
 from server.database.cycle import get_cycle_week, write_cycle_week
 from server.database.cache import clean_caches
-from server.handlers.powerpoints import handle_powerpoints  # , handle_powerpoints_raw
+from server.handlers.powerpoints import handle_powerpoints
 from server.database.database import (
     database,
     StarSystem,
@@ -40,8 +39,6 @@ from server.database.database import (
 pyver = os.getenv("PYTHON_VERSION")
 print(f" * Using Python {pyver}")
 print(" * All imports sucsessful")
-clean_caches()
-print(" * Caches cleaned")
 
 
 """
@@ -50,9 +47,7 @@ Flask and database
 
 app = Flask(__name__)
 load_dotenv()
-app.config["SQLALCHEMY_DATABASE_URI"] = (
-    "mysql+pymysql://assistant:6548@10.0.0.52/elite"  # os.getenv("DATABASE_CONNECTION_STRING_PA")
-)
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_CONNECTION_STRING_PA")#("mysql+pymysql://assistant:6548@10.0.0.52/elite" )
 app.config["SQLALCHEMY_POOL_SIZE"] = 10
 app.config["SQLALCHEMY_POOL_TIMEOUT"] = 30
 app.config["SQLALCHEMY_POOL_RECYCLE"] = 280
