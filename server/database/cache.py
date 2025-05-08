@@ -1,6 +1,4 @@
 from server.database.cycle import get_cycle_week
-import json
-import ast
 import sqlite3
 from datetime import datetime, timedelta
 
@@ -17,6 +15,10 @@ class Cache:
         self.path = "cache/cache.db"
         self.conn = sqlite3.connect(self.path)
         self.cursor = self.conn.cursor()
+        self.cursor.execute("PRAGMA journal_mode=WAL;")
+        # DEBUG
+        # self.conn.set_trace_callback(print)
+        # END DEBUG
         self.cycle_week = get_cycle_week()
 
     def __exit__(self) -> None:
@@ -24,7 +26,17 @@ class Cache:
         self.conn.close()
         return
 
+    def clean(self, name: str):
+        """
+        Cleans old cache entries for the specified table
+        """
+        self.table_check(name)
+        self.cursor.execute(f"DELETE FROM {name} WHERE expiry < {self.timestamp()};")
+
     def table_check(self, name: str) -> None:
+        """
+        Creates the table for that item, if it isn't already present
+        """
         self.cursor.execute(
             f"""
                 CREATE TABLE IF NOT EXISTS {name} (

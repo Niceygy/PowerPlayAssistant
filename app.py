@@ -17,6 +17,7 @@ from flask import (
 )
 
 # OWN CODE
+from server.database.cache import Cache
 from server.handlers.capi import handle_capi
 from server.handlers.choice import handle_task_choice
 from server.intro.pledge import handle_pledge
@@ -26,7 +27,6 @@ from server.database.systems import query_star_systems
 from server.handlers.is_crime import handle_is_crime
 from server.handlers.results import handle_results
 from server.database.cycle import get_cycle_week, write_cycle_week
-from server.database.cache import clean_caches
 from server.handlers.powerpoints import handle_powerpoints
 from server.database.database import (
     database,
@@ -36,9 +36,13 @@ from server.database.database import (
 )
 
 
-pyver = os.getenv("PYTHON_VERSION")
-print(f" * Using Python {pyver}")
-print(" * All imports sucsessful")
+"""
+Cache
+"""
+cache = Cache()
+cache.clean("megaship")
+cache.clean("raregoods")
+cache.__exit__()
 
 
 """
@@ -184,7 +188,6 @@ def search_systems():
     query = request.args.get("query")
     results = query_star_systems(query)
     return jsonify(results)
-
 
 @app.after_request
 def apply_headers(response):
