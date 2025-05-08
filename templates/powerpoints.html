@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PowerPlay Assistant - PowerPoints</title>
+    <meta name="description" content="PowerPoints from PowerPlay Assistant! How is your power doing?" />
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='powers.css') }}" />
     <script defer src="https://data.niceygy.net/script.js" data-website-id="5a305d97-fef0-4c86-9528-243ae53470ad"></script>
@@ -48,12 +49,12 @@
         {% for power in powerdata %}
         <tr>
           <th class="{{power['shortcode']}}">
-            <img src="static/icons/powers/{{power['shortcode']}}.svg" class="power-icon" />
+            <img src="static/icons/powers/{{power['shortcode']}}.svg" class="power-icon" alt="Power icon for {{ power['name'] }}" />
             {{ power['place'] }}
           </th>
           <th class="{{power['shortcode']}}">{{ power['name'] }}</th>
           <th class="{{power['shortcode']}}">
-            <img src="static/icons/{{power['comparison_icon']}}" class="power_icon" style="width: 20px" />
+            <img src="static/icons/{{power['comparison_icon']}}" class="power_icon" style="width: 20px" alt="{{power['comparison_icon']}}"/>
             {{ power['comparison'] }}
           </th>
           <th class="{{power['shortcode']}}">{{ power['systems'] }}</th>
