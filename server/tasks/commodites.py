@@ -1,6 +1,6 @@
 from sqlalchemy import func
 from server.constants import POWERCOMMODITIES, POWERS
-from server.database.database import PowerData, StarSystem, system_coordinates
+from server.database.database import PowerData, StarSystem
 from server.powers import get_system_power_info, power_full_to_short
 
 
