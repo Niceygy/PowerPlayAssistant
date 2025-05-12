@@ -71,6 +71,9 @@ class PowerData(database.Model):
     system_name = Column(String(50), primary_key=True)
     state = Column(String(20))
     shortcode = Column(String(4))
+    war = Column(Boolean())
+    war_start = Column(Integer())
+    opposition = Column(String(4))
 
 class RareGoods(database.Model):
     __tablename__ = "Raregoods"

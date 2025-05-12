@@ -20,7 +20,6 @@ from flask import (
 from server.database.cache import Cache
 from server.handlers.capi import handle_capi, handle_logout
 from server.handlers.choice import handle_task_choice
-from server.intro.pledge import handle_pledge
 from server.status import get_status, set_status
 from server.handlers.index import handle_index
 from server.database.systems import query_star_systems
@@ -28,6 +27,7 @@ from server.handlers.is_crime import handle_is_crime
 from server.handlers.results import handle_results
 from server.database.cycle import get_cycle_week, write_cycle_week
 from server.handlers.powerpoints import handle_powerpoints
+from server.handlers.conflict import handle_conflict_result, handle_conflict_search
 from server.database.database import (
     database,
     StarSystem,
@@ -113,6 +113,14 @@ def results():
 @app.route("/handle_choice", methods=["GET", "POST"])
 def handle_choice():
     return handle_task_choice(request)
+
+@app.route("/conflict", methods=["GET"])
+def conflicts():
+    return handle_conflict_search(request, database)
+
+@app.route("/conflict/result", methods=["POST", "GET"])
+def conflicts_result(): 
+    return handle_conflict_result(request, database)
 
 
 """

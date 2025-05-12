@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PowerPlay Assistant</title>
+    <title>PowerPlay Assistant - Conflict Search</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
     <script defer src="https://data.niceygy.net/script.js" data-website-id="5a305d97-fef0-4c86-9528-243ae53470ad"></script>
     <link rel="icon" href="{{ url_for('static', filename='icons/favicon.ico') }}" type="image/x-icon">
@@ -43,15 +43,8 @@
         <br />
     </div>
     <div class="specifyTask">
-    <h2>Specify Task</h2>
-    <form action="/" method="post">
-        <label for="mission">Doing:</label>
-        <select id="mission" name="mission">
-            {% for mission in missions %}
-                <option value="{{ mission }}" {% if selected_mission == mission %}selected{% endif %}>{{ mission }}</option>
-            {% endfor %}
-        </select><br><br>
-
+    <h2>Search Conflicts</h2>
+    <form action="conflict/result" method="post">
         <label for="system">Near system:</label>
         <input list="system-results" id="system" name="system" oninput="searchSystems()" autocomplete="off" value="{{ default_system }}">
         <datalist id="system-results"></datalist><br><br>
@@ -72,16 +65,6 @@
     
 </body>
 <div class="footer">
-    <a href="{{ url_for('changelog') }}">Changelog</a>
-    <a href="{{ url_for('database_stats') }}">Database Stats</a>
-    <a href="{{ url_for('powerpoints') }}">PowerPoints</a>
-    <a href="{{ url_for('conflicts') }}">Conflict Finder</a>
-    <br />
-    <a href="https://niceygy.net">Niceygy.Net</a>
-    <a href="https://forums.frontier.co.uk/threads/powerplay-2-0-activities.629227/">PowerPlay Thread</a>
-    <a href="https://go.niceygy.net/support_me">Support Me</a>
-    <a href="{{url_for('about')}}">about</a>
-    <br>
-    <div class="glowing-emoji">{{ status_text }}</div>
+    <a href="{{url_for('index')}}">Home</a>
 </div>
 </html>

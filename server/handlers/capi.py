@@ -33,8 +33,8 @@ def handle_logout():
         )
     )
     
-    response.set_cookie("ppa_cmdrname", None, expires=datetime.now(), path="/")
-    response.set_cookie("ppa_power", None, expires=datetime.now(), path="/")
-    response.set_cookie("ppa_last_system", None, expires=datetime.now() + timedelta(seconds=500), path="/")
+    response.set_cookie("ppa_cmdrname", None)
+    response.delete_cookie("ppa_power")
+    response.delete_cookie("ppa_last_system")
     
     return response

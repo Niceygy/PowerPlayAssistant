@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
+    <link rel="icon" href="{{ url_for('static', filename='icons/favicon.ico') }}" type="image/x-icon" />
+    <script defer src="https://data.niceygy.net/script.js" data-website-id="5a305d97-fef0-4c86-9528-243ae53470ad"></script>
+    <title>PowerPlay Assistant - Conflicts</title>
+    <script>
+      function copyText(text) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard
+            .writeText(text)
+            .then(function () {
+              alert("Copied " + text);
+            })
+            .catch(function (err) {
+              console.error("Could not copy text: ", err);
+            });
+        } else {
+          // Fallback method
+          let textarea = document.createElement("textarea");
+          textarea.value = text;
+          document.body.appendChild(textarea);
+          textarea.select();
+          try {
+            document.execCommand("copy");
+            alert("Copied " + text);
+          } catch (err) {
+            console.error("Fallback: Oops, unable to copy", err);
+          }
+          document.body.removeChild(textarea);
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="main">
+      <h1>Selected Options</h1>
+      <p><strong>System:</strong> {{ systemName }}</p>
+      <p><strong>For:</strong> {{ power }}</p>
+
+      <h1>Conflicts:</h1>
+      <ul>
+        {% for system in systems %}
+        <li>
+            <a onclick="copyText('{{system.name}}')">{{ system.name }} [ {{ system.ly }} LY ] - {{ system.power1 }} vs {{ system.power2 }}</a>
+        </li>
+        {% endfor %}
+      </ul>
+      <br />
+      <p><i>Click the system name to copy it</i></p>
+
+      <a href="{{ url_for('index') }}">Back to Home</a>
+    </div>
+  </body>
+</html>
