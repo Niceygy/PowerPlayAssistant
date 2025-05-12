@@ -9,7 +9,7 @@ from server.handlers.raregoods import handle_rare_goods
 from server.powers import get_system_power_info, is_system_anarchy
 from server.tasks.suggest import handle_not_sure
 from server.tasks.tasks import (
-    TaskDescription,
+    task_description,
     getTaskType,
     is_task_own_strength,
     isPowersWeakness,
@@ -60,7 +60,7 @@ def handle_results(request, database):
             taskType=getTaskType(task),
             isIllegal="Is" if isTaskACrime(task, is_system_anarchy(system, database)) else "isn't",
             isOpposingWeakness=isPowersWeakness(power, task),
-            taskDescription=TaskDescription(task, power, system, powerInfo, database),
+            taskDescription=task_description(task, power, system, powerInfo, database),
             systemNotes=systemNotes(power, system, database),
             isOwnStrength="is" if is_task_own_strength(task, controllingPower) else "isn't"
         )

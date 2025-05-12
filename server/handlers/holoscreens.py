@@ -2,7 +2,7 @@ from flask import render_template
 from server.powers import get_system_power_info, power_full_to_short
 from server.tasks.megaships import find_nearest_megaships
 from server.tasks.tasks import (
-    TaskDescription,
+    task_description,
     getTaskType,
     is_task_own_strength,
     isPowersWeakness,
@@ -29,7 +29,7 @@ def handle_holoscreens(request, power, system, database):
         system=system,
         power=power,
         taskName=task,
-        taskDescription=TaskDescription(task, power, system, powerInfo, database),
+        taskDescription=task_description(task, power, system, powerInfo, database),
         taskType=getTaskType(task),
         isIllegal="is",
         isOpposingWeakness=isPowersWeakness(power, task),

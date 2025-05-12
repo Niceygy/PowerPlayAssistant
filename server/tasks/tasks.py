@@ -98,7 +98,7 @@ def systemNotes(powerFullName, system_name, database):
     else:
         return message
     
-def TaskDescription(task_name: str, power_name: str, system_name: str, system_power_info, database, extraInfo=""):
+def task_description(task_name: str, power_name: str, system_name: str, system_power_info, database, extraInfo=""):
     """
     Get the description of a task.
 

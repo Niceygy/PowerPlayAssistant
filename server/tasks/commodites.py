@@ -68,10 +68,11 @@ def is_system_in_range(
         .filter(distance <= 20)  # Ensure this filter is applied after the join
         .all()
     )
-
-    if fortified_within_range:
-        return True, fortified_within_range[0].system_name
-    elif strongholds_within_range:
-        return True, strongholds_within_range[0].system_name
+    
+    
+    if strongholds_within_range:
+        return True, strongholds_within_range[0][0].system_name
+    elif fortified_within_range:
+        return True, fortified_within_range[0][0].system_name
     else:
         return False, ""

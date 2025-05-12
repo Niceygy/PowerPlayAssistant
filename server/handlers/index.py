@@ -34,7 +34,8 @@ def handle_index(request):
                 )
             )
 
-    if request.cookies.get("ppa_cmdrname", None) != None:
+    cmdr_name = request.cookies.get("ppa_cmdrname", None)
+    if cmdr_name != None and cmdr_name != "":
         # user is logged in
         cmdr_name = request.cookies.get("ppa_cmdrname")
         system_name = request.cookies.get("ppa_last_system")

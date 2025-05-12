@@ -17,9 +17,9 @@ def handle_capi(request, database):
             url_for("index")
         )
     )
-    response.set_cookie("ppa_cmdrname", cmdr_name, secure=False, expires=datetime.now() + timedelta(days=30))
-    response.set_cookie("ppa_power", power, secure=False, expires=datetime.now() + timedelta(days=300))
-    response.set_cookie("ppa_last_system", system_name, secure=False, expires=datetime.now() + timedelta(days=30))
+    response.set_cookie("ppa_cmdrname", cmdr_name, expires=datetime.now() + timedelta(days=30))
+    response.set_cookie("ppa_power", power, expires=datetime.now() + timedelta(days=300))
+    response.set_cookie("ppa_last_system", system_name, expires=datetime.now() + timedelta(days=30))
     
     return response
     
@@ -33,8 +33,8 @@ def handle_logout():
         )
     )
     
-    response.set_cookie("ppa_cmdrname", "", secure=False)
-    response.set_cookie("ppa_power", "", secure=False)
-    response.set_cookie("ppa_last_system", "", secure=False, expires=datetime.now() + timedelta(seconds=500))
+    response.set_cookie("ppa_cmdrname", None, expires=datetime.now(), path="/")
+    response.set_cookie("ppa_power", None, expires=datetime.now(), path="/")
+    response.set_cookie("ppa_last_system", None, expires=datetime.now() + timedelta(seconds=500), path="/")
     
     return response
