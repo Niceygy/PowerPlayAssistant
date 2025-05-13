@@ -4,6 +4,7 @@ from sqlalchemy import and_, or_, func
 from server.database.database import PowerData, StarSystem, distance_to_system
 from server.constants import POWERNAMES
 from server.powers import power_full_to_short, short_to_full_power
+from server.database.cache import Cache
 
 
 def handle_conflict_search(request, database):
@@ -20,6 +21,7 @@ def handle_conflict_result(request, database):
             url_for("conflicts_result", system_name=system_name, power=power)
         )
     else:
+        
         power = request.args.get("power")
         shortcode = power_full_to_short(power)
         system_name = request.args.get("system_name")

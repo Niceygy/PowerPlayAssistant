@@ -1,6 +1,7 @@
 from server.database.cycle import get_cycle_week
 import sqlite3
 from datetime import datetime, timedelta
+from typing import Optional
 
 
 class Cache:
@@ -49,9 +50,13 @@ class Cache:
         )
         return
 
-    def expiry(self) -> int:
-        # all expiry is one week
-        time = datetime.now() + timedelta(days=6, hours=23)
+    def expiry(self, days: Optional[int]) -> int:
+        """
+        Calculates the expiry for a new entry.
+        days can be adjusted as needed (default 7)
+        """
+        if days is None: days = 7
+        time = datetime.now() + timedelta(days=days)
         return time.timestamp()
 
     def timestamp(self) -> int:
@@ -60,8 +65,8 @@ class Cache:
         If the expiry > timestamp(), it is valid.
         """
         return datetime.now().timestamp()
-
-    def add(self, query: str, data: str, data_type: str) -> None:
+    
+    def add(self, query: str, data: str, data_type: str, expiry_override: Optional[int]) -> None:
         """Adds an item to the cache
 
         Args:
@@ -78,7 +83,7 @@ class Cache:
             if result is None:
                 self.cursor.execute(
                     f"INSERT INTO {data_type} (input, data, expiry, cycle) VALUES (?, ?, ?, ?)",
-                    (query, data, self.expiry(), self.cycle_week),
+                    (query, data, self.expiry(expiry_override), self.cycle_week),
                 )
                 self.conn.commit()
             return
@@ -108,70 +113,3 @@ class Cache:
         except Exception as e:
             print(e)
             return None
-
-
-# def item_in_cache(system_name: str, shortcode: str, opposing: bool, dataType: str) -> str | None:
-#     """
-#     Is this thing in cache? If so, return it
-#     """
-#     current_week = get_cycle_week()
-#     try:
-#         with open(f"cache/week{current_week}.cache", "r") as f:
-#             for line in f.read().splitlines():
-#                 if line is None:
-#                     continue
-#                 if not line.startswith(f"{dataType}:"):
-#                     continue
-#                 else:
-#                     line = line.removeprefix(f"{dataType}:")
-#                 temp = line.split("/", 3)
-#                 _system_name = temp[0]
-#                 _shortcode = temp[1]
-#                 _opposing = temp[2]
-#                 _data = temp[3]
-#                 if (
-#                     _system_name == system_name
-#                     and _shortcode == shortcode
-#                     and _opposing == str(opposing)
-#                 ):
-#                     f.close()
-
-#                     if dataType == "MEGASHIP":
-#                         result = []
-#                         jsonData = json.loads(_data)
-#                         for entry in jsonData:
-#                             megaship_name = entry[0]["name"]
-#                             system = entry[0][f"SYSTEM{get_cycle_week()}"]
-#                             result.append([megaship_name, system])
-#                         return result
-#                     else:
-#                         return ast.literal_eval(_data)
-#             f.close()
-#     except FileNotFoundError:
-#         with open(f"cache/week{current_week}.cache", "w") as f:
-#             f.write("")
-#             f.close()
-#         return None
-#     return None
-
-# def add_item_to_cache(system_name: str, shortcode: str, opposing: bool, data: str, dataType: str):
-#     """
-#     Add this thing to the cache
-#     """
-#     if item_in_cache(system_name, shortcode, opposing, dataType) is not None:
-#         return
-#     else:
-#         current_week = get_cycle_week()
-#         with open(f"./cache/week{current_week}.cache", "a") as f:
-#             f.write(f"{dataType}:{system_name}/{shortcode}/{opposing}/{json.dumps(data)}\n")
-#             f.close()
-#         return
-
-
-def clean_caches():
-    return
-    for i in range(5):
-        try:
-            open(f"cache/week{i}.cache", "w").close()
-        except FileNotFoundError:
-            open(f"cache/week{i}.cache", "r").write(" ")
