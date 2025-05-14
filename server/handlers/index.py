@@ -2,7 +2,7 @@ from flask import make_response, redirect, render_template, url_for
 from datetime import datetime, timedelta
 from server.constants import POWERNAMES, TASKNAMES
 from server.status import get_status
-from server.tasks.tasks import isTaskACrime       
+from server.tasks.tasks import isTaskACrime
 
 
 def handle_index(request):
@@ -50,9 +50,11 @@ def handle_index(request):
                 request.cookies.get("ppa_last_visit"), "%Y-%m-%d %H:%M:%S"
             )
             if datetime.now() - last_visit > timedelta(hours=12):
-                response = make_response(redirect("https://capi.niceygy.net/userinfo/ppa"))
+                response = make_response(
+                    redirect("https://capi.niceygy.net/userinfo/ppa")
+                )
                 response.set_cookie(
-                   "ppa_last_visit", datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                    "ppa_last_visit", datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 )
                 return response
 
@@ -68,10 +70,12 @@ def handle_index(request):
                 default_system=system_name,
             )
         )
-        if request.cookies.get("ppa_last_visit", None) == None:
-            response.set_cookie(
-                "ppa_last_visit", datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            )
+
+        response.set_cookie(
+            "ppa_last_visit",
+            datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            expires=datetime.now() + timedelta(days=40),
+        )
         return response
 
     return render_template(
@@ -84,4 +88,3 @@ def handle_index(request):
         welcome_button_message="Login",
         welcome_message="Welcome anonymous CMDR.",
     )
-    

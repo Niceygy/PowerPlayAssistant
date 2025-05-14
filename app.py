@@ -84,9 +84,12 @@ def not_found(request):
     return render_template("errors/404.html")
 
 
-@app.errorhandler(500)
-def not_found():
-    return render_template("errors/500.html")
+@app.errorhandler(Exception)
+def internal_error(err):
+    return render_template(
+        "errors/500.html",
+        info=str(err)
+        )
 
 
 """
@@ -104,7 +107,7 @@ def is_crime():
     return handle_is_crime(request, database)
 
 
-@app.route("/results")
+@app.route("/results", methods=["GET", "POST"])
 def results():
     return handle_results(request, database)
 
@@ -256,4 +259,4 @@ def apply_headers(response):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=5001)
+    app.run(host="0.0.0.0", port=5001)
