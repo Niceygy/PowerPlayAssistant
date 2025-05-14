@@ -3,7 +3,7 @@ certifi==2025.4.26
 charset-normalizer==3.4.1
 click==8.1.8
 dotenv==0.9.9
-Flask==3.1.0
+Flask==3.1.1
 Flask-SQLAlchemy==3.1.1
 gevent==24.11.1
 greenlet==3.1.1
