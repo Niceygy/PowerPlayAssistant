@@ -71,12 +71,6 @@ def how_many_systems(powerFullName: str, database) -> list[int]:
     Returns:
         list[int]: [exploited, fortified, stronghold, total]
     """
-    # cacheData = item_in_cache(powerFullName, "NA", True, "POWERPOINTS")
-    # if cacheData is not None:
-    #     exploited, fortified, stronghold = cacheData.split(",")
-    #     total = exploited + fortified + stronghold
-    #     return [exploited, fortified, stronghold, total]
-        
     exploited = (
         database.session.query(
             PowerData
@@ -106,7 +100,5 @@ def how_many_systems(powerFullName: str, database) -> list[int]:
     )
     
     total = fortified + exploited + stronghold
-    
-    # add_item_to_cache(powerFullName, "NA", True, f"{exploited},{fortified},{stronghold}" "POWERPOINTS")
-    
+        
     return [exploited, fortified, stronghold, total]

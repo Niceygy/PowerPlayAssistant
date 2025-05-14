@@ -5,6 +5,7 @@ from server.database.database import PowerData, StarSystem, distance_to_system
 from server.constants import POWERNAMES
 from server.powers import power_full_to_short, short_to_full_power
 from server.database.cache import Cache
+import ast
 
 
 def handle_conflict_search(request, database):
@@ -21,10 +22,19 @@ def handle_conflict_result(request, database):
             url_for("conflicts_result", system_name=system_name, power=power)
         )
     else:
-        
         power = request.args.get("power")
         shortcode = power_full_to_short(power)
         system_name = request.args.get("system_name")
+
+        cache = Cache()
+        res = cache.get(f"{power}_{system_name}", "conflicts")
+        if res is not None:
+            return render_template(
+                "conflicts/result.html",
+                systems=ast.literal_eval(res),
+                systemName=system_name,
+                power=power,
+            )
 
         user_system = (
             database.session.query(StarSystem)
@@ -62,16 +72,20 @@ def handle_conflict_result(request, database):
         result = []
         for item in query:
             item = item[1]
-            result.append({
-                'name': item.system_name,
-                'power1': short_to_full_power(item.shortcode),
-                'power2': short_to_full_power(item.opposition),
-                'ly': math.trunc(distance_to_system(system_name, item.system_name, database))
-            })
+            result.append(
+                {
+                    "name": item.system_name,
+                    "power1": short_to_full_power(item.shortcode),
+                    "power2": short_to_full_power(item.opposition),
+                    "ly": math.trunc(
+                        distance_to_system(system_name, item.system_name, database)
+                    ),
+                }
+            )
+
+        cache.add(f"{power}_{system_name}", str(result), "conflicts", 1)
+        cache.__exit__()
 
         return render_template(
-            "conflicts/result.html",
-            systems=result,
-            systemName=system_name,
-            power=power
+            "conflicts/result.html", systems=result, systemName=system_name, power=power
         )

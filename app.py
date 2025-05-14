@@ -31,7 +31,6 @@ from server.handlers.conflict import handle_conflict_result, handle_conflict_sea
 from server.database.database import (
     database,
     StarSystem,
-    Station,
     Megaship,
 )
 
@@ -177,14 +176,11 @@ def database_stats():
     megaships = database.session.query(
         func.count(func.distinct(Megaship.name))
     ).scalar()
-    stations = database.session.query(
-        func.count(func.distinct(Station.station_name))
-    ).scalar()
     return render_template(
         "database.html",
         systems=systems,
         megaships=megaships,
-        stations=stations,
+        stations=0,
         week=get_cycle_week(),
     )
 

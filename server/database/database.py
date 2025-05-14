@@ -22,23 +22,6 @@ class StarSystem(database.Model):
     is_anarchy = Column(Boolean)
 
 
-class Station(database.Model):
-    """
-    stations:
-
-    - id: int pri key
-    - name: text
-    - system: text
-    - type: text (Starport, Outpost, PlanetaryPort, Settlement, EngineerBase)
-    """
-    __tablename__ = "stations"
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    station_name = Column(String(255))
-    star_system = Column(String(255))
-    station_type = Column(String(255))
-    economy = Column(String(255))
-
-
 class Megaship(database.Model):
     """
     megaships: 

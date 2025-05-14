@@ -87,7 +87,8 @@ class Cache:
                 )
                 self.conn.commit()
             return
-        except Exception:
+        except Exception as e:
+            print(e)
             return
 
     def get(self, query: str, data_type: str) -> list:
