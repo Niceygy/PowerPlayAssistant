@@ -3,12 +3,16 @@
   <head>
     <meta charset="utf-8" />
     <title>PowerPlay Assistant - Results</title>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='main.css') }}"
-    />
-    <link rel="icon" href="{{ url_for('static', filename='icons/favicon.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
+    <link rel="icon" href="{{ url_for('static', filename='icons/favicon.ico') }}" type="image/x-icon" />
     <script defer src="https://data.niceygy.net/script.js" data-website-id="5a305d97-fef0-4c86-9528-243ae53470ad"></script>
+        <script>
+      window.onload = function() {        
+        umami.track(`{{taskName}}`);
+        umami.track("{{ power }}")
+    };
+    </script>
+  
   </head>
   <body>
     <h1>Selected Options</h1>
@@ -19,7 +23,7 @@
     <p><strong>Current Controlling Power: </strong> {{ currentPower }}</p>
     <p><strong>Current State: </strong> {{ currentState }}</p>
     <p><strong>Is Anarchy: </strong> {{ isAnarchy }}</p>
-    <p><strong>Notes: </strong> {{ systemNotes }} </p>
+    <p><strong>Notes: </strong> {{ systemNotes }}</p>
 
     <h1>Selected Task:</h1>
     <p><strong>Task: </strong> {{ taskName }}</p>
@@ -29,7 +33,6 @@
     <p><strong>This {{ isOpposingWeakness }} the opposing power's weakness</strong></p>
     <p><strong>This {{ isOwnStrength }} your power's strength</strong></p>
     <br />
-
 
     <a href="{{ url_for('index') }}">Back to Home</a>
   </body>

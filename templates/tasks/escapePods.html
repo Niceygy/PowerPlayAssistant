@@ -20,6 +20,12 @@
         document.getElementById("loadingIcon").style.display = "none";
       };
     </script>
+        <script>
+      window.onload = function() {        
+        umami.track(`escapepods`);
+        umami.track("{{ power }}")
+    };
+    </script>
   </head>
   <body>
     <div style="text-align: center">

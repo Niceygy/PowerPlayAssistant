@@ -35,6 +35,10 @@
           document.body.removeChild(textarea);
         }
       }
+      window.onload = function() {        
+        umami.track(`megaships`);
+        umami.track("{{ power }}")
+    };
     </script>
   </head>
   <body>

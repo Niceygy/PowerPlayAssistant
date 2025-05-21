@@ -51,6 +51,12 @@
     <p><strong>This {{ isIllegal }} Illegal </strong></p>
     <p><strong>This {{ isOpposingWeakness }} the opposing power's weakness</strong></p>
     <p><strong>This {{ isOwnStrength }} your power's strength</strong></p>
+    <script>
+      window.onload = function() {        
+        umami.track(`commodity`);
+        umami.track("{{ power }}")
+    };
+    </script>
 
     <h1>Location:</h1>
     <p onclick="copyText('{{ item_system }}')">You (probably) can find {{ item_name }} in {{ item_system }}, which is {{ item_ly }} LY from you.</p>

@@ -33,6 +33,10 @@
           document.body.removeChild(textarea);
         }
       }
+      window.onload = function() {        
+        umami.track(`raregoods`);
+        umami.track("{{ power }}")
+    };
     </script>
   </head>
   <body>
