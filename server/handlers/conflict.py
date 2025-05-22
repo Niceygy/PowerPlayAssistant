@@ -6,7 +6,6 @@ from server.database.database import PowerData, StarSystem, distance_to_system
 from server.constants import POWERNAMES
 from server.powers import power_full_to_short, short_to_full_power
 from server.database.cache import Cache
-import ast
 
 
 def handle_conflict_search(request, database):
@@ -32,7 +31,7 @@ def handle_conflict_result(request, database):
         if res is not None:
             return render_template(
                 "conflicts/result.html",
-                systems=ast.literal_eval(res),
+                systems=json.loads(res[0]),
                 systemName=system_name,
                 power=power,
             )
