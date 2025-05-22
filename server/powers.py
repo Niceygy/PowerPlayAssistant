@@ -1,6 +1,5 @@
 from server.constants import POWERS
 from server.database.database import StarSystem, PowerData
-# from server.database.cache import add_item_to_cache, item_in_cache
 
 def power_full_to_short(power: str) -> str:
     """
@@ -18,8 +17,6 @@ def short_to_full_power(power: str) -> str:
     if power == '':
         return None
     return POWERS[power]
-
-
 
 def get_system_power_info(system, database):
     """

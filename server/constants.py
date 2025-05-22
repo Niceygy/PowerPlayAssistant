@@ -132,16 +132,16 @@ Tasks powers are weak to
 """
 
 POWERS = {
-    "ALD": "Arissa Lavingy-Duval",
-    "ARD": "Archon Delane",
+    "ALD": 'A. Lavigny-Duval',
+    "ARD": 'Archon Delaine',
     "ASD": "Aisling Duval",
-    "DPT": "Denton Patrus",
+    "DPT": 'Denton Patreus',
     "EMH": "Edmund Mahon",
     "FLW": "Felicia Winters",
     "JRA": "Jerome Archer",
     "LYR": "Li Yong-Rui",
     "NAK": "Nakato Kaine",
-    "PRA": "Prantav Antal",
+    "PRA": 'Pranav Antal',
     "YRG": "Yuri Grom",
     "ZMT": "Zemina Torval",
 }
@@ -196,16 +196,16 @@ Permit locked systems
 """
 
 POWERNAMES = [
-    "Arissa Lavingy-Duval",
-    "Archon Delane",
+    "A. Lavingy-Duval",
+    "Archon Delaine",
     "Aisling Duval",
-    "Denton Patrus",
+    "Denton Patreus",
     "Edmund Mahon",
     "Felicia Winters",
     "Jerome Archer",
     "Li Yong-Rui",
     "Nakato Kaine",
-    "Prantav Antal",
+    "Pranav Antal",
     "Yuri Grom",
     "Zemina Torval",
 ]

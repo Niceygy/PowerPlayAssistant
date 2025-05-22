@@ -1,3 +1,4 @@
+import json
 import math
 from flask import render_template, redirect, url_for
 from sqlalchemy import and_, or_, func
@@ -83,7 +84,7 @@ def handle_conflict_result(request, database):
                 }
             )
 
-        cache.add(f"{power}_{system_name}", str(result), "conflicts", 1)
+        cache.add(f"{power}_{system_name}",  json.dumps(result), "conflicts", 1)
         cache.__exit__()
 
         return render_template(

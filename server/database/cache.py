@@ -17,6 +17,7 @@ class Cache:
         self.conn = sqlite3.connect(self.path)
         self.cursor = self.conn.cursor()
         self.cursor.execute("PRAGMA journal_mode=WAL;")
+        self.cursor.execute("VACUUM;")
         # DEBUG
         # self.conn.set_trace_callback(print)
         # END DEBUG
@@ -50,7 +51,7 @@ class Cache:
         )
         return
 
-    def expiry(self, days: Optional[int]) -> int:
+    def expiry(self, days=7) -> int:
         """
         Calculates the expiry for a new entry.
         days can be adjusted as needed (default 7)
