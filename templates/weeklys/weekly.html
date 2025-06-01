@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PowerPlay Assistant - About</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
+    <script defer src="https://data.niceygy.net/script.js" data-website-id="5a305d97-fef0-4c86-9528-243ae53470ad"></script>
+    <link rel="icon" href="{{ url_for('static', filename='icons/favicon.ico') }}" type="image/x-icon" />
+    <!-- v5 -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+  </head>
+  <body>
+    <img id="ocr-preview" style="max-width:500px; display:block; margin-bottom:10px;">
+    <canvas id="ocr-canvas" style="display:none;"></canvas>
+    <input type="file" id="ocr-file" accept="image/*" onchange="showPreview(event)">
+    <button onclick="runOCR()">Run OCR</button>
+    <pre id="ocr-result"></pre>
+    <script>
+      let rect = null;
+      let startX, startY, endX, endY;
+      const img = document.getElementById('ocr-preview');
+      const canvas = document.getElementById('ocr-canvas');
+
+      function showPreview(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        img.src = URL.createObjectURL(file);
+        img.onload = () => {
+          canvas.width = 1080;
+          canvas.height = 1920;
+          canvas.style.display = 'block';
+          canvas.getContext('2d').drawImage(img, 0, 10);
+        };
+      }
+
+      img.addEventListener('mousedown', function(e) {
+        const rectBounds = img.getBoundingClientRect();
+        startX = e.clientX - rectBounds.left;
+        startY = e.clientY - rectBounds.top;
+        rect = null;
+        canvas.getContext('2d').drawImage(img, 0, 0);
+        canvas.onmousemove = function(ev) {
+          endX = ev.clientX - rectBounds.left;
+          endY = ev.clientY - rectBounds.top;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0);
+          ctx.strokeStyle = 'red';
+          ctx.lineWidth = 2;
+          ctx.strokeRect(startX, startY, endX - startX, endY - startY);
+        };
+      });
+
+      img.addEventListener('mouseup', function(e) {
+        canvas.onmousemove = null;
+        endX = e.clientX - img.getBoundingClientRect().left;
+        endY = e.clientY - img.getBoundingClientRect().top;
+        rect = {
+          left: Math.min(startX, endX),
+          top: Math.min(startY, endY),
+          width: Math.abs(endX - startX),
+          height: Math.abs(endY - startY)
+        };
+      });
+
+      async function runOCR() {
+        const fileInput = document.getElementById('ocr-file');
+        const resultBox = document.getElementById('ocr-result');
+        if (fileInput.files.length === 0) return;
+        const worker = await Tesseract.createWorker("eng");
+        let image = fileInput.files[0];
+        let options = {};
+        if (rect) {
+          options = { rectangle: rect };
+        }
+        const { data } = await worker.recognize(image, options);
+        resultBox.textContent = data.text;
+        await worker.terminate();
+      }
+    </script>
+  </body>
+  <div class="footer">
+    <a href="{{ url_for('index') }}">Home</a>
+  </div>
+</html>

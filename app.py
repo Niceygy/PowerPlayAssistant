@@ -124,6 +124,10 @@ def conflicts():
 def conflicts_result(): 
     return handle_conflict_result(request, database)
 
+@app.route("/weeklys", methods=["GET"])
+def weekly():
+    return render_template("weeklys/weekly.html")
+
 
 """
 Route Handlers - Static Pages

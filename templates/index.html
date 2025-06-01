@@ -10,11 +10,10 @@
     <meta name='description' content='PowerPlay Assistant is a compainon website for Elite: Dangerous, to help commanders with their powerplay 2.0 tasks.'>
     <script defer>
         async function searchSystems() {
-            let elementID = "system";
-            const query = document.getElementById(elementID).value;
+            const query = document.getElementById("system").value;
             const response = await fetch(`/search_systems?query=${query}`);
             const results = await response.json();
-            const datalist = document.getElementById(elementID + '-results');
+            const datalist = document.getElementById("system-results");
             datalist.innerHTML = '';
             results.forEach(system => {
                 const option = document.createElement('option');
