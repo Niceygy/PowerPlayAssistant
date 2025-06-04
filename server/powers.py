@@ -1,3 +1,5 @@
+from datetime import datetime
+import math
 from server.constants import POWERS
 from server.database.database import StarSystem, PowerData
 
@@ -99,3 +101,15 @@ def how_many_systems(powerFullName: str, database) -> list[int]:
     total = fortified + exploited + stronghold
         
     return [exploited, fortified, stronghold, total]
+
+def powerplay_cycle() -> int:
+        """
+        Returns the current powerplay cycle number
+        """
+        # 31 oct '24
+        powerplay_startdate = datetime(2024, 10, 31, 8)
+        now = datetime.now()
+
+        cycle = (now - powerplay_startdate).days / 7
+
+        return math.trunc(cycle)

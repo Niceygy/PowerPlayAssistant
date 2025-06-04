@@ -2,7 +2,7 @@ import json
 import math
 from flask import render_template, redirect, url_for
 from sqlalchemy import and_, or_, func
-from server.database.database import PowerData, StarSystem, distance_to_system
+from server.database.database import StarSystem, distance_to_system, Conflicts
 from server.constants import POWERNAMES
 from server.powers import power_full_to_short, short_to_full_power
 from server.database.cache import Cache
@@ -54,14 +54,14 @@ def handle_conflict_result(request, database):
         ).label("distance")
 
         query = (
-            database.session.query(StarSystem, PowerData)
-            .join(PowerData, StarSystem.system_name == PowerData.system_name)
+            database.session.query(StarSystem, Conflicts )
+            .join(Conflicts, StarSystem.system_name == Conflicts.system_name)
             .filter(
                 and_(
-                    PowerData.war == True,
+                    Conflicts.cycle is not None,
                     or_(
-                        PowerData.opposition == shortcode,
-                        PowerData.shortcode == shortcode,
+                        Conflicts.first_place == shortcode,
+                        Conflicts.second_place == shortcode,
                     ),
                 ),
             )
@@ -75,8 +75,8 @@ def handle_conflict_result(request, database):
             result.append(
                 {
                     "name": item.system_name,
-                    "power1": short_to_full_power(item.shortcode),
-                    "power2": short_to_full_power(item.opposition),
+                    "power1": short_to_full_power(item.first_place),
+                    "power2": short_to_full_power(item.second_place),
                     "ly": math.trunc(
                         distance_to_system(system_name, item.system_name, database)
                     ),

@@ -8,6 +8,7 @@ import os
 from contextlib import contextmanager
 from sqlalchemy import func
 from dotenv import load_dotenv
+import traceback
 from flask import (
     Flask,
     jsonify,
@@ -41,6 +42,7 @@ Cache
 cache = Cache()
 cache.clean("megaship")
 cache.clean("raregoods")
+cache.clean("conflicts")
 cache.__exit__()
 
 
@@ -50,9 +52,7 @@ Flask and database
 
 app = Flask(__name__)
 load_dotenv()
-app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv(
-    "DATABASE_CONNECTION_STRING_PA"
-)  # ("mysql+pymysql://assistant:6548@10.0.0.52/elite" )
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_CONNECTION_STRING_PA")
 app.config["SQLALCHEMY_POOL_SIZE"] = 10
 app.config["SQLALCHEMY_POOL_TIMEOUT"] = 30
 app.config["SQLALCHEMY_POOL_RECYCLE"] = 280
@@ -88,7 +88,8 @@ def not_found(request):
 def internal_error(err):
     return render_template(
         "errors/500.html",
-        info=str(err)
+        info=str(err),
+        stack=traceback.format_exc()
         )
 
 
