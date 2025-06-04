@@ -10,7 +10,6 @@ from server.constants import (
     TASKDESCRIPTIONS,
 )
 from server.tasks.commodites import what_commodity_action
-from server.database.database import StarSystem
 from server.tasks.odyssey import retrieve_specific_goods
 
 
