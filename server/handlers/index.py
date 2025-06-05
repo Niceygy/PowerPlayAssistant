@@ -45,18 +45,18 @@ def handle_index(request):
             if local_powernames[i] == power:
                 local_powernames.insert(0, local_powernames.pop(i))
 
-        if request.cookies.get("ppa_last_visit", None) != None:
-            last_visit = datetime.strptime(
-                request.cookies.get("ppa_last_visit"), "%Y-%m-%d %H:%M:%S"
-            )
-            if datetime.now() - last_visit > timedelta(hours=12):
-                response = make_response(
-                    redirect("https://capi.niceygy.net/userinfo/ppa")
-                )
-                response.set_cookie(
-                    "ppa_last_visit", datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                )
-                return response
+        # if request.cookies.get("ppa_last_visit", None) != None:
+        #     last_visit = datetime.strptime(
+        #         request.cookies.get("ppa_last_visit"), "%Y-%m-%d %H:%M:%S"
+        #     )
+        #     if datetime.now() - last_visit > timedelta(hours=12):
+        #         response = make_response(
+        #             redirect("https://capi.niceygy.net/userinfo/ppa")
+        #         )
+        #         response.set_cookie(
+        #             "ppa_last_visit", datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        #         )
+        #         return response
 
         response = make_response(
             render_template(

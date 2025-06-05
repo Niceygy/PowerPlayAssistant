@@ -98,7 +98,7 @@ def find_nearest_megaships(system_name, shortcode, opposing, session):
             })
 
         #Cache result
-        cache.add(f"{system_name}_{shortcode}_{opposing}", json.dumps(result), "megaship")
+        cache.add(f"{system_name}_{shortcode}_{opposing}", json.dumps(result), "megaship", None)
         
         # return result
         return result

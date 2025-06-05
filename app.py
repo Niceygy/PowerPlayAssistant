@@ -12,6 +12,7 @@ import traceback
 from flask import (
     Flask,
     jsonify,
+    make_response,
     render_template,
     request,
     send_from_directory,
@@ -49,15 +50,19 @@ cache.__exit__()
 """
 Flask and database
 """
-
-app = Flask(__name__)
-load_dotenv()
-app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_CONNECTION_STRING_PA")
-app.config["SQLALCHEMY_POOL_SIZE"] = 10
-app.config["SQLALCHEMY_POOL_TIMEOUT"] = 30
-app.config["SQLALCHEMY_POOL_RECYCLE"] = 280
-app.config["SQLALCHEMY_MAX_OVERFLOW"] = 20
-database.init_app(app)
+def init():
+    app = Flask(__name__)
+    load_dotenv()
+    app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://powerplay_assistant:elite.niceygy.net@10.0.0.52/elite"#os.getenv("DATABASE_CONNECTION_STRING_PA")
+    app.config["SQLALCHEMY_POOL_SIZE"] = 10
+    app.config["SQLALCHEMY_POOL_TIMEOUT"] = 30
+    app.config["SQLALCHEMY_POOL_RECYCLE"] = 280
+    app.config["SQLALCHEMY_MAX_OVERFLOW"] = 20
+    if 'TEST' in app.config and app.config['TEST']:
+        print("PPA In testing mode")
+    database.init_app(app)
+    return app
+app = init()
 
 
 @contextmanager
@@ -81,16 +86,18 @@ Error Handlers
 
 @app.errorhandler(404)
 def not_found(request):
-    return render_template("errors/404.html")
+    response = make_response(render_template("errors/404.html"), 404)
+    return response
 
 
 @app.errorhandler(Exception)
 def internal_error(err):
-    return render_template(
+    response = make_response(render_template(
         "errors/500.html",
         info=str(err),
         stack=traceback.format_exc()
-        )
+        ), 500)
+    return response
 
 
 """
@@ -102,16 +109,13 @@ Route Handlers - Main Pages
 def index():
     return handle_index(request)
 
-
 @app.route("/is_crime", methods=["GET", "POST"])
 def is_crime():
     return handle_is_crime(request, database)
 
-
 @app.route("/results", methods=["GET", "POST"])
 def results():
     return handle_results(request, database)
-
 
 @app.route("/handle_choice", methods=["GET", "POST"])
 def handle_choice():
@@ -144,27 +148,22 @@ def archnotepad():
         url="https://inara.cz/elite/cmdr-architect/",
     )
 
-
 @app.route("/changelog", methods=["GET"])
 def changelog():
     return render_template("changelog.html")
-
 
 @app.route("/robots.txt")
 def robots():
     print(request.headers.get("User-Agent"))
     return send_from_directory(app.static_folder, "robots.txt")
 
-
 @app.route("/favicon.ico")
 def favicon():
     return send_from_directory(app.static_folder, "icons/favicon.ico")
 
-
 @app.route("/about", methods=["GET"])
 def about():
     return render_template("about.html")
-
 
 @app.route("/meritminer", methods=["GET"])
 def meritminer():
@@ -174,7 +173,6 @@ def meritminer():
         description="The tool MeritMiner is better suited to helping you with this task.",
         url="https://meritminer.cc/",
     )
-
 
 @app.route("/database", methods=["GET"])
 def database_stats():

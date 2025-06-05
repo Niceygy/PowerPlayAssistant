@@ -32,7 +32,7 @@ def best_rare_goods(system_name, database):
     # Sort the list by the absolute difference from 200
     distances.sort(key=lambda x: abs(x[0] - 200))
 
-    cache.add(system_name, distances[:ITEMS_TO_RETURN], "raregoods")
+    cache.add(system_name, distances[:ITEMS_TO_RETURN], "raregoods", None)
     
     cache.__exit__()
 
