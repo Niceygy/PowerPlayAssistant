@@ -6,3 +6,4 @@ cache/
 temp.*
 *.tmp
 .env
+.pytest*
