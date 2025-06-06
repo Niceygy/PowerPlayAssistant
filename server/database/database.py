@@ -1,4 +1,4 @@
-from sqlalchemy import BOOLEAN, Column, Integer, String, Float, Boolean, func
+from sqlalchemy import BOOLEAN, Column, Integer, String, Float, Boolean, func, BigInteger
 from flask_sqlalchemy import SQLAlchemy
 import math
 
@@ -48,7 +48,8 @@ class PowerData(database.Model):
     state = Column(String(20))
     """Unoccupied, War, Exploited, Fortified or Stronghold"""
     shortcode = Column(String(4))
-
+    control_points = Column(Float())
+    points_change = Column(Float())
     
 class Conflicts(database.Model):
     __tablename__ = "conflicts"

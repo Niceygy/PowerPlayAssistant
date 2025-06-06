@@ -24,8 +24,12 @@ def handle_escape_pods(request, database):
     }
 
     shortcode = power_full_to_short(power)
-    task_short = task_replacements[shortcode]
-    task_full = TASKSHORTCODES[task_short]
+    try:
+        task_short = task_replacements[shortcode]
+        task_full = TASKSHORTCODES[task_short]
+    except Exception:
+        task_short = "??"
+        task_full = "Unknown"
     
     return render_template(
         "tasks/escapePods.html",
