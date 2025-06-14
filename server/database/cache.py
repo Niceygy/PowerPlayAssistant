@@ -82,6 +82,7 @@ class Cache:
             )
             result = self.cursor.fetchone()
             if result is None:
+                # data = str(data)
                 self.cursor.execute(
                     f"INSERT INTO {data_type} (input, data, expiry, cycle) VALUES (?, ?, ?, ?)",
                     (query, data, self.expiry(expiry_override), self.cycle_week),

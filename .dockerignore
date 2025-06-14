@@ -10,3 +10,5 @@ build.sh
 .git
 .git/*
 .gitignore
+.pytest/*
+.vscode

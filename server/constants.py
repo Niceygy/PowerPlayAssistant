@@ -31,6 +31,12 @@ TASKDESCRIPTIONS = {
     "UPMW": "Get Powerplay malware from your local power contact, and upload it to a settlement data point in the target system. Note: This may trigger the alarms!",
 }
 
+SUSPENDED = [
+    "Transfer Power classified data",
+    "Transfer Power association and political data",
+    "Transfer Power research and Industrial data",
+    "Upload Powerplay Malware",
+]
 
 TASKNAMES = [
     "Bounty hunting",

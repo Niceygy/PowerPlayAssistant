@@ -25,4 +25,4 @@ docker compose down
 
 docker compose up -d
 
-docker logs PowerPlayAssistant -f
+docker logs powerplay_assistant -f

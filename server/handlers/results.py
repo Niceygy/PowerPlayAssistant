@@ -5,6 +5,7 @@ from server.handlers.commodities import handle_commodites
 from server.handlers.escapePods import handle_escape_pods
 from server.handlers.megaships import megaships_results
 from server.handlers.raregoods import handle_rare_goods
+from server.constants import SUSPENDED
 from server.powers import get_system_power_info, is_system_anarchy
 from server.tasks.suggest import handle_not_sure
 from server.tasks.tasks import (
@@ -45,6 +46,8 @@ def handle_results(request, database):
         return handle_escape_pods(request, database)
     elif task == "notsure":
         return handle_not_sure(request, power, database)
+    elif task in SUSPENDED:
+        return render_template("tasks/suspended.html")
     else:
         return render_template(
             "tasks/general.html",

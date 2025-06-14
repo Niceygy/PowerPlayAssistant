@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>PowerPlay Assistant - Task Not Longer Possible</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
+    <link rel="icon" href="{{ url_for('static', filename='icons/favicon.ico') }}" type="image/x-icon" />
+    <script defer src="https://data.niceygy.net/script.js" data-website-id="5a305d97-fef0-4c86-9528-243ae53470ad"></script>
+    <script>
+      function toggleLoadingIcon() {
+        var x = document.getElementById("loadingIcon");
+        if (x.style.display === "none") {
+          x.style.display = "block";
+        } else {
+          x.style.display = "none";
+        }
+      }
+
+      window.onload = function () {
+        document.getElementById("loadingIcon").style.display = "none";
+      };
+    </script>
+        <script>
+      window.onload = function() {        
+        umami.track(`escapepods`);
+        umami.track("{{ power }}")
+    };
+    </script>
+  </head>
+  <body>
+    <div style="text-align: center">
+      <h1>Task Suspended</h1>
+      <br />
+      <p>This task has been temporarily suspended!</p>
+      <p>As of 12/06/2025, the task has been temporarily suspended due to exploits</p>
+
+      <h3><a href="{{ url_for('index') }}">Back to Home</a></h3>
+      <div class="loadingIcon" style="text-align: center">
+        <img id="loadingIcon" src="{{  url_for('static', filename='icons/edloader.svg')}}" width="50" height="50" />
+      </div>
+      <br />
+      
+    </div>
+  </body>
+</html>
