@@ -37,16 +37,7 @@
 <body>
     <h1>PowerPlay Assistant</h1>
     <span style="position: absolute; left: -9999px;">PPA should be screen reader friendly & tab navigable, but if you have any issues please contact me via go dot nice y g y dot net slash powerplayassist underscore thread"></span>
-    <div class="welcomeMessage" style="text-align: right;">
-        <h2>{{cg_title}}</h2>
-            {% for item in cg_data %}
-                <p><b>{{ item['title'] }}</b></p>
-                <p>{{ item['body1'] }}</p>
-                <p>{{ item['body2'] }}</p>
-                <br />
-            {% endfor %}
-        <br />
-    </div>
+    <div class="main-flex">
     <div class="specifyTask">
     <h2>Specify Task</h2>
     <form action="/" method="post">
@@ -58,7 +49,7 @@
         </select><br><br>
 
         <label for="system">Near system:</label>
-        <input list="system-results" id="system" name="system" oninput="searchSystems()" autocomplete="off" value="{{ default_system }}">
+        <input list="system-results" id="system" name="system" oninput="searchSystems()" autocomplete="on" value="{{ default_system }}">
         <datalist id="system-results"></datalist><br><br>
 
         <label for="power">For:</label>
@@ -72,6 +63,17 @@
     </form>
     <div class="loadingIcon"    >
         <img id="loadingIcon" src="{{  url_for('static', filename='icons/edloader.svg')}}" width="50" height="50">
+    </div>
+    </div>
+    <div class="welcomeMessage" style="text-align: right;">
+        <h2>{{cg_title}}</h2>
+            {% for item in cg_data %}
+                <p><b>{{ item['title'] }}</b></p>
+                <p>{{ item['body1'] }}</p>
+                <p>{{ item['body2'] }}</p>
+                <br />
+            {% endfor %}
+        <br />
     </div>
     </div>
     

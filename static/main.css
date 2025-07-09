@@ -72,3 +72,33 @@ label {
   margin: 0px;
   
 }
+
+/* Add this to your main.css or inside a <style> tag in index.html */
+
+@media (max-width: 768px) {
+  .main-flex {
+    display: flex;
+    flex-direction: column;
+  }
+  .specifyTask {
+    order: 1;
+  }
+  .welcomeMessage {
+    order: 2;
+  }
+}
+@media (min-width: 769px) {
+  .main-flex {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-start;
+  }
+  .welcomeMessage {
+    text-align: right;
+    margin-left: auto;
+  }
+  .specifyTask {
+    margin-right: auto;
+  }
+}

@@ -1,5 +1,5 @@
 import sqlite3, math
-from datetime import datetime, timedelta
+from datetime import datetime
 from server.constants import POWERS
 from server.powers import how_many_systems
 
@@ -146,7 +146,7 @@ def fdev_powerpoints(database):
             "place": 0,
             "shortcode": key,
             "name": item,
-            "systems": f"{exploited} Exploited, {fortified} fortified & {stronghold} strongholds [{total} total]",
+            "systems": f"{exploited} Exploited, {fortified} fortified & {stronghold} strongholds",
             "total_systems": total,
             "comparison": f"{points} systems total",
             "comparison_icon": (
