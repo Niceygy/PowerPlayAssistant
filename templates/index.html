@@ -38,8 +38,13 @@
     <h1>PowerPlay Assistant</h1>
     <span style="position: absolute; left: -9999px;">PPA should be screen reader friendly & tab navigable, but if you have any issues please contact me via go dot nice y g y dot net slash powerplayassist underscore thread"></span>
     <div class="welcomeMessage" style="text-align: right;">
-        <p>{{ welcome_message }}</p>
-        <a href="{{welcome_button_link}}">{{welcome_button_message}}</a>
+        <h2>{{cg_title}}</h2>
+            {% for item in cg_data %}
+                <p><b>{{ item['title'] }}</b></p>
+                <p>{{ item['body1'] }}</p>
+                <p>{{ item['body2'] }}</p>
+                <br />
+            {% endfor %}
         <br />
     </div>
     <div class="specifyTask">

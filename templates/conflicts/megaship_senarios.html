@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Megaships results from PowerPlay Assistant!" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
+    <link rel="icon" href="{{ url_for('static', filename='icons/favicon.ico') }}" type="image/x-icon" />
+    <script defer src="https://data.niceygy.net/script.js" data-website-id="5a305d97-fef0-4c86-9528-243ae53470ad"></script>
+    <title>PowerPlay Assistant - Megaships</title>
+    <script>
+      function copyText(text) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard
+            .writeText(text)
+            .then(function () {
+              alert("Copied " + text);
+            })
+            .catch(function (err) {
+              console.error("Could not copy text: ", err);
+            });
+        } else {
+          // Fallback method
+          let textarea = document.createElement("textarea");
+          textarea.value = text;
+          document.body.appendChild(textarea);
+          textarea.select();
+          try {
+            document.execCommand("copy");
+            alert("Copied " + text);
+          } catch (err) {
+            console.error("Fallback: Oops, unable to copy", err);
+            alert("Failed to copy :( Please report this")
+          }
+          document.body.removeChild(textarea);
+        }
+      }
+      window.onload = function() {        
+        umami.track(`megaships`);
+        umami.track("{{ power }}")
+    };
+    </script>
+  </head>
+  <body>
+    <div class="main">
+      <h1>Selected Options</h1>
+      <p><strong>System:</strong> {{ system }}</p>
+      <p><strong>Power(s):</strong> {{ powers }}</p>
+      <p><strong>System States:</strong> {{ states }}</p>
+
+
+
+      <h1>Megaships:</h1>
+      <p><strong>{{ extraInfo }}</strong></p>
+      <ul>
+        {% for megaship in megaships %}
+        <li>
+          {{ megaship['name'] }} - In
+          <!-- <a onclick="copyText('{{ megaship['system'] }}')">{{ megaship['system'] }}</a> -->
+        </li>
+        {% endfor %}
+      </ul>
+      <br />
+      <p><i>Click the system name to copy it</i></p>
+
+      <a href="{{ url_for('index') }}">Back to Home</a>
+    </div>
+  </body>
+</html>

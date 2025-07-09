@@ -138,7 +138,7 @@ Tasks powers are weak to
 """
 
 POWERS = {
-    "ALD": 'A. Lavigny-Duval',
+    "ALD": 'A. Lavingy-Duval',
     "ARD": 'Archon Delaine',
     "ASD": "Aisling Duval",
     "DPT": 'Denton Patreus',
@@ -340,3 +340,24 @@ POWERDATA = [
     "POWER TRACKER MALWARE",  # undermine
     "POWER INJECTION MALWARE",  # reinforce
 ]
+
+PP_TYPE_TRANSLATIONS = {
+    'ppcombatbond': 'PowerPlay Combat Bonds'
+}
+"""Community Goal Translations"""
+
+CG_FILTER_LIST = [
+    "lavingy",
+    "delaine",
+    "duval",
+    "patreus",
+    "mahon",
+    "winters",
+    "archer",
+    "yong-rui",
+    "kaine",
+    "Aatal",
+    "grom",
+    "torval",
+]
+"""A CG's title must contain one of these to be noticed"""

@@ -7,9 +7,7 @@ from server.tasks.tasks import (
     getTaskType,
     is_task_own_strength,
     isPowersWeakness,
-    isTaskACrime,
 )
-import functools
 
 
 def megaships_results(request, power, system, database):
@@ -48,3 +46,32 @@ def megaships_results(request, power, system, database):
         megaships=megaships,
         isOwnStrength="is" if is_task_own_strength(task, power) else "isn't"
     )
+    
+    
+# def megaship_advanced_search(request, power, system, database):
+#     """
+#     Handler for /results, when the task is megaships
+
+#     Methods: GET
+
+#     Renders megaships.html
+#     """
+#     task = "Scan Megaship Datalinks"
+#     # calculated boxes
+    
+
+#     megaships = find_nearest_megaships(system, powerShortCode, choice, database.session)
+#     return render_template(
+#         "tasks/megaships.html",
+#         type=request.args.get("choice"),
+#         system=system,
+#         power=power,
+#         taskName=task,
+#         taskDescription=task_description(task, power, system, powerInfo, database),
+#         taskType=getTaskType(task),
+#         isIllegal="isn't",
+#         isOpposingWeakness=isPowersWeakness(power, task),
+#         extraInfo=extraInfo,
+#         megaships=megaships,
+#         isOwnStrength="is" if is_task_own_strength(task, power) else "isn't"
+#     )
