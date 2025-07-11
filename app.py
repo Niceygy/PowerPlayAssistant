@@ -4,7 +4,6 @@ IMPORTS
 """
 
 # PACKAGES
-import os
 from contextlib import contextmanager
 from sqlalchemy import func
 from dotenv import load_dotenv
@@ -19,6 +18,7 @@ from flask import (
 )
 
 # OWN CODE
+from server.constants import API_KEYS, POWERS
 from server.database.cache import Cache
 from server.handlers.capi import handle_capi, handle_logout
 from server.handlers.choice import handle_task_choice
@@ -30,6 +30,12 @@ from server.handlers.results import handle_results
 from server.database.cycle import get_cycle_week, write_cycle_week
 from server.handlers.powerpoints import handle_powerpoints
 from server.handlers.conflict import handle_conflict_result, handle_conflict_search
+from server.handlers.powerpoints import (
+    nicey_powerpoints,
+    kruger_powerpoints,
+    fdev_powerpoints,
+)
+from server.powers import how_many_systems
 from server.database.database import (
     database,
     StarSystem,
@@ -50,18 +56,24 @@ cache.__exit__()
 """
 Flask and database
 """
+
+
 def init():
     app = Flask(__name__)
     load_dotenv()
-    app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://powerplay_assistant:elite.niceygy.net@10.0.0.52/elite"#os.getenv("DATABASE_CONNECTION_STRING_PA")
+    app.config["SQLALCHEMY_DATABASE_URI"] = (
+        "mysql+pymysql://powerplay_assistant:elite.niceygy.net@10.0.0.52/elite"  # os.getenv("DATABASE_CONNECTION_STRING_PA")
+    )
     app.config["SQLALCHEMY_POOL_SIZE"] = 10
     app.config["SQLALCHEMY_POOL_TIMEOUT"] = 30
     app.config["SQLALCHEMY_POOL_RECYCLE"] = 280
     app.config["SQLALCHEMY_MAX_OVERFLOW"] = 20
-    if 'TEST' in app.config and app.config['TEST']:
+    if "TEST" in app.config and app.config["TEST"]:
         print("PPA In testing mode")
     database.init_app(app)
     return app
+
+
 app = init()
 
 
@@ -92,11 +104,10 @@ def not_found(request):
 
 @app.errorhandler(Exception)
 def internal_error(err):
-    response = make_response(render_template(
-        "errors/500.html",
-        info=str(err),
-        stack=traceback.format_exc()
-        ), 500)
+    response = make_response(
+        render_template("errors/500.html", info=str(err), stack=traceback.format_exc()),
+        500,
+    )
     return response
 
 
@@ -109,25 +120,31 @@ Route Handlers - Main Pages
 def index():
     return handle_index(request)
 
+
 @app.route("/is_crime", methods=["GET", "POST"])
 def is_crime():
     return handle_is_crime(request, database)
+
 
 @app.route("/results", methods=["GET", "POST"])
 def results():
     return handle_results(request, database)
 
+
 @app.route("/handle_choice", methods=["GET", "POST"])
 def handle_choice():
     return handle_task_choice(request)
+
 
 @app.route("/conflict", methods=["GET"])
 def conflicts():
     return handle_conflict_search(request, database)
 
+
 @app.route("/conflict/result", methods=["POST", "GET"])
-def conflicts_result(): 
+def conflicts_result():
     return handle_conflict_result(request, database)
+
 
 @app.route("/weeklys", methods=["GET"])
 def weekly():
@@ -148,22 +165,27 @@ def archnotepad():
         url="https://inara.cz/elite/cmdr-architect/",
     )
 
+
 @app.route("/changelog", methods=["GET"])
 def changelog():
     return render_template("changelog.html")
+
 
 @app.route("/robots.txt")
 def robots():
     print(request.headers.get("User-Agent"))
     return send_from_directory(app.static_folder, "robots.txt")
 
+
 @app.route("/favicon.ico")
 def favicon():
     return send_from_directory(app.static_folder, "icons/favicon.ico")
 
+
 @app.route("/about", methods=["GET"])
 def about():
     return render_template("about.html")
+
 
 @app.route("/meritminer", methods=["GET"])
 def meritminer():
@@ -173,6 +195,7 @@ def meritminer():
         description="The tool MeritMiner is better suited to helping you with this task.",
         url="https://meritminer.cc/",
     )
+
 
 @app.route("/database", methods=["GET"])
 def database_stats():
@@ -246,6 +269,72 @@ def status_update():
     text = request.args.get("text")
     set_status(text, emoji)
     return f"Updated to {get_status()}"
+
+
+@app.route("/api", methods=["GET", "POST"])
+def api():
+    if request.method == "POST":
+        auth_key = ""
+        try:
+            data = request.get_json(silent=True)
+            if not data or "key" not in data:
+                return jsonify(
+                    {
+                        "error": True,
+                        "error_code": 401,
+                        "error_message": "Invaid Key! Make sure you have included a json value named 'key' in the body of your request ",
+                    }
+                )
+            auth_key = data["key"]
+            if not auth_key in API_KEYS:
+                return jsonify(
+                    {
+                        "error": True,
+                        "error_code": 401,
+                        "error_message": "Invaid Key! Make sure you have included a json value named 'key' in the body of your request ",
+                    }
+                )
+        except Exception:
+            return jsonify(
+                    {
+                        "error": True,
+                        "error_code": 401,
+                        "error_message": "Invaid Key! Make sure you have included a json value named 'key' in the body of your request ",
+                    }
+                )
+        request_type = request.get_json()["type"]
+
+        match request_type:
+            case "pp_systems":
+                result = []
+                for key, item in POWERS.items():
+                    exploited, fortified, stronghold, total = how_many_systems(
+                        item, database
+                    )
+                    result.append(
+                        {
+                            "exploited": exploited,
+                            "fortified": fortified,
+                            "stronghold": stronghold,
+                            "total": total,
+                            "power": item,
+                        }
+                    )
+                return jsonify(result)
+            case "pp_points":
+                result = []
+                result.append(nicey_powerpoints(database))
+                result.append(kruger_powerpoints(database))
+                result.append(fdev_powerpoints(database))
+                return jsonify(result)
+    else:
+        return jsonify(
+            {
+                "error": True,
+                "error_code": 405,
+                "error_message": "This endpoint only supports POST requests ",
+            }
+        )
 
 
 """

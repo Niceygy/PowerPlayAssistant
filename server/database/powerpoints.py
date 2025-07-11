@@ -113,6 +113,7 @@ def nicey_powerpoints(database):
             comparison_message = f"0 pts [{points}]"
 
         data = {
+            "type": "nicey",
             "place": 0,
             "shortcode": key,
             "name": item,
@@ -143,6 +144,7 @@ def fdev_powerpoints(database):
         last_week_points = last_week_data.get(key, 0)  # Default to 0
 
         data = {
+            "type": "fdev",
             "place": 0,
             "shortcode": key,
             "name": item,
@@ -191,6 +193,7 @@ def kruger_powerpoints(database):
             comparison_message = f"0 pts [{points}]"
 
         data = {
+            "type": "kruger",
             "place": 0,
             "shortcode": key,
             "name": item,

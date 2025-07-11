@@ -361,3 +361,13 @@ CG_FILTER_LIST = [
     "torval",
 ]
 """A CG's title must contain one of these to be noticed"""
+
+API_KEYS = [
+    48965164896 #kruger
+]
+"""
+API keys for the PPA API. 
+Yes, I know they're on github. 
+The point is to discorage random bots from using it.
+If you want a key, ping me on bluesky @niceygy.net
+"""
