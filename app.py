@@ -18,6 +18,7 @@ from flask import (
 )
 
 # OWN CODE
+from server.api.api import frequency_map
 from server.constants import API_KEYS, POWERS
 from server.database.cache import Cache
 from server.handlers.capi import handle_capi, handle_logout
@@ -240,8 +241,17 @@ def powerpoints():
 
 
 """
+Route Handlers - Map
+"""
+
+@app.route("/map")
+def map():
+    return frequency_map(database.session)
+
+"""
 Route Handlers - APIs
 """
+
 
 
 @app.route("/week", methods=["GET"])

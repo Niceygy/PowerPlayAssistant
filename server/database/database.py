@@ -20,6 +20,7 @@ class StarSystem(database.Model):
     longitude = Column(Float)
     height = Column(Float)
     is_anarchy = Column(Boolean)
+    frequency = Column(Integer)
 
 
 class Megaship(database.Model):
