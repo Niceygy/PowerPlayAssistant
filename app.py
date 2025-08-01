@@ -31,6 +31,7 @@ from server.handlers.results import handle_results
 from server.database.cycle import get_cycle_week, write_cycle_week
 from server.handlers.powerpoints import handle_powerpoints
 from server.handlers.conflict import handle_conflict_result, handle_conflict_search
+from server.handlers.systemSearch import handle_system_search
 from server.handlers.powerpoints import (
     nicey_powerpoints,
     kruger_powerpoints,
@@ -135,6 +136,10 @@ def results():
 @app.route("/handle_choice", methods=["GET", "POST"])
 def handle_choice():
     return handle_task_choice(request)
+
+@app.route("/system_search", methods=["GET", "POST"])
+def system_search():
+    return handle_system_search(request, database)
 
 
 @app.route("/conflict", methods=["GET"])

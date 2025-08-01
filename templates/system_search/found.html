@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
+    <link rel="icon" href="{{ url_for('static', filename='icons/favicon.ico') }}" type="image/x-icon" />
+    <script defer src="https://data.niceygy.net/script.js" data-website-id="5a305d97-fef0-4c86-9528-243ae53470ad"></script>
+    <title>PowerPlay Assistant - System Found</title>
+    <script>
+      function redirect() {
+        window.location.href = "/?system_name={{found_system}}"
+        
+      }
+    </script>
+  </head>
+  <body>
+    <div class="main">
+      <h1>Selected Options</h1>
+      <p><strong>System:</strong> {{ original_system }}</p>
+      <p><strong>Power:</strong> {{ power }}</p>
+      <p><strong>Type:</strong> {{ system_type }}</p>
+
+      <h1>System:</h1>
+      <p>The system {{ found_system }} matches your requirements!</p>
+      <p>Click below to import it to the homepage, and search from there.</p>
+      
+      <br><br>
+
+      <button onclick="redirect()">Go!</button>
+
+      <br><br>
+
+      <a href="{{ url_for('index') }}">Back to Home</a>
+    </div>
+  </body>
+</html>

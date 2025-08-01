@@ -64,13 +64,21 @@ def handle_index(request):
         cg_title = ""
     else:
         cg_title = "Powerplay Commuinity Goals"
+        
+    default_system = "Sol"
+    try:
+        if request.args.get("system_name") != None:
+            default_system = request.args.get("system_name")
+    except Exception:
+        default_system = "Sol" 
+        
 
     return render_template(
         "index.html",
         missions=TASKNAMES,
         powers=POWERNAMES,
         status_text=get_status(),
-        default_system="Sol",
+        default_system=default_system,
         cg_title=cg_title,
         cg_data=cg,
     )

@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PowerPlay Assistant</title>
+    <title>PowerPlay Assistant - Find that systenm!</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
     <script defer src="https://data.niceygy.net/script.js" data-website-id="5a305d97-fef0-4c86-9528-243ae53470ad"></script>
     <link rel="icon" href="{{ url_for('static', filename='icons/favicon.ico') }}" type="image/x-icon">
     <meta name='description' content='PowerPlay Assistant is a compainon website for Elite: Dangerous, to help commanders with their powerplay 2.0 tasks.'>
     <script defer>
         async function searchSystems() {
-            const query = document.getElementById("system").value;
+            let elementID = "system";
+            const query = document.getElementById(elementID).value;
             const response = await fetch(`/search_systems?query=${query}`);
             const results = await response.json();
-            const datalist = document.getElementById("system-results");
+            const datalist = document.getElementById(elementID + '-results');
             datalist.innerHTML = '';
             results.forEach(system => {
                 const option = document.createElement('option');
@@ -36,20 +37,11 @@
     </script>
 <body>
     <h1>PowerPlay Assistant</h1>
-    <span style="position: absolute; left: -9999px;">PPA should be screen reader friendly & tab navigable, but if you have any issues please contact me via go dot nice y g y dot net slash powerplayassist underscore thread"></span>
-        <div class="main-flex">
     <div class="specifyTask">
-    <h2>Specify Task</h2>
-    <form action="/" method="post">
-        <label for="mission">Doing:</label>
-        <select id="mission" name="mission">
-            {% for mission in missions %}
-                <option value="{{ mission }}" {% if selected_mission == mission %}selected{% endif %}>{{ mission }}</option>
-            {% endfor %}
-        </select><br><br>
-
-        <label for="system">Near system:</label>
-        <input list="system-results" id="system" name="system" oninput="searchSystems()" autocomplete="on" value="{{ default_system }}">
+    <h2>Find nearby system</h2>
+    <form action="/system_search" method="post">
+        <label for="system">Your current system:</label>
+        <input list="system-results" id="system" name="system" oninput="searchSystems()" autocomplete="off" value="{{ default_system }}">
         <datalist id="system-results"></datalist><br><br>
 
         <label for="power">For:</label>
@@ -59,36 +51,23 @@
             {% endfor %}
         </select><br><br>
 
+        <label for="system_type">System Type</label>
+        <select id="system_type" name="system_type">
+            <option value="no_owner">Unoccupied</option>
+            <option value="you_own">Reinforcing</option>
+            <option value="enemy_owns">Undermining</option>
+        </select><br><br>
+            
+
         <button type="submit" onclick="toggleLoadingBtn()">Go!</button>
     </form>
     <div class="loadingIcon"    >
         <img id="loadingIcon" src="{{  url_for('static', filename='icons/edloader.svg')}}" width="50" height="50">
     </div>
     </div>
-    <div class="welcomeMessage" style="text-align: right;">
-        <h2>{{cg_title}}</h2>
-            {% for item in cg_data %}
-                <p><b>{{ item['title'] }}</b></p>
-                <p>{{ item['body1'] }}</p>
-                <p>{{ item['body2'] }}</p>
-                <br />
-            {% endfor %}
-        <br />
-    </div>
-    </div>
     
 </body>
 <div class="footer">
-    <a href="{{ url_for('changelog') }}">Changelog</a>
-    <a href="{{ url_for('system_search') }}">System Finder</a>
-    <a href="{{ url_for('powerpoints') }}">PowerPoints</a>
-    <a href="{{ url_for('conflicts') }}">Conflict Finder</a>
-    <br />
-    <a href="https://niceygy.net">Niceygy.Net</a>
-    <a href="https://forums.frontier.co.uk/threads/powerplay-2-0-activities.629227/">PowerPlay Thread</a>
-    <a href="https://go.niceygy.net/support_me">Support Me</a>
-    <a href="{{url_for('about')}}">about</a>
-    <br>
-    <div class="glowing-emoji">{{ status_text }}</div>
+    <a href="{{url_for('index')}}">Home</a>
 </div>
 </html>
