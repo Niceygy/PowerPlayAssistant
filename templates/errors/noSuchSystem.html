@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PowerPlay Assistant - No Such System!</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
+    <script defer src="https://data.niceygy.net/script.js" data-website-id="5a305d97-fef0-4c86-9528-243ae53470ad"></script>
+    <link rel="icon" href="{{ url_for('static', filename='icons/favicon.ico') }}" type="image/x-icon" />
+    
+    <script>
+        function backToHome() {
+            window.location.href = "/";
+        }
+
+      window.onload = function() {
+        umami.track("error_sysNotFound");
+      };
+    </script>
+  </head>
+  <body>
+    <h1>PowerPlay Assistant</h1>
+    <p>The system you have requested ( {{ system_name }} ) is not a system in the PowerPlay Assistant database!</p>
+    <p>Please double-check your system name is correct, and report a bug <a href="https://go.niceygy.net/powerplay_assist_thread">here</a> if it is.</p>
+    <br></br>
+    <button onclick="backToHome()">Back</button>
+    <br></br>
+  </body>
+  <div class="footer">
+    <a href="{{ url_for('index') }}">Home</a>
+  </div>
+</html>

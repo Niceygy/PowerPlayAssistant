@@ -1,5 +1,6 @@
 from flask import render_template, redirect, url_for
 
+from server.database.systems import is_valid_starsystem
 from server.handlers.bountyHunting import handle_bounty_hunting
 from server.handlers.commodities import handle_commodites
 from server.handlers.escapePods import handle_escape_pods
@@ -23,6 +24,12 @@ def handle_results(request, database):
     task = request.args.get("taskName")
     power = request.args.get("power")
     megaship_sys_type_choice = request.args.get("choice")
+    
+    if not is_valid_starsystem(system):
+        return render_template(
+            "errors/noSuchSystem.html",
+            system_name=system
+        )
 
     powerInfo = get_system_power_info(system, database)
     controllingPower = powerInfo[1]

@@ -20,3 +20,10 @@ def query_star_systems(query):
             return ["No System Found"]
     except Exception:
         return ["No System Found"]
+    
+def is_valid_starsystem(systemName: str) -> bool:
+    result = (
+        StarSystem.query.filter(StarSystem.system_name == systemName).first()
+    )
+    
+    return result != None
