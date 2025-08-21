@@ -59,7 +59,7 @@ def handle_index(request):
                 )
             )
 
-    cg = load_community_goals()
+    cg = [] #load_community_goals()
     if cg == []:
         cg_title = ""
     else:
