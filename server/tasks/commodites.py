@@ -1,6 +1,7 @@
+from math import trunc
 from sqlalchemy import func
 from server.constants import POWERCOMMODITIES, POWERS
-from server.database.database import PowerData, StarSystem
+from server.database.database import PowerData, StarSystem, distance_to_system
 from server.powers import get_system_power_info, power_full_to_short
 
 
@@ -23,7 +24,7 @@ def what_commodity_action(powerFullName, system, database) -> str:
 
 def is_system_in_range(
     powerFullName: str, system_name: str, database
-) -> tuple[bool, str]:
+) -> tuple[bool, str, float]:
     """Is the system within 30LY of a stronghold or 20LY of a fortified?
 
     Args:
@@ -50,13 +51,13 @@ def is_system_in_range(
 
     powerShortCode = power_full_to_short(powerFullName)
 
-
     strongholds_within_range = (
         database.session.query(StarSystem, distance)
         .join(PowerData, StarSystem.system_name == PowerData.system_name)
         .filter(PowerData.shortcode == powerShortCode)
         .filter(PowerData.state == "Stronghold")
         .filter(distance <= 30)  # Ensure this filter is applied after the join
+        .filter(StarSystem.system_name != user_system.system_name)
         .all()
     )
 
@@ -66,13 +67,16 @@ def is_system_in_range(
         .filter(PowerData.shortcode == powerShortCode)
         .filter(PowerData.state == "Fortified")
         .filter(distance <= 20)  # Ensure this filter is applied after the join
+        .filter(StarSystem.system_name != user_system.system_name)
         .all()
     )
     
-    
+
     if strongholds_within_range:
-        return True, strongholds_within_range[0][0].system_name
+        distance_ly = distance_to_system(user_system.system_name, strongholds_within_range[0][0].system_name, database)
+        return True, strongholds_within_range[0][0].system_name, trunc(distance_ly)
     elif fortified_within_range:
-        return True, fortified_within_range[0][0].system_name
+        distance_ly = distance_to_system(user_system.system_name, fortified_within_range[0][0].system_name, database)
+        return True, fortified_within_range[0][0].system_name, trunc(distance_ly)
     else:
-        return False, ""
+        return False, "", 0

@@ -47,7 +47,7 @@ def handle_results(request, database):
         return handle_bounty_hunting(request, database)
     elif task == "Sell Mined Resources":
         return redirect(url_for("meritminer"))
-    elif task == "Transport Powerplay commodities":
+    elif task == "Deliver PowerPlay Commodities":
         return handle_commodites(request, power, system, database)
     elif task == "Collect Escape Pods":
         return handle_escape_pods(request, database)

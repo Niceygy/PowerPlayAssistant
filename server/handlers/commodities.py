@@ -11,7 +11,7 @@ def handle_commodites(request, power, system, database):
     
     anarchy = is_system_anarchy(system, database)
     
-    system_in_range, supply_system = is_system_in_range(power, system, database)
+    system_in_range, supply_system, system_distance = is_system_in_range(power, system, database)
     
     return render_template(
         "tasks/commodity.html",
@@ -26,5 +26,6 @@ def handle_commodites(request, power, system, database):
         isIllegal="isn't",
         isOwnStrength="is" if is_task_own_strength(task, powerInfo[1]) else "isn't",
         item_system=supply_system,
-        item_name=what_commodity_action(powerInfo[1], system, database)
+        item_name=what_commodity_action(powerInfo[1], system, database),
+        item_dist=system_distance
     )

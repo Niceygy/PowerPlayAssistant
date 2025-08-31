@@ -27,3 +27,4 @@ def is_valid_starsystem(systemName: str) -> bool:
     )
     
     return result != None
+
