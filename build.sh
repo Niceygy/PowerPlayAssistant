@@ -23,6 +23,8 @@ docker compose pull
 
 docker compose down
 
+rm /home/docker-user/elite/cache/cache.db
+
 docker compose up -d
 
 docker logs powerplay_assistant -f
