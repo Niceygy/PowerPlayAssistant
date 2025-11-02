@@ -1,4 +1,4 @@
-from sqlalchemy import BOOLEAN, Column, Integer, String, Float, Boolean, func, BigInteger
+from sqlalchemy import BOOLEAN, Column, Integer, String, Float, Boolean, func, JSON
 from flask_sqlalchemy import SQLAlchemy
 import math
 
