@@ -23,7 +23,7 @@ Pygments==2.19.1
 PyMySQL==1.1.1
 pytest==8.4.0
 python-dotenv==1.0.1
-requests==2.32.3
+requests==2.32.4
 SQLAlchemy==2.0.39
 tomli==2.2.1
 typing_extensions==4.12.2
