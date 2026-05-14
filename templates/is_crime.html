@@ -3,21 +3,21 @@
   <head>
     <meta charset="utf-8" />
     <title>PowerPlay Assistant - Warning</title>
-    <link rel="icon" href="{{ url_for('static', filename='icons/favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="/static/icons/favicon.ico" type="image/x-icon">
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='main.css') }}"
+      href="/static/css/main.css"
     />
     <script
       defer
       src="https://data.niceygy.net/script.js"
-      data-website-id="5a305d97-fef0-4c86-9528-243ae53470ad"
+      
     ></script>
   </head>
   <body>
     <div style="text-align: center">
       <h1>Warning!</h1>
-      <h3><strong>Task:</strong> {{ task }}</h3>
+      <h3><strong>Task:</strong> {{ .task }}</h3>
       <br />
       <p>
         The task you have selected is illegal, and may incur a fine or bounty
@@ -25,10 +25,10 @@
       <p>Would you like to limit your search to anarchy-only systems?</p>
       <p><i>(Commiting crimes in anarchy systems does not issue a fine or bounty)</i></p>
 
-      <form action="{{ url_for('is_crime') }}" method="post">
-        <input type="hidden" name="taskName" value="{{ task }}" />
-        <input type="hidden" name="power" value="{{ power }}" />
-        <input type="hidden" name="system" value="{{ system }}" />
+      <form action="/is_crime" method="post">
+        <input type="hidden" name="task" value="{{ .task }}" />
+        <input type="hidden" name="power" value="{{ .power }}" />
+        <input type="hidden" name="system" value="{{ .system }}" />
 
         <div class="buttons" style="text-align: center">
           <div class="action_btn">
@@ -41,7 +41,7 @@
       </form>
 
       <br />
-      <a href="{{ url_for('index') }}">Back to Home</a>
+      <a href="/">Back to Home</a>
     </div>
   </body>
 </html>

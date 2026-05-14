@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>PowerPlay Assistant - Results</title>
+    <link rel="stylesheet" href="/static/css/main.css" />
+    <link rel="icon" href="/static/icons/favicon.ico" type="image/x-icon" />
+    <script defer src="https://data.niceygy.net/script.js" ></script>
+  
+    <script>
+      function copyText(text) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard
+            .writeText(text)
+            .then(function () {
+              alert("Copied " + text);
+            })
+            .catch(function (err) {
+              console.error("Could not copy text: ", err);
+            });
+        } else {
+          // Fallback method
+          let textarea = document.createElement("textarea");
+          textarea.value = text;
+          document.body.appendChild(textarea);
+          textarea.select();
+          try {
+            document.execCommand("copy");
+            alert("Copied " + text);
+          } catch (err) {
+            console.error("Fallback: Oops, unable to copy", err);
+            alert("Failed to copy :( Please report this")
+          }
+          document.body.removeChild(textarea);
+        }
+      }
+    </script>
+
+  </head>
+  <body>
+    <h1>Selected Options</h1>
+    <p><strong>System:</strong> {{ .system }}</p>
+    <p><strong>For:</strong> {{ .power }}</p>
+    <p><strong>Task:</strong> {{ .task }}</p>
+
+    <h1>About System:</h1>
+    <p><strong>Current Controlling Power: </strong> {{ .currentPower }}</p>
+    <p><strong>Current State: </strong> {{ .currentState }}</p>
+    <p><strong>Is Anarchy: </strong> {{ .isAnarchy }}</p>
+    <p><strong>Notes: </strong> {{ .systemNotes }}</p>
+
+    <h1>Selected Task:</h1>
+    <p><strong>Task: </strong> {{ .taskName }}</p>
+    <p><strong>Task Type: </strong> {{ .taskType }}</p>
+    <p class="task-description"><strong>Task Description: </strong> {{ .taskDescription }}</p>
+    <p><strong>This {{ .isIllegal }} Illegal </strong></p>
+    <p><strong>This {{ .isOpposingWeakness }} the opposing power's weakness</strong></p>
+    <p><strong>This {{ .isOwnStrength }} your power's strength</strong></p>
+    <br />
+    <p onclick="copyText('{{.targetSystem}}')">{{ .information }}</p>
+    <p><i>Click the system name to copy it</i></p>
+
+    <a href="/">Back to Home</a>
+  </body>
+</html>

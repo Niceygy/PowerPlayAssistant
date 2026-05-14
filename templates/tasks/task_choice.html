@@ -5,10 +5,10 @@
     <title>PowerPlay Assistant - Choice</title>
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='main.css') }}"
+      href="/static/css/main.css"
     />
-    <link rel="icon" href="{{ url_for('static', filename='icons/favicon.ico') }}" type="image/x-icon">
-    <script defer src="https://data.niceygy.net/script.js" data-website-id="5a305d97-fef0-4c86-9528-243ae53470ad"></script>
+    <link rel="icon" href="/static/icons/favicon.ico" type="image/x-icon">
+    <script defer src="https://data.niceygy.net/script.js" ></script>
     <script>
       function toggleLoadingIcon() {
             var x = document.getElementById("loadingIcon");
@@ -28,7 +28,7 @@
   <body>
     <div style="text-align: center">
     <h1>Task Choice!</h1>
-    <p><strong>Task:</strong> {{ taskName }}</p>
+    <p><strong>Task:</strong> {{ .taskName }}</p>
     <br />
     <p>Would you like to renforce your own power's systems,</p>
     <p>or undermine your opponents?</p>
@@ -37,10 +37,10 @@
     <p><i>Reinforcing or undermining systems. But for now, just select either.</i></p> -->
 
 
-    <form action="{{ url_for('handle_choice') }}" method="post">
-      <input type="hidden" name="task" value="{{ taskName }}">
-      <input type="hidden" name="power" value="{{ power }}">
-      <input type="hidden" name="system" value="{{ system }}">
+    <form action="/handle_choice" method="post">
+      <input type="hidden" name="task" value="{{ .task }}">
+      <input type="hidden" name="power" value="{{ .power }}">
+      <input type="hidden" name="system" value="{{ .system }}">
 
       <div class="buttons" style="text-align: center;">
         <div class="action_btn">
@@ -64,10 +64,10 @@
       </div>
     </form>
     <div class="loadingIcon" style="text-align: center;">
-      <img id="loadingIcon" src="{{  url_for('static', filename='icons/edloader.svg')}}" width="50" height="50">
+      <img id="loadingIcon" src="/static/icons/edloader.svg" width="50" height="50">
   </div>
     <br />
-    <a href="{{ url_for('index') }}">Back to Home</a>
+    <a href="/">Back to Home</a>
     </div>
   </body>
 </html>

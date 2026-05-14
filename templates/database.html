@@ -4,22 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PowerPlay Assistant - Database</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
-    <script defer src="https://data.niceygy.net/script.js" data-website-id="5a305d97-fef0-4c86-9528-243ae53470ad"></script>
-    <link rel="icon" href="{{ url_for('static', filename='icons/favicon.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" href="/static/css/main.css">
+    <script defer src="https://data.niceygy.net/script.js" ></script>
+    <link rel="icon" href="/static/icons/favicon.ico" type="image/x-icon">
 </head>
 <body>
     <!-- <h1>PowerPlay Assistant</h1> -->
     <h2>Database Stats</h2>
-    <p><strong>Star Systems: </strong> {{systems}} </p>
-    <p><strong>Stations: </strong> {{stations}} </p>
-    <p><strong>Megaships: </strong> {{megaships}} </p>
-    <p><strong>Megaship cycle week: </strong>{{week}}</p>
+    <p><strong>Star Systems: </strong> {{.systems}} </p>
+    <p><strong>Stations: </strong> {{.stations}} </p>
+    <p><strong>Megaships: </strong> {{.megaships}} </p>
+    <p><strong>Megaship cycle week: </strong>{{.week}}</p>
     <br>
 
 </body>
 <div class="footer">
-    <a href="{{ url_for('index') }}">Home</a>
+    <a href="/">Home</a>
 </div>
 </html>
 

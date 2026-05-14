@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='main.css') }}"
+      href="/static/css/main.css"
     />
-    <link rel="icon" href="{{ url_for('static', filename='icons/favicon.ico') }}" type="image/x-icon">
-    <script defer src="https://data.niceygy.net/script.js" data-website-id="5a305d97-fef0-4c86-9528-243ae53470ad"></script>
+    <link rel="icon" href="/static/icons/favicon.ico" type="image/x-icon">
+    <script defer src="https://data.niceygy.net/script.js" ></script>
     <title>PowerPlay Assistant - Holoscreens</title>
     <script>
       function copyText(text) {
@@ -38,40 +38,31 @@
   <body>
     <div class="main">
     <h1>Selected Options</h1>
-    <p><strong>System:</strong> {{ system }}</p>
-    <p><strong>For:</strong> {{ power }}</p>
+    <p><strong>System:</strong> {{ .system }}</p>
+    <p><strong>For:</strong> {{ .power }}</p>
 
     <h1>Selected Task:</h1>
-    <p><strong>Task: </strong> {{ taskName }}</p>
-    <p><strong>Task Type: </strong> {{ taskType }}</p>
-    <p class="task-description"><strong>Task Description: </strong> {{ taskDescription }}</p>
-    <p><strong>This {{ isIllegal }} Illegal </strong></p>
+    <p><strong>Task: </strong> {{ .taskName }}</p>
+    <p><strong>Task Type: </strong> {{ .taskType }}</p>
+    <p class="task-description"><strong>Task Description: </strong> {{ .taskDescription }}</p>
+    <p><strong>This {{ .isIllegal }} Illegal </strong></p>
     <p>
       <strong
-        >This {{ isOpposingWeakness }} the opposing power's weakness</strong
+        >This {{ .isOpposingWeakness }} the opposing power's weakness</strong
       >
     </p>
-    <p><strong>This {{ isOwnStrength }} your power's strength</strong></p>
+    <p><strong>This {{ .isOwnStrength }} your power's strength</strong></p>
     
 
     <h1>Systems:</h1>
-    <p><strong>{{ extraInfo }}</strong></p>
+    <p><strong>{{ .extraInfo }}</strong></p>
     <ul>
-      {% for otherSystem in otherSystems %}
-      <li>
-        <a
-          onclick="copyText('{{ otherSystem[0] }}')"
-        >{{ otherSystem[0] }}</a> Has
-        {{ otherSystem[1] }} Starport &
-        {{ otherSystem[2] }} Outposts 
-        
-      </li>
-      {% endfor %}
+      <!-- todo -->
     </ul>
     <br />
     <p><i>Click the system name to copy it</i></p>
 
-    <a href="{{ url_for('index') }}">Back to Home</a>
+    <a href="/">Back to Home</a>
   </div>
   </body>
 </html>

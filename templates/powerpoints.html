@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PowerPlay Assistant - PowerPoints</title>
     <meta name="description" content="PowerPoints from PowerPlay Assistant! How is your power doing?" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='powers.css') }}" />
-    <script defer src="https://data.niceygy.net/script.js" data-website-id="5a305d97-fef0-4c86-9528-243ae53470ad"></script>
-    <link rel="icon" href="{{ url_for('static', filename='icons/favicon.ico') }}" type="image/x-icon" />
+    <link rel="stylesheet" href="/static/css/main.css" />
+    <link rel="stylesheet" href="/static/css/powers.css" />
+    <script defer src="https://data.niceygy.net/script.js" ></script>
+    <link rel="icon" href="/static/icons/favicon.ico" type="image/x-icon" />
 
     <style>
       table {
@@ -30,13 +30,13 @@
     <h2 style="text-align: center">PowerPoints!</h2>
     
     <div style="text-align: center">
-      <h4>{{ title }}</h4>
-      <form method="get" action="{{ url_for('powerpoints') }}">
+      <h4>{{ .title }}</h4>
+      <form method="get" action="/powerpoints">
         <label for="system">Select System:</label>
         <select id="system" name="system" onchange="this.form.submit()">
-          <option value="nicey" {% if request.args.get('system') == 'nicey' %}selected{% endif %}>Nicey</option>
-          <option value="kruger" {% if request.args.get('system') == 'kruger' %}selected{% endif %}>Kruger</option>
-          <option value="fdev" {% if request.args.get('system') == 'fdev' %}selected{% endif %}>FDev</option>
+          <option value="nicey" >Nicey</option>
+          <option value="kruger">Kruger</option>
+          <option value="fdev" >FDev</option>
         </select>
       </form>
       <table style="align-items: center">
@@ -46,21 +46,21 @@
           <th>Points</th>
           <th>Systems</th>
         </tr>
-        {% for power in powerdata %}
+        {{ range $power := .powerdata }}
         <tr>
-          <th class="{{power['shortcode']}}">
-            <img src="static/icons/powers/{{power['shortcode']}}.svg" class="power-icon" alt="Power icon for {{ power['name'] }}" />
-            {{ power['place'] }}
+          <th class="{{$power.shortcode}}">
+            <img src="static/icons/powers/{{$power.shortcode}}.svg" class="power-icon" alt="Power icon for {{ $power.name }}" />
+            {{ $power.place }}
           </th>
-          <th class="{{power['shortcode']}}">{{ power['name'] }}</th>
-          <th class="{{power['shortcode']}}">
-            <img src="static/icons/{{power['comparison_icon']}}" class="power_icon" style="width: 20px" alt="{{power['comparison_icon']}}"/>
-            {{ power['comparison'] }}
+          <th class="{{$power.shortcode}}">{{ $power.name }}</th>
+          <th class="{{$power.shortcode}}">
+            <img src="static/icons/{{$power.comparison_icon}}" class="power_icon" style="width: 20px" alt="{{$power.comparison_icon}}"/>
+            {{ $power.comparison }}
           </th>
-          <th class="{{power['shortcode']}}">{{ power['systems'] }}</th>
+          <th class="{{$power.shortcode}}">{{ $power.systems }}</th>
         </tr>
 
-        {% endfor %}
+        {{ end }}
       </table>
       <br />
     </div>
@@ -69,6 +69,6 @@
     <p>
       <i>Please note that this is using data from the EDDN. Somthing seem wrong? <a href="https://go.niceygy.net/powerplay_assist_thread">Submit a bug report</a></i>
     </p>
-    <a href="{{ url_for('index') }}">Home</a>
+    <a href="/">Home</a>
   </div>
 </html>

@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PowerPlay Assistant - Find that systenm!</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
-    <script defer src="https://data.niceygy.net/script.js" data-website-id="5a305d97-fef0-4c86-9528-243ae53470ad"></script>
-    <link rel="icon" href="{{ url_for('static', filename='icons/favicon.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" href="/static/css/main.css">
+    <script defer src="https://data.niceygy.net/script.js" ></script>
+    <link rel="icon" href="/static/icons/favicon.ico" type="image/x-icon">
     <meta name='description' content='PowerPlay Assistant is a compainon website for Elite: Dangerous, to help commanders with their powerplay 2.0 tasks.'>
     <script defer>
         async function searchSystems() {
@@ -41,14 +41,14 @@
     <h2>Find nearby system</h2>
     <form action="/system_search" method="post">
         <label for="system">Your current system:</label>
-        <input list="system-results" id="system" name="system" oninput="searchSystems()" autocomplete="off" value="{{ default_system }}">
+        <input list="system-results" id="system" name="system" oninput="searchSystems()" autocomplete="off" value="{{ .default_system }}">
         <datalist id="system-results"></datalist><br><br>
 
         <label for="power">For:</label>
         <select id="power" name="power">
-            {% for power in powers %}
-                <option value="{{ power }}" {% if selected_power == power %}selected{% endif %}>{{ power }}</option>
-            {% endfor %}
+            {{ range $power := .powers }}
+                <option value="{{ $power }}" {{ if eq .selected_power $power }}selected{{end}}>{{ $power }}</option>
+            {{ end }}
         </select><br><br>
 
         <label for="system_type">System Type</label>
@@ -62,12 +62,12 @@
         <button type="submit" onclick="toggleLoadingBtn()">Go!</button>
     </form>
     <div class="loadingIcon"    >
-        <img id="loadingIcon" src="{{  url_for('static', filename='icons/edloader.svg')}}" width="50" height="50">
+        <img id="loadingIcon" src="/static/icons/edloader.svg" width="50" height="50">
     </div>
     </div>
     
 </body>
 <div class="footer">
-    <a href="{{url_for('index')}}">Home</a>
+    <a href="/">Home</a>
 </div>
 </html>

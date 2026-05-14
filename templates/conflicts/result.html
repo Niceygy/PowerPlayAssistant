@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
-    <link rel="icon" href="{{ url_for('static', filename='icons/favicon.ico') }}" type="image/x-icon" />
-    <script defer src="https://data.niceygy.net/script.js" data-website-id="5a305d97-fef0-4c86-9528-243ae53470ad"></script>
+    <link rel="stylesheet" href="/static/css/main.css" />
+    <link rel="icon" href="/static/icons/favicon.ico" type="image/x-icon" />
+    <script defer src="https://data.niceygy.net/script.js" ></script>
     <title>PowerPlay Assistant - Conflicts</title>
     <script>
       function copyText(text) {
@@ -38,21 +38,22 @@
   <body>
     <div class="main">
       <h1>Selected Options</h1>
-      <p><strong>System:</strong> {{ systemName }}</p>
-      <p><strong>For:</strong> {{ power }}</p>
+      <p><strong>System:</strong> {{ .systemName }}</p>
+      <p><strong>For:</strong> {{ .power }}</p>
+      <p><strong>Doing:</strong> Combat</p>
 
       <h1>Conflicts:</h1>
       <ul>
-        {% for system in systems %}
+        {{ range $system := .systems }}
         <li>
-            <a onclick="copyText('{{system.name}}')">{{ system.name }} [ {{ system.ly }} LY ] - {{ system.power1 }} vs {{ system.power2 }}</a>
+            <a onclick="copyText('{{$system.SystemName}}')">{{ $system.SystemName }} [ {{ $system.LY }} LY ] - {{ $system.Power1 }} vs {{ $system.Power2 }}</a>
         </li>
-        {% endfor %}
+        {{ end }}
       </ul>
       <br />
       <p><i>Click the system name to copy it</i></p>
 
-      <a href="{{ url_for('index') }}">Back to Home</a>
+      <a href="/">Back to Home</a>
     </div>
   </body>
 </html>
