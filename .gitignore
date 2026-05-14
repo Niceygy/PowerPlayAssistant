@@ -7,3 +7,5 @@ temp.*
 *.tmp
 .env
 .pytest*
+
+__debug*

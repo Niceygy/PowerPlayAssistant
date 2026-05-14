@@ -1,4 +1,4 @@
-package handlers
+package tasks
 
 import (
 	"log"
@@ -23,7 +23,26 @@ type megaship struct {
 	Distance float64
 }
 
+func m_CheckInputs(c *echo.Context) error {
+	if c.QueryParam("choice") == "" {
+		system := c.QueryParam("system")
+		power := c.QueryParam("power")
+		task := c.QueryParam("task")
+		return c.Redirect(307, utils.Concat([]string{
+			"handle_choice?system=",
+			system,
+			"&power=",
+			power,
+			"&task=",
+			task,
+		}))
+	} else {
+		return nil
+	}
+}
+
 func HandleMegaship(c *echo.Context) error {
+	m_CheckInputs(c)
 	user_system := c.QueryParam("system")
 	power := c.QueryParam("power")
 	choice := c.QueryParam("choice")

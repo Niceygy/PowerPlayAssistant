@@ -1,4 +1,4 @@
-package handlers
+package tasks
 
 import (
 	"github.com/labstack/echo/v5"
@@ -28,13 +28,10 @@ func HandleBountyHunting(c *echo.Context) error {
 			"isAnarchy":          "NO",
 			"taskName":           "Bounty Hunting",
 			"isIlligal":          "NO",
-			"isOpposingWeakness": utils.IsOpposingWeakness(task_code, user_power_shortcode),
+			"isOpposingWeakness": utils.IsOpposingWeakness(bounty_task_code, user_power_shortcode),
 			"taskDescription":    utils.TASKDESCRIPTIONS[bounty_task_code],
 			"systemNotes":        database.GetExtraInfo(system),
 			"isOwnStrength":      utils.IsOwnStrength(bounty_task_code, user_power_shortcode),
 		}))
 	}
-
-	// return c.NoContent(404)
-
 }

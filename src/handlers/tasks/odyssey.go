@@ -1,4 +1,4 @@
-package handlers
+package tasks
 
 import (
 	"log"
@@ -189,6 +189,7 @@ func HandleOdyMalware(c *echo.Context) error {
 	user_coords := database.GetSystemLocation(system)
 
 	var information string
+	var s powerdata_location_response
 
 	if user_shortcode == system_power_shortcode {
 		//in friendly sys, find nearby enemy or unoccupied sys
@@ -204,20 +205,22 @@ func HandleOdyMalware(c *echo.Context) error {
 			log.Panic(err.Error())
 		}
 
-		s := powerdata_location_response{}
 		err = rows.Scan(&s.System_name, &s.Shortcode, &s.State, &s.Control_points, &s.Points_change, &s.Distance)
 		if err != nil {
 			log.Panic(err.Error())
 		}
 		if s.State != "Unoccupied" {
-			information = ""
+			//Aqusition - needs injection malware
+			information = "You will need 'Power Injection Malware', which can be found at a power contact in this system. "
 		} else {
-			information = ""
+			//Undermining - needs tracker malware
+			information = "You will need 'Power Tracker Malware', which can be found at a power contact in this system. "
 		}
+		information += "Then head to '" + s.System_name + "', and upload it to a data port at any odyssey settlement."
 	} else if slices.Contains(utils.POWERNAMES, database.PowerShortToFull(system_power_shortcode)) {
-		//enemy sys
+		//enemy sys, find nearby friendly sys to obtain tracker malware
 	} else {
-		//unoccupied sys
+		//unoccupied sys, find nearby freindly sys to obtain injection malware
 	}
 
 	return c.HTML(200, utils.RenderTemplate(ody_html_template, map[string]any{
