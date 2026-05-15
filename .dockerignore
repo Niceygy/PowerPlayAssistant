@@ -12,3 +12,4 @@ build.sh
 .gitignore
 .pytest/*
 .vscode
+*.go

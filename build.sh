@@ -1,8 +1,5 @@
 #!/bin/bash
-cd src
 CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o powerplayassistant .
-cd ..
-mv src/powerplayassistant .
 
 # Build the Docker image
 docker build -t niceygy/powerplayassistant .
