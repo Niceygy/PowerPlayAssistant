@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"log"
+	"math/rand/v2"
 	"slices"
 	"strings"
 
@@ -21,6 +21,16 @@ func isTaskIllegal(task string, isAnarchy bool) bool {
 		}
 		return slices.Contains(utils.TASKS_CRIMINAL, taskShortCode)
 	}
+}
+
+var subtexts []string = []string{
+	"V2!!",
+	"Now with added basking",
+	"What do you mean, 'its on fire'?!",
+	"k5elite.com is cool too",
+	"It turns out, very hard indeed",
+	"Made with Echo " + echo.Version,
+	"Made with 🩷 & 💥, by Niceygy",
 }
 
 func HandleIndex(c *echo.Context) error {
@@ -53,16 +63,17 @@ func HandleIndex(c *echo.Context) error {
 				utils.MakeURLSafe(selected_power),
 			}, "")
 		}
-		log.Println(redirectURL)
+		// log.Println(redirectURL)
 		return c.Redirect(307, redirectURL)
 	} else {
 		return c.HTML(200, utils.RenderTemplate("templates/index.html", map[string]any{
 			"missions":         utils.TASK_NAMES,
 			"powers":           utils.POWERNAMES,
 			"default_system":   "Sol",
-			"status_text":      "test",
 			"selected_mission": "",
 			"selected_power":   "",
+			"subtext":          subtexts[rand.IntN(len(subtexts)-1)],
+			"status_text":      utils.GetStatus(),
 		}))
 	}
 }
