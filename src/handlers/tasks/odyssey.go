@@ -92,8 +92,8 @@ func HandleOdysseyDownloadTasks(c *echo.Context) error {
 		query = `SELECT powerdata.*,
 		` + database.CreateDistanceStatement(user_coords) + `
 		FROM powerdata
-		INNER JOIN star_systems
-			ON star_systems.system_name = powerdata.system_name
+		INNER JOIN systems
+			ON systems.system_name = powerdata.system_name
 		WHERE powerdata.shortcode = '` + user_shortcode + `'
 			AND powerdata.state != ''
 		ORDER BY distance
@@ -104,8 +104,8 @@ func HandleOdysseyDownloadTasks(c *echo.Context) error {
 		query = `SELECT powerdata.*,
 		` + database.CreateDistanceStatement(user_coords) + `
 		FROM powerdata
-		INNER JOIN star_systems
-			ON star_systems.system_name = powerdata.system_name
+		INNER JOIN systems
+			ON systems.system_name = powerdata.system_name
 		WHERE powerdata.shortcode = '` + user_shortcode + `'
 			AND powerdata.state != ''
 		ORDER BY distance
@@ -118,8 +118,8 @@ func HandleOdysseyDownloadTasks(c *echo.Context) error {
 		query = `SELECT powerdata.*,
 		` + database.CreateDistanceStatement(user_coords) + `
 		FROM powerdata
-		INNER JOIN star_systems
-			ON star_systems.system_name = powerdata.system_name
+		INNER JOIN systems
+			ON systems.system_name = powerdata.system_name
 		WHERE powerdata.shortcode != '` + user_shortcode + `'
 			AND powerdata.state != ''
 		ORDER BY distance
@@ -196,8 +196,8 @@ func HandleOdysseyMalware(c *echo.Context) error {
 		rows, err := database.Db.Query(`SELECT powerdata.*,
 		` + database.CreateDistanceStatement(user_coords) + `
 		FROM powerdata
-		INNER JOIN star_systems
-			ON star_systems.system_name = powerdata.system_name
+		INNER JOIN systems
+			ON systems.system_name = powerdata.system_name
 		WHERE powerdata.shortcode != '` + user_shortcode + `'
 		ORDER BY distance
 		LIMIT 1;`)

@@ -31,9 +31,9 @@ type Megaships struct {
 
 func CreateDistanceStatement(user_coords []float64) string {
 	return `SQRT(
-        POW(star_systems.longitude - ` + ftos(user_coords[0]) + `, 2) +
-        POW(star_systems.latitude  - ` + ftos(user_coords[1]) + `, 2) +
-        POW(star_systems.height    - ` + ftos(user_coords[2]) + `, 2)
+        POW(systems.longitude - ` + ftos(user_coords[0]) + `, 2) +
+        POW(systems.latitude  - ` + ftos(user_coords[1]) + `, 2) +
+        POW(systems.height    - ` + ftos(user_coords[2]) + `, 2)
     ) AS distance`
 }
 

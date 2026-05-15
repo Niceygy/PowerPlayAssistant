@@ -35,9 +35,9 @@ func HandleCommodities(c *echo.Context) error {
 	rows, err := database.Db.Query(`SELECT
 	powerdata.*,
 	` + database.CreateDistanceStatement(user_coords) + `
-	FROM star_systems
+	FROM systems
 	INNER JOIN powerdata
-		ON powerdata.system_name = star_systems.system_name
+		ON powerdata.system_name = systems.system_name
 	WHERE powerdata.state = '` + system_type_for_commodity + `' 
 		AND powerdata.shortcode = '` + database.PowerFullToShort(power) + `'
 	ORDER BY distance

@@ -8,7 +8,7 @@ import (
 )
 
 func GetSystemLocation(system_name string) []float64 {
-	res := Db.QueryRow("SELECT latitude, longitude, height FROM star_systems WHERE system_name = '?' LIMIT 1;", system_name)
+	res := Db.QueryRow("SELECT latitude, longitude, height FROM systems WHERE system_name = '?' LIMIT 1;", system_name)
 	system := StarSystem{}
 	res.Scan(&system.Latitude, &system.Longitude, &system.Height)
 	return []float64{system.Latitude, system.Longitude, system.Height}
@@ -38,7 +38,7 @@ func GetExtraInfo(system_name string) string {
 }
 
 func IsSystemAnarchy(system_name string) bool {
-	res, err := Db.Query("SELECT is_anarchy FROM star_systems WHERE system_name = '" + system_name + "' LIMIT 1;")
+	res, err := Db.Query("SELECT is_anarchy FROM systems WHERE system_name = '" + system_name + "' LIMIT 1;")
 	if err != nil {
 		log.Panic(err)
 	}
@@ -53,9 +53,9 @@ func GetNearestOwnedSystem(current_system string, needed_system_type string, pow
 	rows, err := Db.Query(`SELECT
 	powerdata.*,
 	` + CreateDistanceStatement(user_coords) + `
-	FROM star_systems
+	FROM systems
 	INNER JOIN powerdata
-		ON powerdata.system_name = star_systems.system_name
+		ON powerdata.system_name = systems.system_name
 	WHERE powerdata.state = '` + needed_system_type + `' 
 		AND powerdata.shortcode = '` + PowerFullToShort(power_full) + `'
 	ORDER BY distance

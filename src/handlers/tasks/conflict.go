@@ -29,8 +29,8 @@ func HandleConflictSearch(c *echo.Context) error {
     conflicts.*,
     ` + database.CreateDistanceStatement(user_coords) + `
 	FROM conflicts
-	JOIN star_systems
-    	ON conflicts.system_name = star_systems.system_name
+	JOIN systems
+    	ON conflicts.system_name = systems.system_name
 	WHERE 
 		conflicts.first_place = '` + user_shortcode + `' OR conflicts.second_place = '` + user_shortcode + `'
 	ORDER BY distance

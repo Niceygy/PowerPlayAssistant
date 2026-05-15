@@ -11,7 +11,7 @@ import (
 func HandleSystemSearch(c *echo.Context) error {
 	system := c.QueryParam("query")
 	var systems []string
-	rows, err := database.Db.Query("SELECT system_name FROM star_systems WHERE system_name LIKE '%" + system + "%' LIMIT 10;" /*, system*/)
+	rows, err := database.Db.Query("SELECT system_name FROM systems WHERE system_name LIKE '%" + system + "%' LIMIT 10;" /*, system*/)
 	if err != nil {
 		log.Panic(err.Error())
 	} else {

@@ -28,14 +28,10 @@ func HandleRareGoods(c *echo.Context) error {
 	state, target_sys_owning_power := database.GetSystemPowerInfo(system)
 
 	rows, err := database.Db.Query(`SELECT Raregoods.*, 
-	SQRT(
-        POW(star_systems.longitude - ` + ftos(user_coords[0]) + `, 2) +
-        POW(star_systems.latitude  - ` + ftos(user_coords[1]) + `, 2) +
-        POW(star_systems.height    - ` + ftos(user_coords[2]) + `, 2)
-    ) AS distance
+	` + database.CreateDistanceStatement(user_coords) + `
 	FROM Raregoods
-	INNER JOIN star_systems
-		ON Raregoods.system_name = star_systems.system_name
+	INNER JOIN systems
+		ON Raregoods.system_name = systems.system_name
 	ORDER BY distance
 	LIMIT ` + rg_items_limit + `;
 	`)

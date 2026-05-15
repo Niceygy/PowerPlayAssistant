@@ -21,7 +21,7 @@ All python requirements can be installed using `python3 -m pip3 install -r requi
 I would reccomend using a venv! `python3 -m venv .venv`
 The MariaDB can be set up with the following sql commands.
 
-Systems table: `CREATE TABLE IF NOT EXISTS star_systems (system_name VARCHAR(255) PRIMARY KEY, latitude DOUBLE, longitude DOUBLE, height DOUBLE, state VARCHAR(255), shortcode VARCHAR(255), is_anarchy TINTYINT(1), has_res_sites TINTYINT(1));`
+Systems table: `CREATE TABLE IF NOT EXISTS systems (system_name VARCHAR(255) PRIMARY KEY, latitude DOUBLE, longitude DOUBLE, height DOUBLE, state VARCHAR(255), shortcode VARCHAR(255), is_anarchy TINTYINT(1), has_res_sites TINTYINT(1));`
 <br></br>
 Megaships table: `CREATE TABLE IF NOT EXISTS megaships (name VARCHAR(255) PRIMARY KEY, SYSTEM1 VARCHAR(255), SYSTEM2 VARCHAR(255), SYSTEM3 VARCHAR(255), SYSTEM4 VARCHAR(255), SYSTEM5 VARCHAR(255), SYSTEM6 VARCHAR(255));`
 <br></br>

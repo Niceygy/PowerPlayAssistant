@@ -60,6 +60,7 @@ var TASK_NAMES = []string{
 	"Reboot mission completion",
 	"Commit crimes",
 	"Conflict Zones",
+	"Attack Stronghold Carrier",
 	// ODY
 	"Retrieve specific goods",
 	"Transfer Power classified data",
@@ -68,7 +69,7 @@ var TASK_NAMES = []string{
 	"Upload Powerplay Malware",
 	// not sure
 	"notsure",
-} //Task Names in an array
+} //Task Names in an array. Most of these are in elite, but a few have been manually added for extra functionality.
 
 var TASK_SHORTCODES = map[string]string{
 	"BTHT": "Bounty hunting",
@@ -88,6 +89,7 @@ var TASK_SHORTCODES = map[string]string{
 	"HISV": "Hand in salvage",
 	"RMCP": "Reboot mission completion",
 	"CMCR": "Commit crimes",
+	"ASTC": "Attack Stronghold Carrier",
 	// ODY
 	"RSGD": "Retrieve specific goods",
 	"TPCL": "Transfer Power classified data",
@@ -97,7 +99,7 @@ var TASK_SHORTCODES = map[string]string{
 } //Task shortcodes and full names
 
 var TASK_TYPES = map[string][]string{
-	"Combat":      {"BTHT", "PKLS", "CMCR"},
+	"Combat":      {"BTHT", "PKLS", "CMCR", "ATSC"},
 	"Trading":     {"SLFP", "SRGD", "FMLV", "TPCD"},
 	"Mining":      {"SMNR"},
 	"Scanning":    {"SSWK", "HICD", "SDLK"},
@@ -111,7 +113,7 @@ var TASK_TYPES = map[string][]string{
 Tasks that incur a bounty or fine.
 "HSHK" is removed (holoscreens)
 */
-var TASKS_CRIMINAL = []string{"CMCR", "PKLS", "UPMW", "TPRD", "TPCL", "TPAD"}
+var TASKS_CRIMINAL = []string{"CMCR", "PKLS", "UPMW", "TPRD", "TPCL", "TPAD", "ATSC"}
 
 var POWERWEAKNESSES = map[string][]string{
 	"ALD": {"CMCR", "SDLK"},

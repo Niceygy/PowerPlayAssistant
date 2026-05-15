@@ -21,7 +21,7 @@ func PowerShortToFull(shortcode string) string {
 }
 
 func DoesSystemExist(system_name string) bool {
-	res := Db.QueryRow("SELECT system_name FROM star_systems WHERE system_name = '?' LIMIT 1;", system_name)
+	res := Db.QueryRow("SELECT system_name FROM systems WHERE system_name = '?' LIMIT 1;", system_name)
 	system := StarSystem{}
 	res.Scan(&system.System_name)
 	return system.System_name == ""

@@ -74,10 +74,10 @@ func HandleMegaship(c *echo.Context) error {
     megaships.name, megaships.SYSTEM` + megaship_system_col + `,
     ` + database.CreateDistanceStatement(user_coords) + `
 	FROM megaships
-	JOIN star_systems
-    	ON megaships.SYSTEM` + megaship_system_col + ` = star_systems.system_name
+	JOIN systems
+    	ON megaships.SYSTEM` + megaship_system_col + ` = systems.system_name
 	JOIN powerdata
-    	ON star_systems.system_name = powerdata.system_name
+    	ON systems.system_name = powerdata.system_name
 	WHERE powerdata.shortcode ` + is_opposing_statement + ` '` + user_shortcode + `'
 	ORDER BY distance
 	LIMIT 15;`,
