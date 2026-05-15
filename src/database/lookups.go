@@ -8,7 +8,7 @@ import (
 )
 
 func GetSystemLocation(system_name string) []float64 {
-	res := Db.QueryRow("SELECT latitude, longitude, height FROM systems WHERE system_name = '?' LIMIT 1;", system_name)
+	res := Db.QueryRow("SELECT latitude, longitude, height FROM systems WHERE system_name = ? LIMIT 1;", system_name)
 	system := System{}
 	res.Scan(&system.Latitude, &system.Longitude, &system.Height)
 	return []float64{system.Latitude, system.Longitude, system.Height}
@@ -38,7 +38,7 @@ func GetExtraInfo(system_name string) string {
 }
 
 func IsSystemAnarchy(system_name string) bool {
-	res, err := Db.Query("SELECT is_anarchy FROM systems WHERE system_name = '" + system_name + "' LIMIT 1;")
+	res, err := Db.Query("SELECT is_anarchy FROM systems WHERE system_name = ? LIMIT 1;", system_name)
 	if err != nil {
 		log.Panic(err)
 	}

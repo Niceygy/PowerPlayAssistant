@@ -19,6 +19,7 @@ var SPESIFIC_TASK_HANDLERS map[string]echo.HandlerFunc = map[string]echo.Handler
 	"Transfer Power association and political data": tasks.HandleOdysseyDownloadTasks,
 	"Transfer Power research and Industrial data":   tasks.HandleOdysseyDownloadTasks,
 	"Conflict Zones":                                tasks.HandleConflictSearch,
+	"Attack Stronghold Carrier":                     tasks.HandleStrongholdCarriers,
 }
 
 // Main entrypoint for the /results page.

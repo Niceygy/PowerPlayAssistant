@@ -24,24 +24,6 @@ type megaship struct {
 	Distance float64
 }
 
-func m_CheckInputs(c *echo.Context) error {
-	if c.QueryParam("choice") == "" {
-		system := c.QueryParam("system")
-		power := c.QueryParam("power")
-		task := c.QueryParam("task")
-		return c.Redirect(307, utils.Concat([]string{
-			"handle_choice?system=",
-			system,
-			"&power=",
-			power,
-			"&task=",
-			task,
-		}))
-	} else {
-		return nil
-	}
-}
-
 func getMegashipCycle() string {
 	wd, _ := os.Getwd()
 	f, err := os.ReadFile(wd + "/week.txt")
@@ -53,16 +35,26 @@ func getMegashipCycle() string {
 }
 
 func HandleMegaship(c *echo.Context) error {
-	m_CheckInputs(c)
 	user_system := c.QueryParam("system")
 	power := c.QueryParam("power")
 	choice := c.QueryParam("choice")
+	task := c.QueryParam("task")
+
+	if choice == "" {
+		return c.Redirect(307, utils.Concat([]string{
+			"handle_choice?system=",
+			user_system,
+			"&power=",
+			power,
+			"&task=",
+			task,
+		}))
+	}
 
 	megaship_system_col := getMegashipCycle()
-
-	// _, system_shortcode := database.GetSystemPowerInfo(system)
 	user_shortcode := database.PowerFullToShort(power)
 	user_coords := database.GetSystemLocation(user_system)
+
 	is_opposing_statement := ""
 	if choice == "Undermine" {
 		is_opposing_statement = "!="
