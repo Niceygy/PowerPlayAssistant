@@ -18,7 +18,7 @@ func main() {
 	// Middleware
 	limiterStore := middleware.NewRateLimiterMemoryStore(10)
 	e.Use(middleware.RateLimiter(limiterStore))
-	e.Use(middleware.Gzip())
+	// e.Use(middleware.Gzip())
 	e.Use(middleware.Secure())
 	e.Use(middleware.Decompress())
 	// e.Use(middleware.RequestLoggerWithConfig(middleware.RequestLoggerConfig{
@@ -27,8 +27,8 @@ func main() {
 	// 		return nil
 	// 	},
 	// }))
-	// e.Use(middleware.RequestLoggerW()) // use the RequestLogger middleware with slog logger
-	// e.Use(middleware.Recover()) // recover panics as errors for proper error handling
+	// e.Use(middleware.RequestLogger()) // use the RequestLogger middleware with slog logger
+	e.Use(middleware.Recover()) // recover panics as errors for proper error handling
 	e.Static("/static/", "static", e.Middlewares()...)
 	e.RouteNotFound("/*", func(c *echo.Context) error {
 		log.Println("[404] Not Found: " + c.Path())
