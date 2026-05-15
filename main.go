@@ -18,17 +18,15 @@ func main() {
 	// Middleware
 	limiterStore := middleware.NewRateLimiterMemoryStore(10)
 	e.Use(middleware.RateLimiter(limiterStore))
-	e.Use(middleware.GzipWithConfig(middleware.GzipConfig{Skipper: func(c *echo.Context) bool {
-		return true // c.Path()
-	}}))
+	e.Use(middleware.Gzip())
 	e.Use(middleware.Secure())
 	e.Use(middleware.Decompress())
-	e.Use(middleware.RequestLoggerWithConfig(middleware.RequestLoggerConfig{
-		LogValuesFunc: func(c *echo.Context, v middleware.RequestLoggerValues) error {
-			log.Println("Route = " + c.Path() + ", Method = " + c.Request().Method)
-			return nil
-		},
-	}))
+	// e.Use(middleware.RequestLoggerWithConfig(middleware.RequestLoggerConfig{
+	// 	LogValuesFunc: func(c *echo.Context, v middleware.RequestLoggerValues) error {
+	// 		log.Println("Route = " + c.Path() + ", Method = " + c.Request().Method)
+	// 		return nil
+	// 	},
+	// }))
 	// e.Use(middleware.RequestLoggerW()) // use the RequestLogger middleware with slog logger
 	// e.Use(middleware.Recover()) // recover panics as errors for proper error handling
 	e.Static("/static/", "static", e.Middlewares()...)
@@ -48,7 +46,7 @@ func main() {
 	e.Any("/", handlers.HandleIndex)
 	e.Any("/results", handlers.HandleResults)
 	e.Any("/handle_choice", handlers.HandleTaskChoice)
-	e.Any("/system_search", handlers.HandleSystemSearch)
+	e.Any("/search_systems", handlers.HandleSystemSearch)
 	e.Any("/is_crime", handlers.HandleIsCrime)
 
 	// Start server

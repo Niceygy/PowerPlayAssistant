@@ -1,7 +1,6 @@
 package database
 
 import (
-	"log"
 	"math"
 	"time"
 
@@ -41,7 +40,9 @@ func GetSystemPowerInfo(system_name string) (string, string) {
 	pd := PowerData{}
 	err := res.Scan(&pd.State, &pd.Shortcode)
 	if err != nil {
-		log.Panic(err.Error())
+		// log.Panic(err.Error())
+		//unoccupied
+		return "Unoccupied", ""
 	}
 	return pd.State, pd.Shortcode
 }

@@ -3,6 +3,7 @@ package tasks
 import (
 	"log"
 	"math"
+	"os"
 	"strconv"
 
 	"github.com/labstack/echo/v5"
@@ -41,13 +42,23 @@ func m_CheckInputs(c *echo.Context) error {
 	}
 }
 
+func getMegashipCycle() string {
+	wd, _ := os.Getwd()
+	f, err := os.ReadFile(wd + "/week.txt")
+	if err != nil {
+		log.Panic(err.Error())
+	}
+
+	return string(f)
+}
+
 func HandleMegaship(c *echo.Context) error {
 	m_CheckInputs(c)
 	user_system := c.QueryParam("system")
 	power := c.QueryParam("power")
 	choice := c.QueryParam("choice")
 
-	megaship_system_col := 1
+	megaship_system_col := getMegashipCycle()
 
 	// _, system_shortcode := database.GetSystemPowerInfo(system)
 	user_shortcode := database.PowerFullToShort(power)
@@ -60,11 +71,11 @@ func HandleMegaship(c *echo.Context) error {
 	}
 
 	rows, err := database.Db.Query(`SELECT
-    megaships.name, megaships.SYSTEM` + strconv.Itoa(megaship_system_col) + `,
+    megaships.name, megaships.SYSTEM` + megaship_system_col + `,
     ` + database.CreateDistanceStatement(user_coords) + `
 	FROM megaships
 	JOIN star_systems
-    	ON megaships.SYSTEM` + strconv.Itoa(megaship_system_col) + ` = star_systems.system_name
+    	ON megaships.SYSTEM` + megaship_system_col + ` = star_systems.system_name
 	JOIN powerdata
     	ON star_systems.system_name = powerdata.system_name
 	WHERE powerdata.shortcode ` + is_opposing_statement + ` '` + user_shortcode + `'

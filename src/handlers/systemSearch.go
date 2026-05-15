@@ -1,8 +1,8 @@
 package handlers
 
 import (
+	"encoding/json"
 	"log"
-	"strings"
 
 	"github.com/labstack/echo/v5"
 	"niceygy.net/powerplay-assistant/src/database"
@@ -10,21 +10,26 @@ import (
 
 func HandleSystemSearch(c *echo.Context) error {
 	system := c.QueryParam("query")
-	var systems string
-	rows, err := database.Db.Query("SELECT system_name FROM star_systems WHERE system_name LIKE '%?%'", system)
+	var systems []string
+	rows, err := database.Db.Query("SELECT system_name FROM star_systems WHERE system_name LIKE '%" + system + "%' LIMIT 10;" /*, system*/)
 	if err != nil {
 		log.Panic(err.Error())
 	} else {
 		for rows.Next() {
-			var s string
+			// var s string
 			if err = rows.Scan(&system); err != nil {
 				log.Panic(err.Error())
 			} else {
-				systems = systems + "'" + s + "',"
+				systems = append(systems, system)
 			}
 		}
-		systems = strings.TrimSuffix(systems, ",")
+	}
+	res, err := json.Marshal(systems)
+	if err != nil {
+		log.Panic(err.Error())
 	}
 
-	return c.JSON(200, "["+systems+"]")
+	// log.Println("Byte=" + string(res))
+	// log.Println("Raw=" + strings.Join(systems, ","))
+	return c.JSONBlob(200, res)
 }
