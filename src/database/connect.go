@@ -16,6 +16,10 @@ func OpenDatabase() *sql.DB {
 		log.Panic(err)
 		// panic(err)
 	}
+	err = db.Ping()
+	if err != nil {
+		log.Panic(err.Error())
+	}
 	db.SetMaxOpenConns(10)
 	log.Println("Connected to MariaDB")
 	return db

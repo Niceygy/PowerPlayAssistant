@@ -5,14 +5,26 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Debug PowerPlay Assistant",
-      "type": "debugpy",
+      "name": "Launch Package",
+      "type": "go",
       "request": "launch",
-      "module": "flask",
-      "env": { "FLASK_APP": "app.py", "FLASK_DEBUG": "1", "DATABASE_CONNECTION_STRING_PA": "mysql+pymysql://powerplay_assistant:elite.niceygy.net@10.0.0.52/elite", "env": "dev" },
-      "args": ["run", "--no-debugger", "--no-reload", "--host=0.0.0.0"],
-      "jinja": true,
-      "autoStartBrowser": false
+      "mode": "auto",
+      "program": "${workspaceFolder}",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "name": "Launch test function",
+      "type": "go",
+      "request": "launch",
+      "mode": "test",
+      "envFile": "${workspaceFolder}/.env",
+      "program": "${workspaceFolder}/src/tests/pages_test.go",
+      "args": [
+        "-test.run",
+        "TestPages"
+      ]
     }
+    
+    
   ]
 }

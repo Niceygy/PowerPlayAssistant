@@ -3,6 +3,7 @@ package utils
 import (
 	"html/template"
 	"log"
+	"os"
 	"strings"
 )
 
@@ -25,6 +26,10 @@ func (w *bufferWriter) Write(p []byte) (int, error) {
 }
 
 func RenderTemplate(filename string, data any) string {
+	wd, _ := os.Getwd()
+	filename = wd + filename
+	filename = strings.Replace(filename, "src/tests", "", 1)
+
 	tmpl, err := template.ParseFiles(filename)
 	if err != nil {
 		// return "", err

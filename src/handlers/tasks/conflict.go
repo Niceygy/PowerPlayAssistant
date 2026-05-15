@@ -9,10 +9,6 @@ import (
 	"niceygy.net/powerplay-assistant/src/utils"
 )
 
-// func HandleConflict(c *echo.Context) error {
-// 	return c.HTML(200, utils.RenderTemplate("templates/conflicts/search.html", ma))
-// }
-
 type conflict_response struct {
 	SystemName string
 	Power1     string

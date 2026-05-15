@@ -38,6 +38,7 @@ var SUSPENDED = []string{
 	// "Transfer Power association and political data",
 	// "Transfer Power research and Industrial data",
 	// "Upload Powerplay Malware",
+	"Collect Escape Pods",
 }
 
 var TASKNAMES = []string{

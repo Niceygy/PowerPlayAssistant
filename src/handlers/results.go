@@ -27,7 +27,7 @@ func HandleResults(c *echo.Context) error {
 
 	if !database.DoesSystemExist(system) {
 		return c.HTML(404, utils.RenderTemplate("templates/errors/noSuchSystem.html", map[any]any{}))
-	} else if isTaskIlligal(task, database.IsSystemAnarchy(system)) && len(c.QueryParam("anarchy")) < 1 {
+	} else if isTaskIllegal(task, database.IsSystemAnarchy(system)) && len(c.QueryParam("anarchy")) < 1 {
 		return c.Redirect(307, utils.Concat([]string{
 			"is_crime?system=",
 			system,
@@ -53,7 +53,7 @@ func HandleResults(c *echo.Context) error {
 			"currentState":       sys_state,
 			"isAnarchy":          anarchy,
 			"taskType":           utils.GetTaskType(task),
-			"isIllegal":          isTaskIlligal(task, anarchy),
+			"isIllegal":          isTaskIllegal(task, anarchy),
 			"isOpposingWeakness": utils.IsOpposingWeakness(task, shortcode),
 			"isOwnStrength":      utils.IsOwnStrength(task, shortcode),
 			"systemNotes":        database.GetExtraInfo(system),

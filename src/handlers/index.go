@@ -9,7 +9,7 @@ import (
 	"niceygy.net/powerplay-assistant/src/utils"
 )
 
-func isTaskIlligal(task string, isAnarchy bool) bool {
+func isTaskIllegal(task string, isAnarchy bool) bool {
 	if isAnarchy {
 		return false
 	} else {
@@ -31,7 +31,7 @@ func HandleIndex(c *echo.Context) error {
 
 		var redirectURL string
 
-		if isTaskIlligal(selected_task, false) {
+		if isTaskIllegal(selected_task, false) {
 			redirectURL = strings.Join([]string{
 				"/is_crime",
 				"?task=",
