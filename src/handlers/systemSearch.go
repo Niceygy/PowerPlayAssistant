@@ -29,7 +29,5 @@ func HandleSystemSearch(c *echo.Context) error {
 		log.Panic(err.Error())
 	}
 
-	// log.Println("Byte=" + string(res))
-	// log.Println("Raw=" + strings.Join(systems, ","))
 	return c.JSONBlob(200, res)
 }

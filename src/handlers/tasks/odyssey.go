@@ -13,7 +13,7 @@ import (
 
 //https://forums.frontier.co.uk/threads/powerplay-2-0-activities.629227/
 
-type powerdata_location_response struct {
+type systems_location_response struct {
 	System_name    string
 	Shortcode      string
 	State          string
@@ -89,25 +89,25 @@ func HandleOdysseyDownloadTasks(c *echo.Context) error {
 	switch activity_type {
 	case TASK_UNDERMINE:
 		//hostile system, find friendly one to give data to
-		query = `SELECT powerdata.*,
+		query = `SELECT systems.*,
 		` + database.CreateDistanceStatement(user_coords) + `
-		FROM powerdata
+		FROM systems
 		INNER JOIN systems
-			ON systems.system_name = powerdata.system_name
-		WHERE powerdata.shortcode = '` + user_shortcode + `'
-			AND powerdata.state != ''
+			ON systems.system_name = systems.system_name
+		WHERE systems.shortcode = '` + user_shortcode + `'
+			AND systems.state != ''
 		ORDER BY distance
 		LIMIT 1;`
 		information += "an enemy system, so you need to download " + data_type + " from an odyssey settlement here and hand it into a power contact in <owned system>, which is <distance> LY away"
 	case TASK_AQUIRE:
 		//unoccupied system, find friendly one to give data to
-		query = `SELECT powerdata.*,
+		query = `SELECT systems.*,
 		` + database.CreateDistanceStatement(user_coords) + `
-		FROM powerdata
+		FROM systems
 		INNER JOIN systems
-			ON systems.system_name = powerdata.system_name
-		WHERE powerdata.shortcode = '` + user_shortcode + `'
-			AND powerdata.state != ''
+			ON systems.system_name = systems.system_name
+		WHERE systems.shortcode = '` + user_shortcode + `'
+			AND systems.state != ''
 		ORDER BY distance
 		LIMIT 1;`
 		information += "a unoccupied system, so you need to download " + data_type + " from an odyssey settlement here and hand it into a power contact in <owned system>, which is <distance> LY away"
@@ -115,13 +115,13 @@ func HandleOdysseyDownloadTasks(c *echo.Context) error {
 	case TASK_REINFORCE:
 		//user in friendly system, find nearby one to undermine
 		//You are in a friendly system
-		query = `SELECT powerdata.*,
+		query = `SELECT systems.*,
 		` + database.CreateDistanceStatement(user_coords) + `
-		FROM powerdata
+		FROM systems
 		INNER JOIN systems
-			ON systems.system_name = powerdata.system_name
-		WHERE powerdata.shortcode != '` + user_shortcode + `'
-			AND powerdata.state != ''
+			ON systems.system_name = systems.system_name
+		WHERE systems.shortcode != '` + user_shortcode + `'
+			AND systems.state != ''
 		ORDER BY distance
 		LIMIT 1;`
 		information += "a friendly system, so you need to download " + data_type + " from an odyssey settlement here and hand it into a local power contact "
@@ -133,7 +133,7 @@ func HandleOdysseyDownloadTasks(c *echo.Context) error {
 		log.Panic(err.Error())
 	}
 
-	s := powerdata_location_response{}
+	s := systems_location_response{}
 
 	for rows.Next() {
 
@@ -189,16 +189,16 @@ func HandleOdysseyMalware(c *echo.Context) error {
 	user_coords := database.GetSystemLocation(system)
 
 	var information string
-	var s powerdata_location_response
+	var s systems_location_response
 
 	if user_shortcode == system_power_shortcode {
 		//in friendly sys, find nearby enemy or unoccupied sys
-		rows, err := database.Db.Query(`SELECT powerdata.*,
+		rows, err := database.Db.Query(`SELECT systems.*,
 		` + database.CreateDistanceStatement(user_coords) + `
-		FROM powerdata
+		FROM systems
 		INNER JOIN systems
-			ON systems.system_name = powerdata.system_name
-		WHERE powerdata.shortcode != '` + user_shortcode + `'
+			ON systems.system_name = systems.system_name
+		WHERE systems.shortcode != '` + user_shortcode + `'
 		ORDER BY distance
 		LIMIT 1;`)
 		if err != nil {

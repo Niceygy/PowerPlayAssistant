@@ -9,7 +9,7 @@ import (
 
 func GetSystemLocation(system_name string) []float64 {
 	res := Db.QueryRow("SELECT latitude, longitude, height FROM systems WHERE system_name = '?' LIMIT 1;", system_name)
-	system := StarSystem{}
+	system := System{}
 	res.Scan(&system.Latitude, &system.Longitude, &system.Height)
 	return []float64{system.Latitude, system.Longitude, system.Height}
 }
@@ -51,13 +51,11 @@ func IsSystemAnarchy(system_name string) bool {
 func GetNearestOwnedSystem(current_system string, needed_system_type string, power_full string) (string, []float64) {
 	user_coords := GetSystemLocation(current_system)
 	rows, err := Db.Query(`SELECT
-	powerdata.*,
+	system_name, longitude, latitude, height,
 	` + CreateDistanceStatement(user_coords) + `
 	FROM systems
-	INNER JOIN powerdata
-		ON powerdata.system_name = systems.system_name
-	WHERE powerdata.state = '` + needed_system_type + `' 
-		AND powerdata.shortcode = '` + PowerFullToShort(power_full) + `'
+	WHERE systems.state = '` + needed_system_type + `' 
+		AND systems.shortcode = '` + PowerFullToShort(power_full) + `'
 	ORDER BY distance
 	LIMIT 1;`)
 
@@ -72,7 +70,8 @@ func GetNearestOwnedSystem(current_system string, needed_system_type string, pow
 		var x float64
 		var y float64
 		var z float64
-		if err = rows.Scan(&result_system_name, &x, &y, &z); err != nil {
+		var distance float64
+		if err = rows.Scan(&result_system_name, &x, &y, &z, &distance); err != nil {
 			log.Panic(err.Error())
 		} else {
 			result_system_coords = []float64{x, y, z}

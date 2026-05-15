@@ -2,17 +2,28 @@ package database
 
 import "math"
 
-type StarSystem struct {
-	System_name string
-	Latitude    float64
-	Longitude   float64
-	Height      float64
-	Is_anarchy  bool
-	Frequency   int
-}
+// type StarSystem struct {
+// 	System_name string
+// 	Latitude    float64
+// 	Longitude   float64
+// 	Height      float64
+// 	Is_anarchy  bool
+// }
 
-type PowerData struct {
+// type PowerData struct {
+// 	System_name    string
+// 	Shortcode      string
+// 	State          string
+// 	Control_points float64
+// 	Points_change  float64
+// }
+
+type System struct {
 	System_name    string
+	Latitude       float64
+	Longitude      float64
+	Height         float64
+	Is_anarchy     bool
 	Shortcode      string
 	State          string
 	Control_points float64

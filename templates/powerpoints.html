@@ -46,7 +46,7 @@
           <th>Points</th>
           <th>Systems</th>
         </tr>
-        {{ range $power := .powerdata }}
+        {{ range $power := .systems }}
         <tr>
           <th class="{{$power.shortcode}}">
             <img src="static/icons/powers/{{$power.shortcode}}.svg" class="power-icon" alt="Power icon for {{ $power.name }}" />

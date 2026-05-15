@@ -33,13 +33,11 @@ func HandleCommodities(c *echo.Context) error {
 	user_coords := database.GetSystemLocation(system)
 
 	rows, err := database.Db.Query(`SELECT
-	powerdata.*,
+	system_name, shortcode, state, control_points, points_change,
 	` + database.CreateDistanceStatement(user_coords) + `
 	FROM systems
-	INNER JOIN powerdata
-		ON powerdata.system_name = systems.system_name
-	WHERE powerdata.state = '` + system_type_for_commodity + `' 
-		AND powerdata.shortcode = '` + database.PowerFullToShort(power) + `'
+	WHERE systems.state = '` + system_type_for_commodity + `' 
+		AND systems.shortcode = '` + database.PowerFullToShort(power) + `'
 	ORDER BY distance
 	LIMIT 1;`)
 
@@ -47,7 +45,7 @@ func HandleCommodities(c *echo.Context) error {
 		log.Panic(err.Error())
 	}
 
-	var fortifiedSystem powerdata_location_response
+	var fortifiedSystem systems_location_response
 
 	for rows.Next() {
 		if err = rows.Scan(&fortifiedSystem.System_name, &fortifiedSystem.Shortcode, &fortifiedSystem.State, &fortifiedSystem.Control_points, &fortifiedSystem.Points_change, &fortifiedSystem.Distance); err != nil {

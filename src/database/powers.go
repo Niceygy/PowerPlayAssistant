@@ -22,7 +22,7 @@ func PowerShortToFull(shortcode string) string {
 
 func DoesSystemExist(system_name string) bool {
 	res := Db.QueryRow("SELECT system_name FROM systems WHERE system_name = '?' LIMIT 1;", system_name)
-	system := StarSystem{}
+	system := System{}
 	res.Scan(&system.System_name)
 	return system.System_name == ""
 }
@@ -32,12 +32,9 @@ func GetSystemPowerInfo(system_name string) (string, string) {
 	if !DoesSystemExist(system_name) {
 		return "", ""
 	}
-	res /*, err*/ := Db.QueryRow("SELECT state, shortcode FROM powerdata WHERE system_name = '" + system_name + "';" /*, system_name*/)
-	// if err != nil {
-	// 	panic(err)
-	// }
+	res := Db.QueryRow("SELECT state, shortcode FROM systems WHERE system_name = '?' LIMIT 1;", system_name)
 
-	pd := PowerData{}
+	pd := System{}
 	err := res.Scan(&pd.State, &pd.Shortcode)
 	if err != nil {
 		// log.Panic(err.Error())

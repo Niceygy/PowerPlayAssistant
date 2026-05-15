@@ -76,22 +76,9 @@ func HandleMegaship(c *echo.Context) error {
 	FROM megaships
 	JOIN systems
     	ON megaships.SYSTEM` + megaship_system_col + ` = systems.system_name
-	JOIN powerdata
-    	ON systems.system_name = powerdata.system_name
-	WHERE powerdata.shortcode ` + is_opposing_statement + ` '` + user_shortcode + `'
+	WHERE systems.shortcode ` + is_opposing_statement + ` '` + user_shortcode + `'
 	ORDER BY distance
-	LIMIT 15;`,
-	// /*map[string]any{*/
-	// /*"user_longitude": */
-	// "SYSTEM"+strconv.Itoa(1),
-	// user_coords[0],
-	// /*"user_latitide":  */ user_coords[1],
-	// /*"user_height":    */ user_coords[2],
-	// /*"system_column":  */ "SYSTEM"+strconv.Itoa(1),
-	// /*"system_name":    */ user_system,
-	// /*"is_opposing":    */ is_opposing_statement,
-	// /*"shortcode":      */ user_shortcode,
-	/*}*/)
+	LIMIT 15;`)
 
 	if err != nil {
 		log.Panic(err)
