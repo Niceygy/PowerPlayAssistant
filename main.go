@@ -2,7 +2,6 @@ package main
 
 import (
 	"log"
-	"log/slog"
 
 	"github.com/labstack/echo/v5"
 	"github.com/labstack/echo/v5/middleware"
@@ -31,7 +30,7 @@ func main() {
 	e.Use(middleware.Recover()) // recover panics as errors for proper error handling
 	e.Static("/static/", "static", e.Middlewares()...)
 	e.RouteNotFound("/*", func(c *echo.Context) error {
-		log.Println("[404] Not Found: " + c.Path())
+		// log.Println("[404] Not Found: " + c.Path())
 		return c.HTML(404, utils.RenderTemplate("templates/errors/404.html", map[string]any{}))
 	})
 
@@ -51,6 +50,6 @@ func main() {
 
 	// Start server
 	if err := e.Start(":8080"); err != nil {
-		slog.Error("failed to start server", "error", err)
+		log.Panic("failed to start server", "error", err)
 	}
 }
