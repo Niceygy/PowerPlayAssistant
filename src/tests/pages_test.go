@@ -47,8 +47,8 @@ func TestPages(t *testing.T) {
 
 	e.Any("/results", handlers.HandleResults)
 
-	for i := range utils.TASKNAMES {
-		task := utils.TASKNAMES[i]
+	for i := range utils.TASK_NAMES {
+		task := utils.TASK_NAMES[i]
 		url := strings.ReplaceAll(utils.Concat([]string{
 			"/results?system=",
 			test_system,

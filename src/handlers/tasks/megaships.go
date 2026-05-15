@@ -116,7 +116,7 @@ func HandleMegaship(c *echo.Context) error {
 		"type":               choice,
 		"task":               "Scan Megaship Datalinks",
 		"taskType":           "Scanning",
-		"taskDescription":    utils.TASKDESCRIPTIONS[task_code],
+		"taskDescription":    utils.TASK_DESCRIPTIONS[task_code],
 		"isIllegal":          "is not",
 		"isOpposingWeakness": utils.IsOpposingWeakness(task_code, user_shortcode),
 		"extraInfo":          database.GetExtraInfo(user_system),

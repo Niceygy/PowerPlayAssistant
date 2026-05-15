@@ -29,7 +29,7 @@ func HandleBountyHunting(c *echo.Context) error {
 			"taskName":           "Bounty Hunting",
 			"isIlligal":          "NO",
 			"isOpposingWeakness": utils.IsOpposingWeakness(bounty_task_code, user_power_shortcode),
-			"taskDescription":    utils.TASKDESCRIPTIONS[bounty_task_code],
+			"taskDescription":    utils.TASK_DESCRIPTIONS[bounty_task_code],
 			"systemNotes":        database.GetExtraInfo(system),
 			"isOwnStrength":      utils.IsOwnStrength(bounty_task_code, user_power_shortcode),
 		}))

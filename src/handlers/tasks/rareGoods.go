@@ -68,7 +68,7 @@ func HandleRareGoods(c *echo.Context) error {
 		"taskType":           "Trading",
 		"isIlligal":          "isn't",
 		"isOpposingWeakness": utils.IsOpposingWeakness(rg_task_code, target_sys_owning_power),
-		"taskDescription":    utils.TASKDESCRIPTIONS[rg_task_code],
+		"taskDescription":    utils.TASK_DESCRIPTIONS[rg_task_code],
 		"systemNotes":        database.GetExtraInfo(system),
 		"raregoods":          result,
 		"isOwnStrength":      utils.IsOwnStrength(rg_task_code, database.PowerFullToShort(power)),

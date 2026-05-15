@@ -14,12 +14,12 @@ func isTaskIllegal(task string, isAnarchy bool) bool {
 		return false
 	} else {
 		var taskShortCode string
-		for k, v := range utils.TASKSHORTCODES {
+		for k, v := range utils.TASK_SHORTCODES {
 			if v == task {
 				taskShortCode = k
 			}
 		}
-		return slices.Contains(utils.CRIMINALTASKS, taskShortCode)
+		return slices.Contains(utils.TASKS_CRIMINAL, taskShortCode)
 	}
 }
 
@@ -57,7 +57,7 @@ func HandleIndex(c *echo.Context) error {
 		return c.Redirect(307, redirectURL)
 	} else {
 		return c.HTML(200, utils.RenderTemplate("templates/index.html", map[string]any{
-			"missions":         utils.TASKNAMES,
+			"missions":         utils.TASK_NAMES,
 			"powers":           utils.POWERNAMES,
 			"default_system":   "Sol",
 			"status_text":      "test",

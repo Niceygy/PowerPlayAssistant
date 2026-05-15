@@ -9,17 +9,20 @@ import (
 	"niceygy.net/powerplay-assistant/src/utils"
 )
 
+// Handlers for tasks that need their own logic, instead of the 'general.html' template
 var SPESIFIC_TASK_HANDLERS map[string]echo.HandlerFunc = map[string]echo.HandlerFunc{
 	"Bounty hunting":                                tasks.HandleBountyHunting,
 	"Scan Megaship Datalinks":                       tasks.HandleMegaship,
 	"Deliver PowerPlay Commodities":                 tasks.HandleCommodities,
-	"Upload Powerplay Malware":                      tasks.HandleOdyMalware,
+	"Upload Powerplay Malware":                      tasks.HandleOdysseyMalware,
 	"Transfer Power classified data":                tasks.HandleOdysseyDownloadTasks,
 	"Transfer Power association and political data": tasks.HandleOdysseyDownloadTasks,
 	"Transfer Power research and Industrial data":   tasks.HandleOdysseyDownloadTasks,
 	"Conflict Zones":                                tasks.HandleConflictSearch,
 }
 
+// Main entrypoint for the /results page.
+// Performs a few checks, then either returns the general template or hands off to a spesific handler
 func HandleResults(c *echo.Context) error {
 	system := c.QueryParam("system")
 	task := c.QueryParam("task")
@@ -57,7 +60,7 @@ func HandleResults(c *echo.Context) error {
 			"isOpposingWeakness": utils.IsOpposingWeakness(task, shortcode),
 			"isOwnStrength":      utils.IsOwnStrength(task, shortcode),
 			"systemNotes":        database.GetExtraInfo(system),
-			"taskDescription":    utils.TASKDESCRIPTIONS[utils.GetTaskCode(task)],
+			"taskDescription":    utils.TASK_DESCRIPTIONS[utils.GetTaskCode(task)],
 		}))
 	}
 

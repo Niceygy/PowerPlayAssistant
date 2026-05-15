@@ -66,12 +66,12 @@ func GetPowerplayCycle() int {
 
 func GetTaskType(task string) string {
 	taskShortCode := ""
-	for key, value := range TASKSHORTCODES {
+	for key, value := range TASK_SHORTCODES {
 		if task == value {
 			taskShortCode = key
 		}
 	}
-	for taskType, tasks := range TASKTYPES {
+	for taskType, tasks := range TASK_TYPES {
 		if slices.Contains(tasks, taskShortCode) {
 			return taskType
 		}
@@ -80,7 +80,7 @@ func GetTaskType(task string) string {
 }
 
 func GetTaskCode(task string) string {
-	for k, v := range TASKSHORTCODES {
+	for k, v := range TASK_SHORTCODES {
 		if v == task {
 			return k
 		}

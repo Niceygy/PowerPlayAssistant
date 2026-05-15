@@ -163,7 +163,7 @@ func HandleOdysseyDownloadTasks(c *echo.Context) error {
 		"systemNotes":        database.GetExtraInfo(system),
 		"taskName":           task,
 		"taskType":           "Odyssey",
-		"taskDescription":    utils.TASKDESCRIPTIONS[task_shortcode], // + " " + information,
+		"taskDescription":    utils.TASK_DESCRIPTIONS[task_shortcode], // + " " + information,
 		"isIllegal":          "is",
 		"isOpposingWeakness": utils.IsOpposingWeakness(task_shortcode, system_power_shortcode),
 		"isOwnStrength":      utils.IsOwnStrength(task_shortcode, system_power_shortcode),
@@ -178,7 +178,7 @@ Undermine - Obtain Tracker Malware from control system, upload to settlement dat
 Aqusition - Obtain Injection Malware from control system and upload to settlement data port in aqusition
 Reinforce - N/A
 */
-func HandleOdyMalware(c *echo.Context) error {
+func HandleOdysseyMalware(c *echo.Context) error {
 	system := c.QueryParam("system")
 	power := c.QueryParam("power")
 	task := c.QueryParam("task")
@@ -233,7 +233,7 @@ func HandleOdyMalware(c *echo.Context) error {
 		"systemNotes":        database.GetExtraInfo(system),
 		"taskName":           task,
 		"taskType":           "Odyssey",
-		"taskDescription":    utils.TASKDESCRIPTIONS[task_shortcode], // + " " + information,
+		"taskDescription":    utils.TASK_DESCRIPTIONS[task_shortcode], // + " " + information,
 		"isIllegal":          "is",
 		"isOpposingWeakness": utils.IsOpposingWeakness(task_shortcode, system_power_shortcode),
 		"isOwnStrength":      utils.IsOwnStrength(task_shortcode, system_power_shortcode),

@@ -62,7 +62,7 @@ func HandleCommodities(c *echo.Context) error {
 		"currentState":    current_state,
 		"isAnarchy":       database.IsSystemAnarchy(system),
 		"taskName":        commodity_task_name,
-		"taskDescription": utils.TASKDESCRIPTIONS[commodity_task_code],
+		"taskDescription": utils.TASK_DESCRIPTIONS[commodity_task_code],
 		"isIllegal":       "isn't",
 		"isOwnStrength":   utils.IsOwnStrength(commodity_task_code, database.PowerFullToShort(power)),
 		"item_system":     fortifiedSystem.System_name,

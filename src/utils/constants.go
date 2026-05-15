@@ -6,7 +6,7 @@ Used in megaships and rare goods
 */
 const ITEMS_TO_RETURN int = 15
 
-var TASKDESCRIPTIONS = map[string]string{
+var TASK_DESCRIPTIONS = map[string]string{
 	"BTHT": "Hunt pirates with bounties in-system. These can be found at resource extraction sites & at navigation beacons. Not applicable in anarchy systems.",
 	"CEPD": "Collect Escape Pods: Collect escape pods (occupied or damaged) from signal sources or destroyed ships. Can be paired with bounty hunting.",
 	"HSHK": "Use a recon limpet to hack holoads. Note that holoads in your own power's system may only be hacked if they are showing an ad for an opposing power. This does not apply for ads in enemy & uncontrolled systems.",
@@ -31,7 +31,7 @@ var TASKDESCRIPTIONS = map[string]string{
 	"TPAD": "Download 'Power Political Data' & 'Power Association Data' from odyssey settlements, and return it to a power contact in a system your power controls.",
 	"TPRD": "Download 'Power research data' & 'Power Industrial data' from odyssey settlements, and return it to a power contact in a system your power controls.",
 	"UPMW": "Get Powerplay malware from your local power contact, and upload it to a settlement data point in the target system. Note: This may trigger the alarms!",
-}
+} // The task's shortcodes and a breif instruction on how to do them.
 
 var SUSPENDED = []string{
 	// "Transfer Power classified data",
@@ -39,9 +39,9 @@ var SUSPENDED = []string{
 	// "Transfer Power research and Industrial data",
 	// "Upload Powerplay Malware",
 	"Collect Escape Pods",
-}
+} //Tasks that can no longer be completed. Can be temporary or permenant. Put here to avoid confusing people.
 
-var TASKNAMES = []string{
+var TASK_NAMES = []string{
 	"Bounty hunting",
 	"Collect Escape Pods",
 	"Holoscreen Hacking",
@@ -68,11 +68,9 @@ var TASKNAMES = []string{
 	"Upload Powerplay Malware",
 	// not sure
 	"notsure",
-}
+} //Task Names in an array
 
-//Task Names in an array
-
-var TASKSHORTCODES = map[string]string{
+var TASK_SHORTCODES = map[string]string{
 	"BTHT": "Bounty hunting",
 	"CEPD": "Collect Escape Pods",
 	"HSHK": "Holoscreen Hacking",
@@ -96,11 +94,9 @@ var TASKSHORTCODES = map[string]string{
 	"TPAD": "Transfer Power association and political data",
 	"TPRD": "Transfer Power research and Industrial data",
 	"UPMW": "Upload Powerplay Malware",
-}
+} //Task shortcodes and full names
 
-//Task shortcodes and their names
-
-var TASKTYPES = map[string][]string{
+var TASK_TYPES = map[string][]string{
 	"Combat":      {"BTHT", "PKLS", "CMCR"},
 	"Trading":     {"SLFP", "SRGD", "FMLV", "TPCD"},
 	"Mining":      {"SMNR"},
@@ -109,16 +105,13 @@ var TASKTYPES = map[string][]string{
 	"Odyssey":     {"RSGD", "TPCL", "TPAD", "TPRD", "UPMW"},
 	"Aid":         {"CAHM", "CEPD"},
 	"Illegal":     {"CMCR", "HSHK", "PKLS", "UPMW"},
-}
-
-//Task types: e.g trading or combat
-
-var CRIMINALTASKS = []string{"CMCR", "PKLS", "UPMW", "TPRD", "TPCL", "TPAD"}
+} //Task types: e.g trading or combat
 
 /*
 Tasks that incur a bounty or fine.
-"HSHK" is removed
+"HSHK" is removed (holoscreens)
 */
+var TASKS_CRIMINAL = []string{"CMCR", "PKLS", "UPMW", "TPRD", "TPCL", "TPAD"}
 
 var POWERWEAKNESSES = map[string][]string{
 	"ALD": {"CMCR", "SDLK"},
@@ -133,9 +126,7 @@ var POWERWEAKNESSES = map[string][]string{
 	"PRA": {"TPCD", "FMLV"},
 	"YRG": {"CMCR", "UPMW"},
 	"ZMT": {"RSGD", "SMNR"},
-}
-
-//Tasks powers are weak to
+} //Tasks powers are weak to (+50% I think?)
 
 var POWERS = map[string]string{
 	"ALD": "A. Lavingy-Duval",
@@ -218,7 +209,7 @@ var POWER_RENFORCE_PREFERENCES = map[string][]string{
 	"PRA": {"CEPD", "CAHM", "UPMW"},
 	"YRG": {"BTHT", "CEPD", "HSHK"},
 	"ZMT": {"SLFP", "SMNR", "CAHM"},
-} //Activities that this power really likes. Uses shortcodes
+} //Activities that this power really likes. Uses shortcodes. +50% I think?
 
 var POWER_ABOUT = map[string]string{
 	"ALD": "Arissa Lavingy-Duval is the current Emperor, and leader of the imperial senate. Her political platform is built on honour, and she has a focus on tackling corruption.",
@@ -263,7 +254,7 @@ var POWER_BEST_FOR = map[string]string{
 	"PRA": "Exobiologists",
 	"YRG": "Bounty Hunters",
 	"ZMT": "Miners",
-} //The power's prefered actions
+} //The power's prefered player types.
 
 var POWERCOMMODITIES = map[string][]string{
 	// power: aquire, reinforce, undermine
@@ -307,7 +298,7 @@ var POWERCOMMODITIES = map[string][]string{
 		"Grom Counter Intelligence",
 	},
 	"ZMT": {"Torval Trade Agreements", "Torval Deeds", "Torval Political Servants"},
-}
+} //Powerplay commodities, ordered in [Aquire, Reinforce, Undermine]
 
 var POWERDATA = []string{
 	"POWER TRACKER MALWARE",   // undermine
