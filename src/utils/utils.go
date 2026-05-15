@@ -36,14 +36,14 @@ func IsOwnStrength(task_code string, power_shortcode string) string {
 	return "isn't"
 }
 
-func HTTPGetJSON(url string) map[any]any {
+func HTTPGetJSON(url string) map[string]any {
 	res, err := http.Get(url)
 
 	if err != nil {
 		log.Panic(err)
 	}
 
-	var jsonRes map[any]any
+	var jsonRes map[string]any
 	var bytesRes []byte
 
 	_, err = res.Body.Read(bytesRes)

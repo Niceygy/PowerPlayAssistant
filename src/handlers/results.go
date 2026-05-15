@@ -37,7 +37,7 @@ func HandleResults(c *echo.Context) error {
 			task,
 		}))
 	} else if slices.Contains(utils.SUSPENDED, task) {
-		return c.HTML(200, utils.RenderTemplate("templates/tasks/suspended.html", map[any]any{}))
+		return c.HTML(200, utils.RenderTemplate("templates/errors/suspended.html", map[any]any{}))
 	} else if handler, exists := SPESIFIC_TASK_HANDLERS[task]; exists {
 		return handler(c)
 	} else {
