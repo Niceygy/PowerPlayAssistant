@@ -1,7 +1,9 @@
 package main
 
 import (
+	"embed"
 	"log"
+	"os"
 
 	"github.com/labstack/echo/v5"
 	"github.com/labstack/echo/v5/middleware"
@@ -10,25 +12,33 @@ import (
 	"niceygy.net/powerplay-assistant/src/utils"
 )
 
+//go:embed templates/*
+var htmlTemplates embed.FS
+
+//go:embed static/*
+var staticFiles embed.FS
+
+var isDebugMode bool = os.Getenv("DEBUG") == "true"
+
 func main() {
+	utils.HTMLTemplates = htmlTemplates
+	utils.StaticFiles = staticFiles
 	// Echo instance
 	e := echo.New()
 
 	// Middleware
 	limiterStore := middleware.NewRateLimiterMemoryStore(10)
 	e.Use(middleware.RateLimiter(limiterStore))
-	// e.Use(middleware.Gzip())
 	e.Use(middleware.Secure())
 	e.Use(middleware.Decompress())
-	// e.Use(middleware.RequestLoggerWithConfig(middleware.RequestLoggerConfig{
-	// 	LogValuesFunc: func(c *echo.Context, v middleware.RequestLoggerValues) error {
-	// 		log.Println("Route = " + c.Path() + ", Method = " + c.Request().Method)
-	// 		return nil
-	// 	},
-	// }))
-	// e.Use(middleware.RequestLogger()) // use the RequestLogger middleware with slog logger
-	e.Use(middleware.Recover()) // recover panics as errors for proper error handling
-	e.Static("/static/", "static", e.Middlewares()...)
+	if !isDebugMode {
+		e.Use(middleware.Recover()) // recover panics as errors for proper error handling
+	} else {
+		log.Println("PowerPlayAssistant in debug mode, error recovery inactive.")
+	}
+	fs := echo.MustSubFS(staticFiles, "static")
+	e.StaticFS("/static", fs, e.Middlewares()...)
+	// e.Static("/static/", "static", e.Middlewares()...)
 	e.RouteNotFound("/*", func(c *echo.Context) error {
 		// log.Println("[404] Not Found: " + c.Path())
 		return c.HTML(404, utils.RenderTemplate("templates/errors/404.html", map[string]any{}))

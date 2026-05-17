@@ -2,7 +2,7 @@ FROM alpine:latest
 # Set working directory in the container
 WORKDIR /app/
 
-COPY . .
+COPY powerplayassistant .
 
 LABEL org.opencontainers.image.description="PowerPlay Assistant"
 LABEL org.opencontainers.image.authors="Niceygy (Ava Whale)"
