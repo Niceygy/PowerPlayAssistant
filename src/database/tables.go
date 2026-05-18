@@ -40,11 +40,11 @@ type Megaships struct {
 	SYSTEM6 string
 }
 
-func CreateDistanceStatement(user_coords []float64) string {
+func CreateDistanceStatement(user_system System) string {
 	return `SQRT(
-        POW(systems.longitude - ` + ftos(user_coords[0]) + `, 2) +
-        POW(systems.latitude  - ` + ftos(user_coords[1]) + `, 2) +
-        POW(systems.height    - ` + ftos(user_coords[2]) + `, 2)
+        POW(systems.latitude - ` + ftos(user_system.Latitude) + `, 2) +
+        POW(systems.longitude  - ` + ftos(user_system.Longitude) + `, 2) +
+        POW(systems.height    - ` + ftos(user_system.Height) + `, 2)
     ) AS distance`
 }
 
@@ -55,9 +55,9 @@ func DistanceBetweenSystems(start string, end string) float64 {
 	//x/y/z
 
 	//diffrences
-	xdist := end_coords[0] - start_coords[0]
-	ydist := end_coords[1] - start_coords[1]
-	zdist := end_coords[2] - start_coords[2]
+	xdist := end_coords.Latitude - start_coords.Latitude
+	ydist := end_coords.Longitude - start_coords.Longitude
+	zdist := end_coords.Height - start_coords.Height
 
 	//square them
 	xdistSqr := xdist * xdist

@@ -7,11 +7,11 @@ import (
 	"niceygy.net/powerplay-assistant/src/utils"
 )
 
-func GetSystemLocation(system_name string) []float64 {
+func GetSystemLocation(system_name string) System {
 	res := Db.QueryRow("SELECT latitude, longitude, height FROM systems WHERE system_name = ? LIMIT 1;", system_name)
 	system := System{}
 	res.Scan(&system.Latitude, &system.Longitude, &system.Height)
-	return []float64{system.Latitude, system.Longitude, system.Height}
+	return system //[]float64{system.Latitude, system.Longitude, system.Height}
 }
 
 func GetExtraInfo(system_name string) string {

@@ -1,9 +1,25 @@
+-- SELECT e.system_name,
+--   e.shortcode,
+--   (
+--     SELECT COUNT(*)
+--     FROM systems AS f
+--     WHERE f.system_name != e.system_name
+--       AND f.shortcode = e.shortcode -- Bounding box - performance etc
+--       AND f.latitude BETWEEN e.latitude - 20 AND e.latitude + 20
+--       AND f.longitude BETWEEN e.longitude - 20 AND e.longitude + 20
+--       AND f.height BETWEEN e.height - 20 AND e.height + 20
+--       AND (
+--         (f.latitude - e.latitude) * (f.latitude - e.latitude) + (f.longitude - e.longitude) * (f.longitude - e.longitude) + (f.height - e.height) * (f.height - e.height)
+--       ) < 20 * 20
+--   ) AS neighbour_count
+-- FROM systems AS e
+-- WHERE e.state = "Stronghold";
+
+
 -- SET @fortified_range := 20;
 -- SET @fortified_range_squared := @fortified_range * @fortified_range;
-
 -- SET @stronghold_range := 30;
 -- SET @stronghold_range_squared := @stronghold_range * @stronghold_range;
-
 -- SELECT
 --     q.system_name,
 --     q.shortcode,
@@ -13,7 +29,6 @@
 --     SELECT
 --         e.system_name AS system_name,
 --         e.shortcode   AS shortcode,
-
 --         -- Count fortified neighbors within 20 ly
 --         (
 --             SELECT COUNT(*)
@@ -27,7 +42,6 @@
 --                     (f.height    - e.height   ) * (f.height    - e.height   )
 --                   ) <= @fortified_range_squared
 --         ) AS fort_count,
-
 --         -- Count stronghold neighbors within 30 ly
 --         (
 --             SELECT COUNT(*)
@@ -41,31 +55,35 @@
 --                     (s.height    - e.height   ) * (s.height    - e.height   )
 --                   ) <= @stronghold_range_squared
 --         ) AS strong_count
-
 --         -- (
 --         --     q.strong_count + q.fort_count
 --         -- ) as dependents
-
 --     FROM systems e
 --     WHERE e.state = 'Exploited'
 --       AND e.shortcode <> ''
 -- ) AS q
-
 -- -- Exactly ONE dependency total
 -- WHERE (q.fort_count + q.strong_count) = 1;
+
+---the number of solely dependent exploited systems there are for a given stronghold or fortified
+---wanted to know which fortified or stronghold to target to knock out as many exploited as possible.
+---
+---For every strongold, get 
+---
+---
+
 SET @fortified_range := 20;
 SET @fortified_range_squared := @fortified_range * @fortified_range;
-
 SET @stronghold_range := 30;
 SET @stronghold_range_squared := @stronghold_range * @stronghold_range;
+
 
 SELECT
     q.system_name,
     q.shortcode,
     q.fort_count,
     q.strong_count,
-
-    -- The actual dependent system (only one exists)
+    
     (
         SELECT d.system_name
         FROM systems d
@@ -83,7 +101,6 @@ SELECT
           AND d.state IN ('Fortified', 'Stronghold')
         LIMIT 1
     ) AS dependency_system,
-
     (
         SELECT d.state
         FROM systems d
@@ -101,7 +118,6 @@ SELECT
           AND d.state IN ('Fortified', 'Stronghold')
         LIMIT 1
     ) AS dependency_type
-
 FROM (
     SELECT
         e.system_name,
@@ -109,7 +125,6 @@ FROM (
         e.latitude,
         e.longitude,
         e.height,
-
         -- Count fortified neighbors within 20
         (
             SELECT COUNT(*)
@@ -123,7 +138,6 @@ FROM (
                     (f.height    - e.height   ) * (f.height    - e.height   )
                   ) <= @fortified_range_squared
         ) AS fort_count,
-
         -- Count stronghold neighbors within 30
         (
             SELECT COUNT(*)
@@ -137,12 +151,10 @@ FROM (
                     (s.height    - e.height   ) * (s.height    - e.height   )
                   ) <= @stronghold_range_squared
         ) AS strong_count
-
     FROM systems e
     WHERE e.state = 'Exploited'
       AND e.shortcode <> ''
-      AND e.shortcode = "LYR"
+      -- AND e.shortcode = "LYR"
 ) AS q
-
 -- Exactly one dependency total
 WHERE (q.fort_count + q.strong_count) = 1;
