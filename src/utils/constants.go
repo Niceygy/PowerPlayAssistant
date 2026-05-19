@@ -9,7 +9,6 @@ Used in megaships and rare goods
 const ITEMS_TO_RETURN int = 15
 
 var HTMLTemplates embed.FS
-var StaticFiles embed.FS
 
 var TASK_DESCRIPTIONS = map[string]string{
 	"BTHT": "Hunt pirates with bounties in-system. These can be found at resource extraction sites & at navigation beacons. Not applicable in anarchy systems.",

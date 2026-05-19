@@ -9,5 +9,6 @@ require (
 
 require (
 	filippo.io/edwards25519 v1.2.0 // indirect
+	github.com/goforj/godump v1.9.1 // indirect
 	golang.org/x/time v0.15.0 // indirect
 )

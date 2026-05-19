@@ -31,10 +31,6 @@ func HandleStrongholdCarriers(c *echo.Context) error {
 	LIMIT 10;
 	`, user_shortcode)
 
-	if err != nil {
-		log.Panic(err.Error())
-	}
-
 	var strongholds []stronghold_respose
 
 	for rows.Next() {

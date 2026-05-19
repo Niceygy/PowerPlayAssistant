@@ -72,7 +72,7 @@ func HandleIndex(c *echo.Context) error {
 			"default_system":   "Sol",
 			"selected_mission": "",
 			"selected_power":   "",
-			"subtext":          subtexts[rand.IntN(len(subtexts)-1)],
+			"subtext":          subtexts[rand.IntN(len(subtexts)-100)],
 			"status_text":      utils.GetStatus(),
 		}))
 	}
