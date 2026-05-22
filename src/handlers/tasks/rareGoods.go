@@ -2,7 +2,9 @@ package tasks
 
 import (
 	"log"
+	"maps"
 	"math"
+	"slices"
 
 	"github.com/labstack/echo/v5"
 	"niceygy.net/powerplay-assistant/src/database"
@@ -10,8 +12,8 @@ import (
 )
 
 const rg_task_name string = "Deliver Rare Goods"
-const rg_task_code string = ""
-const rg_items_limit string = "15"
+const rg_task_code string = "SRGD"
+const rg_items_limit int = 15
 
 type rare_good struct {
 	Name     string
@@ -32,9 +34,7 @@ func HandleRareGoods(c *echo.Context) error {
 	FROM Raregoods
 	INNER JOIN systems
 		ON Raregoods.system_name = systems.system_name
-	ORDER BY distance
-	LIMIT ` + rg_items_limit + `;
-	`)
+	ORDER BY distance;`)
 
 	if err != nil {
 		log.Panic(err.Error())
@@ -42,7 +42,7 @@ func HandleRareGoods(c *echo.Context) error {
 		defer rows.Close()
 	}
 
-	result := []rare_good{}
+	resultMap := map[float64]rare_good{}
 
 	for rows.Next() {
 		r := rare_good{}
@@ -51,7 +51,15 @@ func HandleRareGoods(c *echo.Context) error {
 		} else {
 			r.Distance = math.Round(r.Distance)
 		}
-		result = append(result, r)
+		diff_from_200 := math.Abs(r.Distance - 200)
+		resultMap[diff_from_200] = r
+		// result = append(result, r)
+	}
+
+	sorted_keys := slices.Sorted(maps.Keys(resultMap))
+	var result []rare_good = make([]rare_good, 0)
+	for i := 0; i < rg_items_limit; i++ {
+		result = append(result, resultMap[sorted_keys[i]])
 	}
 
 	return c.HTML(200, utils.RenderTemplate("templates/tasks/raregoods.html", map[string]any{

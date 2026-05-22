@@ -18,7 +18,7 @@ var TASK_DESCRIPTIONS = map[string]string{
 	"SDLK": "First Find a megaship (as listed below) and scan it with the datalink scanner. Then find the 'Megaship Log Uplink' and scan that too.",
 	"SLFP": "Trade commodites across systems for a large profit. Merits apply to destination system. Tools like Inara.cz can help with this.",
 	"SMNR": "Sell mined resources in a system you wish to influence. For undermining they have to be mined in-system. If reinforcing, it does not matter where they have been mined.",
-	"SRGD": "Sell rare goods to the target system. Most efficient when the rare good comes form 200LY away. Merits earned depends on profit.",
+	"SRGD": "Sell rare goods to the target system. Most efficient when the rare good comes from closest to 200LY away. Merits earned depends on profit.",
 	"TPCD": "First go to a Stronghold or Fortified system nearby. Stronghold systems have a range of 30LY, and Fortified have one of 20LY. Take the commodity to a target system within range, and hand it in at any port",
 	"CAHM": "Complete missions that provide aid and humanitarian support to systems. E.G Donation Missions.",
 	"FMLV": "Sell low value goods in large quantities to flood the market. Biowaste seems to work well with this.",
