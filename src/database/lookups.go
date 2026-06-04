@@ -25,7 +25,9 @@ func GetExtraInfo(system_name string) string {
 
 	for k, v := range utils.HOMESYSTEMS {
 		if k == system_name {
-			result.WriteString("This is the home system of " + utils.POWERS[v] + ". Opposing powers will not be welcome here! ")
+			result.WriteString("This is the home system of ")
+			result.WriteString(utils.POWERS[v])
+			result.WriteString(". Opposing powers will not be welcome here! ")
 		}
 	}
 

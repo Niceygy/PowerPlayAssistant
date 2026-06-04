@@ -19,5 +19,5 @@ func getEDStatus() string {
 }
 
 func GetStatus() string {
-	return getAppStatus() //+ ", " + getEDStatus()
+	return getAppStatus() + ", " + getEDStatus()
 }

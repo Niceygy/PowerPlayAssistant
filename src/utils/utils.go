@@ -37,8 +37,16 @@ func IsOwnStrength(task_code string, power_shortcode string) string {
 }
 
 func HTTPGetJSON(url string) map[string]any {
-	res, err := http.Get(url)
+	client := &http.Client{}
 
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		log.Panic(err)
+	}
+
+	req.Header.Set("User-Agent", "PowerPlayAssistant/2.0")
+
+	resp, err := client.Do(req)
 	if err != nil {
 		log.Panic(err)
 	}
@@ -46,7 +54,7 @@ func HTTPGetJSON(url string) map[string]any {
 	var jsonRes map[string]any
 	var bytesRes []byte
 
-	_, err = res.Body.Read(bytesRes)
+	resp.Body.Read(bytesRes)
 
 	if err = json.Unmarshal(bytesRes, &jsonRes); err != nil {
 		log.Panic(err)
@@ -63,6 +71,10 @@ func GetPowerplayCycle() int {
 
 	return int(weeks)
 }
+
+// func GetMegashipCycle() int {
+
+// }
 
 func GetTaskType(task string) string {
 	taskShortCode := ""

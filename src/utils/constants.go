@@ -43,6 +43,7 @@ var SUSPENDED = []string{
 	// "Transfer Power research and Industrial data",
 	// "Upload Powerplay Malware",
 	"Collect Escape Pods",
+	"notsure",
 } //Tasks that can no longer be completed. Can be temporary or permenant. Put here to avoid confusing people.
 
 var TASK_NAMES = []string{

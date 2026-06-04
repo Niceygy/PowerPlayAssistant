@@ -45,6 +45,9 @@ func main() {
 	e.RouteNotFound("/*", func(c *echo.Context) error {
 		return c.HTML(404, utils.RenderTemplate("templates/errors/404.html", map[string]any{}))
 	})
+	e.RouteNotFound("/static", func(c *echo.Context) error {
+		return c.HTML(404, utils.RenderTemplate("templates/errors/404.html", map[string]any{}))
+	})
 
 	e.HTTPErrorHandler = func(c *echo.Context, err error) {
 		c.HTML(500, utils.RenderTemplate("templates/errors/500.html", map[string]any{
