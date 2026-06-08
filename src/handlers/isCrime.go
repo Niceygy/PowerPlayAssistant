@@ -8,8 +8,8 @@ import (
 )
 
 func HandleIsCrime(c *echo.Context) error {
-	m := c.Request()
-	if m.Method == http.MethodPost {
+	r := c.Request()
+	if r.Method == http.MethodPost {
 		return c.Redirect(307, utils.Concat([]string{
 			"/results?anarchy=",
 			c.FormValue("anarchy"),
