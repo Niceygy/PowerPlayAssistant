@@ -120,7 +120,7 @@ Tasks that incur a bounty or fine.
 */
 var TASKS_CRIMINAL = []string{"CMCR", "PKLS", "UPMW", "TPRD", "TPCL", "TPAD", "ATSC"}
 
-var POWERWEAKNESSES = map[string][]string{
+var POWER_WEAKNESSES = map[string][]string{
 	"ALD": {"CMCR", "SDLK"},
 	"ARD": {"BTHT", "PKLS"},
 	"ASD": {"HSHK", "TPCD"},
@@ -150,7 +150,7 @@ var POWERS = map[string]string{
 	"ZMT": "Zemina Torval",
 } //The powers and their shortcodes
 
-var HOMESYSTEMS = map[string]string{
+var HOME_SYSTEMS = map[string]string{
 	"Kamadhenu":  "ALD",
 	"Harma":      "ARD",
 	"Cubeo":      "ASD",
@@ -165,7 +165,7 @@ var HOMESYSTEMS = map[string]string{
 	"Synteini":   "ZMT",
 } //Powers home systems
 
-var PERMITLOCKED = []string{
+var PERMIT_LOCKED = []string{
 	// independent
 	"Shinrarta Dezhra",
 	"Sirius",
@@ -263,7 +263,7 @@ var POWER_BEST_FOR = map[string]string{
 	"ZMT": "Miners",
 } //The power's prefered player types.
 
-var POWERCOMMODITIES = map[string][]string{
+var POWER_COMMODITIES = map[string][]string{
 	// power: aquire, reinforce, undermine
 	"ALD": {
 		"Lavingy Corruption Reports",
@@ -307,37 +307,7 @@ var POWERCOMMODITIES = map[string][]string{
 	"ZMT": {"Torval Trade Agreements", "Torval Deeds", "Torval Political Servants"},
 } //Powerplay commodities, ordered in [Aquire, Reinforce, Undermine]
 
-var POWERDATA = []string{
+var ODY_POWER_DATA_TYPES = []string{
 	"POWER TRACKER MALWARE",   // undermine
 	"POWER INJECTION MALWARE", // reinforce
 }
-
-// PP_TYPE_TRANSLATIONS = {
-//     'ppcombatbond': 'PowerPlay Combat Bonds'
-// }
-// Community Goal Translations
-
-// CG_FILTER_LIST = [
-//     "lavingy",
-//     "delaine",
-//     "duval",
-//     "patreus",
-//     "mahon",
-//     "winters",
-//     "archer",
-//     "yong-rui",
-//     "kaine",
-//     "Aatal",
-//     "grom",
-//     "torval",
-// ]
-// A CG's title must contain one of these to be noticed
-
-// API_KEYS = [
-//     48965164896 #kruger
-// ]
-
-// API keys for the PPA API.
-// Yes, I know they're on github.
-// The point is to discorage random bots from using it.
-// If you want a key, ping me on bluesky @niceygy.net

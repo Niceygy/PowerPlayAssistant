@@ -64,6 +64,7 @@ func main() {
 	e.Any("/is_crime", handlers.HandleIsCrime)
 	e.Any("/changelog", handlers.HandleChangelog)
 	e.Any("/about", handlers.HandleAbout)
+	e.Any("/conflicts", handlers.HandleConflictsSearch)
 
 	// Start server
 	if err := e.Start(":8080"); err != nil {

@@ -37,24 +37,19 @@
     </script>
 <body>
     <h1>PowerPlay Assistant</h1>
-    <div class="welcomeMessage" style="text-align: right;">
-        <p>{{ .welcome_message }}</p>
-        <a href="{{.welcome_button_link}}">{{.welcome_button_message}}</a>
-        <br />
-    </div>
     <div class="specifyTask">
     <h2>Search Conflicts</h2>
-    <form action="conflict/result" method="post">
+    <form action="conflicts" method="post">
         <label for="system">Near system:</label>
         <input list="system-results" id="system" name="system" oninput="searchSystems()" autocomplete="off" value="{{ .default_system }}">
         <datalist id="system-results"></datalist><br><br>
 
-        <label for="power">For:</label>
-        <select id="power" name="power">
-            {{ range $power := .powers }}
-                <option value="{{ $power }}" {{ if eq .selected_power $power }}selected{{end}}>{{ $power }}</option>
-            {{ end }}
-        </select><br><br>
+                <label for="power">For:</label>
+                <select id="power" name="power">
+                    {{ range $power := .powers }}
+                    <option value="{{ $power }}" {{ if eq $.selected_power $power }}selected{{end}}>{{ $power }}</option>
+                    {{ end }}
+                </select><br><br>
 
         <button type="submit" onclick="toggleLoadingBtn()">Go!</button>
     </form>

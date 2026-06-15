@@ -17,13 +17,13 @@ func GetSystemLocation(system_name string) System {
 func GetExtraInfo(system_name string) string {
 	var result strings.Builder
 
-	for _, v := range utils.PERMITLOCKED {
+	for _, v := range utils.PERMIT_LOCKED {
 		if system_name == v {
 			result.WriteString("This system is permit locked. Check you can get here! ")
 		}
 	}
 
-	for k, v := range utils.HOMESYSTEMS {
+	for k, v := range utils.HOME_SYSTEMS {
 		if k == system_name {
 			result.WriteString("This is the home system of ")
 			result.WriteString(utils.POWERS[v])

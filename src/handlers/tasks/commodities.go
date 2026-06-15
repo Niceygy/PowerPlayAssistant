@@ -14,13 +14,13 @@ const commodity_task_code string = "TPCD"
 func whatCommodityForWhatNWhere(power string, system_controllong_power string) (string, string) {
 	user_power_shortcode := database.PowerFullToShort(power)
 	if power == system_controllong_power {
-		return utils.POWERCOMMODITIES[user_power_shortcode][1], "Stronghold"
+		return utils.POWER_COMMODITIES[user_power_shortcode][1], "Stronghold"
 	} else if _, exists := utils.POWERS[system_controllong_power]; exists {
 		//it is a power, but not the user's. undermine
-		return utils.POWERCOMMODITIES[user_power_shortcode][2], "Stronghold"
+		return utils.POWER_COMMODITIES[user_power_shortcode][2], "Stronghold"
 	} else {
 		//uncontrolled system, aquire
-		return utils.POWERCOMMODITIES[user_power_shortcode][0], "Fortified"
+		return utils.POWER_COMMODITIES[user_power_shortcode][0], "Fortified"
 	}
 }
 

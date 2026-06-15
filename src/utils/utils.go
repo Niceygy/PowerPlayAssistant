@@ -15,9 +15,9 @@ func Concat(parts []string) string {
 
 // use shortcodes
 func IsOpposingWeakness(task string, power_shortcode string) string {
-	for k := range POWERWEAKNESSES {
+	for k := range POWER_WEAKNESSES {
 		if k == power_shortcode {
-			if slices.Contains(POWERWEAKNESSES[k], task) {
+			if slices.Contains(POWER_WEAKNESSES[k], task) {
 				return "is"
 			}
 		}
