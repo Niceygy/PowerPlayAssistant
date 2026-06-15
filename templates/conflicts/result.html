@@ -46,7 +46,7 @@
       <ul>
         {{ range $system := .systems }}
         <li>
-          <a onclick="copyText('{{$system.System_name}}')">{{ $system.System_name }} [ {{ $system.LY }} LY ] - {{ $system.Power1 }} vs {{ $system.Power2 }}</a>
+          <a onclick="copyText('{{$system.System_name}}')">{{ $system.System_name }} [ {{ $system.LY }} LY ] - {{ $system.Power1 }} vs {{ $system.Power2 }}. has Conflict Zones: {{ $system.Has_CZs}}</a>
         </li>
         {{ end }}
       </ul>

@@ -33,10 +33,11 @@ func HandleConflictsSearch(c *echo.Context) error {
 		SELECT conflicts.system_name, conflicts.first_place, conflicts.second_place, conflicts.has_czs, conflicts.cycle, ` + database.CreateDistanceStatement(systemEntry) + ` 
 		FROM conflicts 
 		INNER JOIN systems ON conflicts.system_name = systems.system_name 
-		WHERE conflicts.first_place = '` + power + `' 
-		OR conflicts.second_place = '` + power + `' 
+		WHERE (conflicts.first_place = '` + power + `' 
+		OR conflicts.second_place = '` + power + `') 
+		AND conflicts.first_place != conflicts.second_place
 		ORDER BY Distance 
-		LIMIT 10; `)
+		LIMIT 20; `)
 		if err != nil {
 			log.Panic(err)
 		}
@@ -48,10 +49,12 @@ func HandleConflictsSearch(c *echo.Context) error {
 			if err = rows.Scan(&s.System_name, &s.Power1, &s.Power2, &s.Has_CZs, &s.Cycle, &s.LY); err != nil {
 				log.Panic(err.Error())
 			} else {
-				s.LY = math.Round(s.LY)
-				s.Power1 = database.PowerShortToFull(s.Power1)
-				s.Power2 = database.PowerShortToFull(s.Power2)
-				systems = append(systems, s)
+				if s.Power1 != s.Power2 {
+					s.LY = math.Round(s.LY)
+					s.Power1 = database.PowerShortToFull(s.Power1)
+					s.Power2 = database.PowerShortToFull(s.Power2)
+					systems = append(systems, s)
+				}
 			}
 			// godump.Dump(n)
 		}
