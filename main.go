@@ -4,6 +4,7 @@ import (
 	"embed"
 	"log"
 	"os"
+	"time"
 
 	"github.com/goforj/godump"
 	"github.com/labstack/echo/v5"
@@ -33,6 +34,7 @@ func main() {
 	e.Use(middleware.RateLimiter(limiterStore))
 	e.Use(middleware.Secure())
 	e.Use(middleware.Decompress())
+	e.Use(middleware.ContextTimeout(30 * time.Second))
 	if !isDebugMode {
 		e.Use(middleware.RecoverWithConfig(middleware.RecoverConfig{
 			DisablePrintStack: true,

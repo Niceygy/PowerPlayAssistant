@@ -186,6 +186,22 @@ var PERMIT_LOCKED = []string{
 	"Summerland",
 	// alliance
 	"Alioth",
+	//Noobula
+	"Azoth",
+	"Dromi",
+	"Lia Fail",
+	"Matet",
+	"Orna",
+	"Otegine",
+	"Sharur",
+	"Tarnkappe",
+	"Tyet",
+	"Wolfsegen",
+	"Arapahoma",
+	"HIP 97950",
+	"Kongoloca",
+	"Ngunabozho",
+	"Col 285 Sector FG-D a42-0",
 } //Permit locked systems
 
 var POWERNAMES = []string{
