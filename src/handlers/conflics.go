@@ -39,7 +39,8 @@ func HandleConflictsSearch(c *echo.Context) error {
 		ORDER BY Distance 
 		LIMIT 20; `)
 		if err != nil {
-			log.Println("ERR" + err)
+			log.Println("ERR" + err.Error())
+			c.HTML(500, "ERR"+err.Error())
 		}
 
 		var systems []ConflictResult

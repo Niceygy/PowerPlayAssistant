@@ -73,7 +73,7 @@ func HandleMegaship(c *echo.Context) error {
 	LIMIT 15;`)
 
 	if err != nil {
-		log.Println("ERR" + err)
+		log.Println("ERR" + err.Error())
 	} else {
 		defer rows.Close()
 	}
