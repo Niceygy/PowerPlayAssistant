@@ -42,14 +42,14 @@ func HandleCommodities(c *echo.Context) error {
 	LIMIT 1;`)
 
 	if err != nil {
-		log.Panic(err.Error())
+		log.Println("ERR" + err.Error())
 	}
 
 	var fortifiedSystem systems_location_response
 
 	for rows.Next() {
 		if err = rows.Scan(&fortifiedSystem.System_name, &fortifiedSystem.Shortcode, &fortifiedSystem.State, &fortifiedSystem.Control_points, &fortifiedSystem.Points_change, &fortifiedSystem.Distance); err != nil {
-			log.Panic(err.Error())
+			log.Println("ERR" + err.Error())
 		}
 	}
 

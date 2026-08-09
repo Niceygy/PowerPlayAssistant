@@ -30,14 +30,16 @@ func RenderTemplate(filename string, data any) string {
 	tmpl, err := template.ParseFS(HTMLTemplates, filename) //template.ParseFiles(filename)
 	if err != nil {
 		// return "", err
-		log.Panic(err)
+		log.Println("ERR" + err.Error())
+		return "Render ERR" + err.Error()
 	}
 
 	var buf []byte
 	w := &bufferWriter{&buf}
 
 	if err := tmpl.Execute(w, data); err != nil {
-		log.Panic(err)
+		log.Println("ERR" + err.Error())
+		return "Render ERR" + err.Error()
 	}
 
 	return string(buf)

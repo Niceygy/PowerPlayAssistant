@@ -37,7 +37,7 @@ func HandleConflictSearch(c *echo.Context) error {
 	LIMIT 15;`)
 
 	if err != nil {
-		log.Panic(err.Error())
+		log.Println("ERR" + err.Error())
 	}
 
 	var conflicts []conflict_response
@@ -46,7 +46,7 @@ func HandleConflictSearch(c *echo.Context) error {
 		c := conflict_response{}
 		err = rows.Scan(&c.SystemName, &c.Power1, &c.Power2, &c.HasCZs, &c.Cycle, &c.LY)
 		if err != nil {
-			log.Panic(err.Error())
+			log.Println("ERR" + err.Error())
 		} else {
 			c.Power1 = database.PowerShortToFull(c.Power1)
 			c.Power2 = database.PowerShortToFull(c.Power2)

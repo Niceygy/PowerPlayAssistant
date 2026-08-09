@@ -37,7 +37,7 @@ func GetSystemPowerInfo(system_name string) (string, string) {
 	pd := System{}
 	err := res.Scan(&pd.State, &pd.Shortcode)
 	if err != nil {
-		// log.Panic(err.Error())
+		// log.Println("ERR"+err.Error())
 		//unoccupied
 		return "Unoccupied", ""
 	}

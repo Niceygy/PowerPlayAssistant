@@ -37,7 +37,7 @@ func HandleRareGoods(c *echo.Context) error {
 	ORDER BY distance;`)
 
 	if err != nil {
-		log.Panic(err.Error())
+		log.Println("ERR" + err.Error())
 	} else {
 		defer rows.Close()
 	}
@@ -47,7 +47,7 @@ func HandleRareGoods(c *echo.Context) error {
 	for rows.Next() {
 		r := rare_good{}
 		if err = rows.Scan(&r.Name, &r.System, &r.Station, &r.Distance); err != nil {
-			log.Panic(err.Error())
+			log.Println("ERR" + err.Error())
 		} else {
 			r.Distance = math.Round(r.Distance)
 		}

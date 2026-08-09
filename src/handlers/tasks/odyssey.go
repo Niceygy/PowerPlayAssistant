@@ -130,7 +130,7 @@ func HandleOdysseyDownloadTasks(c *echo.Context) error {
 
 	rows, err := database.Db.Query(query)
 	if err != nil {
-		log.Panic(err.Error())
+		log.Println("ERR" + err.Error())
 	}
 
 	s := systems_location_response{}
@@ -139,7 +139,7 @@ func HandleOdysseyDownloadTasks(c *echo.Context) error {
 
 		err = rows.Scan(&s.System_name, &s.Shortcode, &s.State, &s.Control_points, &s.Points_change, &s.Distance)
 		if err != nil {
-			log.Panic(err.Error())
+			log.Println("ERR" + err.Error())
 		}
 	}
 
@@ -202,12 +202,12 @@ func HandleOdysseyMalware(c *echo.Context) error {
 		ORDER BY distance
 		LIMIT 1;`)
 		if err != nil {
-			log.Panic(err.Error())
+			log.Println("ERR" + err.Error())
 		}
 
 		err = rows.Scan(&s.System_name, &s.Shortcode, &s.State, &s.Control_points, &s.Points_change, &s.Distance)
 		if err != nil {
-			log.Panic(err.Error())
+			log.Println("ERR" + err.Error())
 		}
 		if s.State != "Unoccupied" {
 			//Aqusition - needs injection malware

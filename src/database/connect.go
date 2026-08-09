@@ -14,12 +14,12 @@ var Db *sql.DB = OpenDatabase()
 func OpenDatabase() *sql.DB {
 	db, err := sql.Open("mysql", os.Getenv("DATABASE_CONNECTION_STRING"))
 	if err != nil {
-		log.Panic(err)
+		log.Println("ERR" + err.Error())
 		// panic(err)
 	}
 	err = db.Ping()
 	if err != nil {
-		log.Panic(err.Error())
+		log.Println("ERR" + err.Error())
 	}
 	// db.SetMaxOpenConns(10)
 	// Match or keep below MySQL's wait_timeout (e.g., set lifetime to 3 minutes)

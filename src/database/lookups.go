@@ -42,7 +42,8 @@ func GetExtraInfo(system_name string) string {
 func IsSystemAnarchy(system_name string) bool {
 	res, err := Db.Query("SELECT is_anarchy FROM systems WHERE system_name = ? LIMIT 1;", system_name)
 	if err != nil {
-		log.Panic(err)
+		log.Println("ERR" + err.Error())
+		return false
 	}
 	var is_anarchy bool
 	res.Scan(&is_anarchy)
@@ -62,7 +63,7 @@ func GetNearestOwnedSystem(current_system string, needed_system_type string, pow
 	LIMIT 1;`)
 
 	if err != nil {
-		log.Panic(err.Error())
+		log.Println("ERR" + err.Error())
 	}
 
 	var result_system_name string
@@ -74,7 +75,7 @@ func GetNearestOwnedSystem(current_system string, needed_system_type string, pow
 		var z float64
 		var distance float64
 		if err = rows.Scan(&result_system_name, &x, &y, &z, &distance); err != nil {
-			log.Panic(err.Error())
+			log.Println("ERR" + err.Error())
 		} else {
 			result_system_coords = []float64{x, y, z}
 		}

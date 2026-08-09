@@ -13,12 +13,12 @@ func HandleSystemSearch(c *echo.Context) error {
 	var systems []string
 	rows, err := database.Db.Query("SELECT system_name FROM systems WHERE system_name LIKE '%" + system + "%' LIMIT 10;" /*, system*/)
 	if err != nil {
-		log.Panic(err.Error())
+		log.Println("ERR" + err.Error())
 	} else {
 		for rows.Next() {
 			// var s string
 			if err = rows.Scan(&system); err != nil {
-				log.Panic(err.Error())
+				log.Println("ERR" + err.Error())
 			} else {
 				systems = append(systems, system)
 			}
@@ -26,7 +26,7 @@ func HandleSystemSearch(c *echo.Context) error {
 	}
 	res, err := json.Marshal(systems)
 	if err != nil {
-		log.Panic(err.Error())
+		log.Println("ERR" + err.Error())
 	}
 
 	return c.JSONBlob(200, res)

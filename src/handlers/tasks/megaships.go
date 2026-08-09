@@ -28,7 +28,7 @@ func getMegashipCycle() string {
 	wd, _ := os.Getwd()
 	f, err := os.ReadFile(wd + "/week.txt")
 	if err != nil {
-		log.Panic(err.Error())
+		log.Println("ERR" + err.Error())
 	}
 
 	return string(f)
@@ -73,7 +73,7 @@ func HandleMegaship(c *echo.Context) error {
 	LIMIT 15;`)
 
 	if err != nil {
-		log.Panic(err)
+		log.Println("ERR" + err)
 	} else {
 		defer rows.Close()
 	}
@@ -84,7 +84,7 @@ func HandleMegaship(c *echo.Context) error {
 		m := megaship{}
 		if err := rows.Scan(&m.Name, &m.System, &m.Distance); err != nil {
 			e_str := err.Error()
-			log.Panic(e_str)
+			log.Println("ERR" + e_str)
 		}
 		m.Distance = math.Round(m.Distance)
 		megaship_list = append(megaship_list, m)

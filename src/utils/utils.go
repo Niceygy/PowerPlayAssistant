@@ -41,14 +41,14 @@ func HTTPGetJSON(url string) map[string]any {
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		log.Panic(err)
+		log.Println("ERR" + err)
 	}
 
 	req.Header.Set("User-Agent", "PowerPlayAssistant/2.0")
 
 	resp, err := client.Do(req)
 	if err != nil {
-		log.Panic(err)
+		log.Println("ERR" + err)
 	}
 
 	var jsonRes map[string]any
@@ -57,7 +57,7 @@ func HTTPGetJSON(url string) map[string]any {
 	resp.Body.Read(bytesRes)
 
 	if err = json.Unmarshal(bytesRes, &jsonRes); err != nil {
-		log.Panic(err)
+		log.Println("ERR" + err)
 	}
 	return jsonRes
 }

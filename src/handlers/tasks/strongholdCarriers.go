@@ -36,7 +36,7 @@ func HandleStrongholdCarriers(c *echo.Context) error {
 	for rows.Next() {
 		s := stronghold_respose{}
 		if err = rows.Scan(&s.SystemName, &s.OwningPower, &s.Distance); err != nil {
-			log.Panic(err.Error())
+			log.Println("ERR" + err.Error())
 		} else {
 			s.Distance = math.Round(s.Distance)
 			s.OwningPower = database.PowerShortToFull(s.OwningPower)

@@ -70,6 +70,6 @@ func main() {
 
 	// Start server
 	if err := e.Start(":8080"); err != nil {
-		log.Panic("failed to start server", "error", err)
+		log.Println("ERR"+"failed to start server", "error", err)
 	}
 }

@@ -39,7 +39,7 @@ func HandleConflictsSearch(c *echo.Context) error {
 		ORDER BY Distance 
 		LIMIT 20; `)
 		if err != nil {
-			log.Panic(err)
+			log.Println("ERR" + err)
 		}
 
 		var systems []ConflictResult
@@ -47,7 +47,7 @@ func HandleConflictsSearch(c *echo.Context) error {
 		for rows.Next() {
 			s := ConflictResult{}
 			if err = rows.Scan(&s.System_name, &s.Power1, &s.Power2, &s.Has_CZs, &s.Cycle, &s.LY); err != nil {
-				log.Panic(err.Error())
+				log.Println("ERR" + err.Error())
 			} else {
 				if s.Power1 != s.Power2 {
 					s.LY = math.Round(s.LY)
