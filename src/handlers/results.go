@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"net/http"
 	"slices"
 
 	"github.com/labstack/echo/v5"
@@ -29,6 +30,10 @@ func HandleResults(c *echo.Context) error {
 	system := c.QueryParam("system")
 	task := c.QueryParam("task")
 	power := c.QueryParam("power")
+
+	// c.Response().Header().Set("Content-Type", "text/html; charset=utf-8")
+	c.Response().Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
+	c.Response().WriteHeader(http.StatusOK)
 
 	if !database.DoesSystemExist(system) {
 		return c.HTML(404, utils.RenderTemplate("templates/errors/noSuchSystem.html", map[any]any{}))
