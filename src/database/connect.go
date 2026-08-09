@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"log"
 	"os"
+	"time"
 
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -20,7 +21,12 @@ func OpenDatabase() *sql.DB {
 	if err != nil {
 		log.Panic(err.Error())
 	}
-	db.SetMaxOpenConns(10)
+	// db.SetMaxOpenConns(10)
+	// Match or keep below MySQL's wait_timeout (e.g., set lifetime to 3 minutes)
+	db.SetConnMaxLifetime(3 * time.Minute)
+	db.SetConnMaxIdleTime(1 * time.Minute)
+	db.SetMaxOpenConns(25)
+	db.SetMaxIdleConns(5)
 	log.Println("Connected to MariaDB")
 	return db
 }
