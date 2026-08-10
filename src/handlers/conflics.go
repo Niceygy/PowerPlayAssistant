@@ -43,6 +43,8 @@ func HandleConflictsSearch(c *echo.Context) error {
 			c.HTML(500, "ERR"+err.Error())
 		}
 
+		defer rows.Close()
+
 		var systems []ConflictResult
 
 		for rows.Next() {

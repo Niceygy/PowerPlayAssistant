@@ -15,6 +15,7 @@ func HandleSystemSearch(c *echo.Context) error {
 	if err != nil {
 		log.Println("ERR" + err.Error())
 	} else {
+		defer rows.Close()
 		for rows.Next() {
 			// var s string
 			if err = rows.Scan(&system); err != nil {

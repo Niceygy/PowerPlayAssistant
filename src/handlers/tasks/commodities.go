@@ -45,6 +45,7 @@ func HandleCommodities(c *echo.Context) error {
 		log.Println("ERR" + err.Error())
 	}
 
+	defer rows.Close()
 	var fortifiedSystem systems_location_response
 
 	for rows.Next() {

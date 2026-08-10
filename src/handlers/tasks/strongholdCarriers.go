@@ -32,6 +32,7 @@ func HandleStrongholdCarriers(c *echo.Context) error {
 	`, user_shortcode)
 
 	var strongholds []stronghold_respose
+	defer rows.Close()
 
 	for rows.Next() {
 		s := stronghold_respose{}

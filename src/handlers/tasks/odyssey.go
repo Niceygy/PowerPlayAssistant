@@ -133,6 +133,8 @@ func HandleOdysseyDownloadTasks(c *echo.Context) error {
 		log.Println("ERR" + err.Error())
 	}
 
+	defer rows.Close()
+
 	s := systems_location_response{}
 
 	for rows.Next() {
@@ -204,6 +206,8 @@ func HandleOdysseyMalware(c *echo.Context) error {
 		if err != nil {
 			log.Println("ERR" + err.Error())
 		}
+
+		defer rows.Close()
 
 		err = rows.Scan(&s.System_name, &s.Shortcode, &s.State, &s.Control_points, &s.Points_change, &s.Distance)
 		if err != nil {

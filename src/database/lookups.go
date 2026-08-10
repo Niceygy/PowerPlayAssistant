@@ -45,6 +45,7 @@ func IsSystemAnarchy(system_name string) bool {
 		log.Println("ERR" + err.Error())
 		return false
 	}
+	defer res.Close()
 	var is_anarchy bool
 	res.Scan(&is_anarchy)
 	return is_anarchy
@@ -65,6 +66,8 @@ func GetNearestOwnedSystem(current_system string, needed_system_type string, pow
 	if err != nil {
 		log.Println("ERR" + err.Error())
 	}
+
+	defer rows.Close()
 
 	var result_system_name string
 	var result_system_coords []float64

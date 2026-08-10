@@ -22,11 +22,11 @@ func OpenDatabase() *sql.DB {
 		log.Println("ERR" + err.Error())
 	}
 	// db.SetMaxOpenConns(10)
-	// Match or keep below MySQL's wait_timeout (e.g., set lifetime to 3 minutes)
-	db.SetConnMaxLifetime(3 * time.Minute)
+	db.SetConnMaxLifetime(1 * time.Minute)
 	db.SetConnMaxIdleTime(1 * time.Minute)
-	db.SetMaxOpenConns(25)
-	db.SetMaxIdleConns(5)
+	db.SetMaxOpenConns(10)
+	db.SetMaxIdleConns(2)
+	db.Stats()
 	log.Println("Connected to MariaDB")
 	return db
 }

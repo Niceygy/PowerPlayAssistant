@@ -38,9 +38,8 @@ func HandleRareGoods(c *echo.Context) error {
 
 	if err != nil {
 		log.Println("ERR" + err.Error())
-	} else {
-		defer rows.Close()
 	}
+	defer rows.Close()
 
 	resultMap := map[float64]rare_good{}
 

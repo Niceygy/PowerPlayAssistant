@@ -40,6 +40,8 @@ func HandleConflictSearch(c *echo.Context) error {
 		log.Println("ERR" + err.Error())
 	}
 
+	defer rows.Close()
+
 	var conflicts []conflict_response
 
 	for rows.Next() {
