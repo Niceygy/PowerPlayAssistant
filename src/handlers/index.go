@@ -31,6 +31,7 @@ var subtexts []string = []string{
 	"It turns out, very hard indeed",
 	"Made with Echo " + echo.Version,
 	"Made with 🩷 & 💥, by Niceygy",
+	"Slightly less broken",
 }
 
 func HandleIndex(c *echo.Context) error {

@@ -30,12 +30,10 @@ func HandleResults(c *echo.Context) error {
 	task := c.QueryParam("task")
 	power := c.QueryParam("power")
 
-	// c.Response().Header().Set("Content-Type", "text/html; charset=utf-8")
-	// c.Response().Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
-	// c.Response().WriteHeader(http.StatusOK)
-
 	if !database.DoesSystemExist(system) {
-		return c.HTML(404, utils.RenderTemplate("templates/errors/noSuchSystem.html", map[any]any{}))
+		return c.HTML(404, utils.RenderTemplate("templates/errors/noSuchSystem.html", map[any]any{
+			"system_name": system,
+		}))
 	} else if isTaskIllegal(task, database.IsSystemAnarchy(system)) && len(c.QueryParam("anarchy")) < 1 {
 		return c.Redirect(307, utils.Concat([]string{
 			"is_crime?system=",
