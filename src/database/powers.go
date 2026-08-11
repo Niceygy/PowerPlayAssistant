@@ -24,7 +24,8 @@ func DoesSystemExist(system_name string) bool {
 	res := Db.QueryRow("SELECT system_name FROM systems WHERE system_name = ? LIMIT 1;", system_name)
 	system := System{}
 	res.Scan(&system.System_name)
-	return system.System_name == ""
+	// log.Printf("%s == '', %t", system.System_name, (system.System_name == ""))
+	return system.System_name != ""
 }
 
 // [state, shortcode]
