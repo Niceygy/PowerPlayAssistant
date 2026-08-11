@@ -30,8 +30,8 @@ func main() {
 	d := godump.NewDumper(godump.WithoutColor())
 
 	// Middleware
-	limiterStore := middleware.NewRateLimiterMemoryStore(10)
-	e.Use(middleware.RateLimiter(limiterStore))
+	// limiterStore := middleware.NewRateLimiterMemoryStore(10)
+	// e.Use(middleware.RateLimiter(limiterStore))
 	e.Use(middleware.Secure())
 	e.Use(middleware.Decompress())
 	e.Use(middleware.ContextTimeout(30 * time.Second))
