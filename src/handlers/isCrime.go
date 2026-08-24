@@ -9,7 +9,7 @@ import (
 
 func HandleIsCrime(c *echo.Context) error {
 	r := c.Request()
-	if len(c.QueryParam("t")) > 1 {
+	if len(c.QueryParam("t")) >= 1 {
 		return c.HTML(200, utils.RenderTemplate("templates/is_crime.html", map[string]any{
 			"task":   c.QueryParam("task"),
 			"power":  c.QueryParam("power"),
