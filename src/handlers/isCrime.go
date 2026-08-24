@@ -9,7 +9,13 @@ import (
 
 func HandleIsCrime(c *echo.Context) error {
 	r := c.Request()
-	if r.Method == http.MethodPost {
+	if len(c.QueryParam("t")) > 1 {
+		return c.HTML(200, utils.RenderTemplate("templates/is_crime.html", map[string]any{
+			"task":   c.QueryParam("task"),
+			"power":  c.QueryParam("power"),
+			"system": c.QueryParam("system"),
+		}))
+	} else if r.Method == http.MethodPost {
 		return c.Redirect(307, utils.Concat([]string{
 			"/results?anarchy=",
 			c.FormValue("anarchy"),
