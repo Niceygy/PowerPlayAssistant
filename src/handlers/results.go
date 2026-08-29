@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"log"
 	"slices"
 
 	"github.com/labstack/echo/v5"
@@ -31,7 +30,7 @@ func HandleResults(c *echo.Context) error {
 	task := c.QueryParam("task")
 	power := c.QueryParam("power")
 
-	log.Printf("len = %d", len(c.QueryParam("anarchy")))
+	// log.Printf("len = %d", len(c.QueryParam("anarchy")))
 
 	if !database.DoesSystemExist(system) {
 		return c.HTML(404, utils.RenderTemplate("templates/errors/noSuchSystem.html", map[any]any{

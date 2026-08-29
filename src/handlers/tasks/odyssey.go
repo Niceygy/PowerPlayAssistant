@@ -89,11 +89,9 @@ func HandleOdysseyDownloadTasks(c *echo.Context) error {
 	switch activity_type {
 	case TASK_UNDERMINE:
 		//hostile system, find friendly one to give data to
-		query = `SELECT systems.*,
+		query = `SELECT system_name, shortcode, state, control_points, points_change, 
 		` + database.CreateDistanceStatement(user_coords) + `
 		FROM systems
-		INNER JOIN systems
-			ON systems.system_name = systems.system_name
 		WHERE systems.shortcode = '` + user_shortcode + `'
 			AND systems.state != ''
 		ORDER BY distance
@@ -101,11 +99,9 @@ func HandleOdysseyDownloadTasks(c *echo.Context) error {
 		information += "an enemy system, so you need to download " + data_type + " from an odyssey settlement here and hand it into a power contact in <owned system>, which is <distance> LY away"
 	case TASK_AQUIRE:
 		//unoccupied system, find friendly one to give data to
-		query = `SELECT systems.*,
+		query = `SELECT system_name, shortcode, state, control_points, points_change, 
 		` + database.CreateDistanceStatement(user_coords) + `
 		FROM systems
-		INNER JOIN systems
-			ON systems.system_name = systems.system_name
 		WHERE systems.shortcode = '` + user_shortcode + `'
 			AND systems.state != ''
 		ORDER BY distance
@@ -115,11 +111,9 @@ func HandleOdysseyDownloadTasks(c *echo.Context) error {
 	case TASK_REINFORCE:
 		//user in friendly system, find nearby one to undermine
 		//You are in a friendly system
-		query = `SELECT systems.*,
+		query = `SELECT system_name, shortcode, state, control_points, points_change, 
 		` + database.CreateDistanceStatement(user_coords) + `
 		FROM systems
-		INNER JOIN systems
-			ON systems.system_name = systems.system_name
 		WHERE systems.shortcode != '` + user_shortcode + `'
 			AND systems.state != ''
 		ORDER BY distance
@@ -130,7 +124,8 @@ func HandleOdysseyDownloadTasks(c *echo.Context) error {
 
 	rows, err := database.Db.Query(query)
 	if err != nil {
-		log.Println("ERR" + err.Error())
+		log.Println("ERR " + err.Error())
+		return c.String(500, "Server Error")
 	}
 
 	defer rows.Close()
@@ -142,6 +137,9 @@ func HandleOdysseyDownloadTasks(c *echo.Context) error {
 		err = rows.Scan(&s.System_name, &s.Shortcode, &s.State, &s.Control_points, &s.Points_change, &s.Distance)
 		if err != nil {
 			log.Println("ERR" + err.Error())
+		}
+		if rows.Err() != nil {
+			log.Println("ERR ROWS " + rows.Close().Error())
 		}
 	}
 
@@ -187,7 +185,7 @@ func HandleOdysseyMalware(c *echo.Context) error {
 
 	task_shortcode := utils.GetTaskCode(task)
 	user_shortcode := database.PowerFullToShort(power)
-	system_state, system_power_shortcode := database.GetSystemPowerInfo(power)
+	system_state, system_power_shortcode := database.GetSystemPowerInfo(system)
 	user_coords := database.GetSystemLocation(system)
 
 	var information string
@@ -198,8 +196,6 @@ func HandleOdysseyMalware(c *echo.Context) error {
 		rows, err := database.Db.Query(`SELECT systems.*,
 		` + database.CreateDistanceStatement(user_coords) + `
 		FROM systems
-		INNER JOIN systems
-			ON systems.system_name = systems.system_name
 		WHERE systems.shortcode != '` + user_shortcode + `'
 		ORDER BY distance
 		LIMIT 1;`)
